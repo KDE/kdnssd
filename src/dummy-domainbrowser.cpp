@@ -30,18 +30,17 @@ DomainBrowser::DomainBrowser(DomainType, QObject *parent) : QObject(parent), d(0
 DomainBrowser::~DomainBrowser()
 {}
 
-
 void DomainBrowser::startBrowse()
 {}
 
 QStringList DomainBrowser::domains() const
 {
-	return QStringList();
+    return QStringList();
 }
 
 bool DomainBrowser::isRunning() const
 {
-	return false;
+    return false;
 }
 
 }

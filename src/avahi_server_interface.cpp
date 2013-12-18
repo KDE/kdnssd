@@ -26,28 +26,34 @@ OrgFreedesktopAvahiServerInterface::~OrgFreedesktopAvahiServerInterface()
 {
 }
 
-namespace KDNSSD {
-
+namespace KDNSSD
+{
 
 void registerTypes()
 {
-    static bool registered=false;
+    static bool registered = false;
     if (!registered) {
-	qDBusRegisterMetaType<QList<QByteArray> >();
-	registered=true;
+        qDBusRegisterMetaType<QList<QByteArray> >();
+        registered = true;
     }
 }
 
 QString domainToDNS(const QString &domain)
 {
-	if (domainIsLocal(domain)) return domain;
-	else return QUrl::toAce(domain);
+    if (domainIsLocal(domain)) {
+        return domain;
+    } else {
+        return QUrl::toAce(domain);
+    }
 }
 
-QString DNSToDomain(const QString& domain)
+QString DNSToDomain(const QString &domain)
 {
-	if (domainIsLocal(domain)) return domain;
-	else return QUrl::fromAce(domain.toLatin1());
+    if (domainIsLocal(domain)) {
+        return domain;
+    } else {
+        return QUrl::fromAce(domain.toLatin1());
+    }
 }
 }
 

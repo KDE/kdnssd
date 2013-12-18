@@ -25,24 +25,23 @@
 namespace KDNSSD
 {
 
-ServiceTypeBrowser::ServiceTypeBrowser(const QString& domain,QObject *parent) : QObject(parent),d(new ServiceTypeBrowserPrivate(this))
+ServiceTypeBrowser::ServiceTypeBrowser(const QString &domain, QObject *parent) : QObject(parent), d(new ServiceTypeBrowserPrivate(this))
 {
-    d->m_browser=new ServiceBrowser("_services._dns-sd._udp",false, domain);
-    connect(d->m_browser,SIGNAL(serviceAdded(KDNSSD::RemoteService::Ptr)), d, SLOT(newService(KDNSSD::RemoteService::Ptr)));
-    connect(d->m_browser,SIGNAL(serviceRemoved(KDNSSD::RemoteService::Ptr)), d, SLOT(removeService(KDNSSD::RemoteService::Ptr)));
-    connect(d->m_browser,SIGNAL(finished()), this, SIGNAL(finished()));
+    d->m_browser = new ServiceBrowser("_services._dns-sd._udp", false, domain);
+    connect(d->m_browser, SIGNAL(serviceAdded(KDNSSD::RemoteService::Ptr)), d, SLOT(newService(KDNSSD::RemoteService::Ptr)));
+    connect(d->m_browser, SIGNAL(serviceRemoved(KDNSSD::RemoteService::Ptr)), d, SLOT(removeService(KDNSSD::RemoteService::Ptr)));
+    connect(d->m_browser, SIGNAL(finished()), this, SIGNAL(finished()));
 }
 
 ServiceTypeBrowser::~ServiceTypeBrowser()
 {
-	delete d;
+    delete d;
 }
 
 QStringList ServiceTypeBrowser::serviceTypes() const
 {
-	return d->m_servicetypes;
+    return d->m_servicetypes;
 }
-
 
 void ServiceTypeBrowser::startBrowse()
 {
@@ -53,27 +52,24 @@ void ServiceTypeBrowser::startBrowse()
 #ifndef KDE_NO_DEPRECATED
 bool ServiceTypeBrowser::isRunning() const
 {
-	return false;
+    return false;
 }
 #endif
 
 void ServiceTypeBrowserPrivate::newService(KDNSSD::RemoteService::Ptr srv)
 {
-    QString type=srv->serviceName()+'.'+srv->type();
-    m_servicetypes+=type;
+    QString type = srv->serviceName() + '.' + srv->type();
+    m_servicetypes += type;
     emit m_parent->serviceTypeAdded(type);
 }
 
 void ServiceTypeBrowserPrivate::removeService(KDNSSD::RemoteService::Ptr srv)
 {
-    QString type=srv->serviceName()+'.'+srv->type();
+    QString type = srv->serviceName() + '.' + srv->type();
     m_servicetypes.removeAll(type);
     emit m_parent->serviceTypeRemoved(type);
 }
 
-
 }
-
-
 
 #include "moc_servicetypebrowser.cpp"

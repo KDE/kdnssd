@@ -32,27 +32,27 @@ namespace KDNSSD
 
 class ServiceBrowserPrivate : public Responder
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-	ServiceBrowserPrivate(ServiceBrowser* parent) : Responder(),  m_parent(parent)
-	{}
-	QList<RemoteService::Ptr> m_services;
-	QList<RemoteService::Ptr> m_duringResolve;
-	QString m_type;
-	QString m_domain;
-	QString m_subtype;
-	bool m_autoResolve;
-	bool m_finished;
-	ServiceBrowser* m_parent;
-	QTimer timeout;
+    ServiceBrowserPrivate(ServiceBrowser *parent) : Responder(),  m_parent(parent)
+    {}
+    QList<RemoteService::Ptr> m_services;
+    QList<RemoteService::Ptr> m_duringResolve;
+    QString m_type;
+    QString m_domain;
+    QString m_subtype;
+    bool m_autoResolve;
+    bool m_finished;
+    ServiceBrowser *m_parent;
+    QTimer timeout;
 
-	// get already found service identical to s or null if not found
-	RemoteService::Ptr find(RemoteService::Ptr s, const QList<RemoteService::Ptr>& where) const;
-	virtual void customEvent(QEvent* event);
+    // get already found service identical to s or null if not found
+    RemoteService::Ptr find(RemoteService::Ptr s, const QList<RemoteService::Ptr> &where) const;
+    virtual void customEvent(QEvent *event);
 public Q_SLOTS:
-	void queryFinished();
-	void serviceResolved(bool success);
-	void onTimeout();
+    void queryFinished();
+    void serviceResolved(bool success);
+    void onTimeout();
 };
 
 }

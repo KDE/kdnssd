@@ -51,142 +51,142 @@ class ServiceBasePrivate;
 class KDNSSD_EXPORT ServiceBase : public QSharedData //krazy:exclude=dpointer (protected)
 {
 public:
-	typedef QExplicitlySharedDataPointer<ServiceBase> Ptr;
+    typedef QExplicitlySharedDataPointer<ServiceBase> Ptr;
 
-	/**
-	 * Creates a ServiceBase object
-	 *
-	 * Note that @p name, @p type and @p domain uniquely identify
-	 * the service in the DNS-SD system, and @p host and @p port
-	 * provide the actual location of the service.
-	 *
-	 * For example, RemoteService populates @p host and @p port
-	 * based on the @p name, @p type and @p domain attributes
-	 * using the DNS-SD resolution system.
-	 *
-	 * @param name   service name
-	 * @param type   service type
-	 * @param domain the DNS-SD domain name for service
-	 * @param host   the host name of the service (a fully-qualified domain name)
-	 * @param port   the port number of the service
-	 */
-	explicit ServiceBase(const QString& name = QString(),
-	                     const QString& type = QString(),
-	                     const QString& domain = QString(),
-	                     const QString& host = QString(),
-	                     unsigned short port = 0);
+    /**
+     * Creates a ServiceBase object
+     *
+     * Note that @p name, @p type and @p domain uniquely identify
+     * the service in the DNS-SD system, and @p host and @p port
+     * provide the actual location of the service.
+     *
+     * For example, RemoteService populates @p host and @p port
+     * based on the @p name, @p type and @p domain attributes
+     * using the DNS-SD resolution system.
+     *
+     * @param name   service name
+     * @param type   service type
+     * @param domain the DNS-SD domain name for service
+     * @param host   the host name of the service (a fully-qualified domain name)
+     * @param port   the port number of the service
+     */
+    explicit ServiceBase(const QString &name = QString(),
+                         const QString &type = QString(),
+                         const QString &domain = QString(),
+                         const QString &host = QString(),
+                         unsigned short port = 0);
 
-	virtual  ~ServiceBase();
+    virtual  ~ServiceBase();
 
-	/**
-	 * The name of the service
-	 */
-	QString serviceName() const;
+    /**
+     * The name of the service
+     */
+    QString serviceName() const;
 
-	/**
-	 * The type of the service
-	 *
-	 * This is always in the format _sometype._udp or _sometype._tcp.
-	 *
-	 * See the <a href="http://www.dns-sd.org">DNS-SD website</a> for
-	 * <a href="http://www.dns-sd.org/ServiceTypes.html">a full list of service types</a>.
-	 */
-	QString type() const;
+    /**
+     * The type of the service
+     *
+     * This is always in the format _sometype._udp or _sometype._tcp.
+     *
+     * See the <a href="http://www.dns-sd.org">DNS-SD website</a> for
+     * <a href="http://www.dns-sd.org/ServiceTypes.html">a full list of service types</a>.
+     */
+    QString type() const;
 
-	/**
-	 * The domain that the service belongs to
-	 *
-	 * It is "local." for link-local services.
-	 */
-	QString domain() const;
+    /**
+     * The domain that the service belongs to
+     *
+     * It is "local." for link-local services.
+     */
+    QString domain() const;
 
-	/**
-	 * The hostname of the service
-	 *
-	 * Only valid for local and resolved remote services.
-	 *
-	 * Together with port(), this can be used to actually
-	 * access the service.
-	 *
-	 * @see RemoteService::resolve() and RemoteService::resolveAsync()
-	 */
-	QString hostName() const;
+    /**
+     * The hostname of the service
+     *
+     * Only valid for local and resolved remote services.
+     *
+     * Together with port(), this can be used to actually
+     * access the service.
+     *
+     * @see RemoteService::resolve() and RemoteService::resolveAsync()
+     */
+    QString hostName() const;
 
-	/**
-	 * The port number of the service
-	 *
-	 * Only valid for local and resolved remote services.
-	 *
-	 * Together with hostName(), this can be used to actually
-	 * access the service.
-	 *
-	 * @see RemoteService::resolve() and RemoteService::resolveAsync()
-	 */
-	unsigned short port() const;
+    /**
+     * The port number of the service
+     *
+     * Only valid for local and resolved remote services.
+     *
+     * Together with hostName(), this can be used to actually
+     * access the service.
+     *
+     * @see RemoteService::resolve() and RemoteService::resolveAsync()
+     */
+    unsigned short port() const;
 
-	/**
-	 * Additional text data associated with the service
-	 *
-	 * Only valid for local and resolved remote services.
-	 *
-	 * This is data that provides additional information about the
-	 * service.  For example, it might be used to specify a printer
-	 * queue on the printer server specified by hostName() and port().
-	 *
-	 * You can check for the data that might be associated with a
-	 * particular service on the <a
-	 * href="http://www.dns-sd.org/ServiceTypes.html">service types list</a>.
-	 * If a @c key=value pair is given, this will appear with the @c value
-	 * in a QByteArray indexed by the @c key.  If the data is on its own
-	 * (does not have an @c = in it), it will be used to index an empty
-	 * QByteArray, and can be checked for with QMap::contains().
-	 *
-	 * For example, if you are accessing the _ipp._tcp service, you might
-	 * do something like
-	 * @code
-	 * QString printerModel = "unknown";
-	 * if (service->textData().contains("ty")) {
-	 *     printQueue = QString::fromUtf8(service->textData()["ty"].constData());
-	 * }
-	 * @endcode
-	 * since the TXT data of the IPP service may contain data like
-	 * "ty=Apple LaserWriter Pro 630".  Note that you actually have to be
-	 * a bit more clever than this, since the key should usually be case
-	 * insensitive.
-	 */
-	QMap<QString,QByteArray> textData() const;
+    /**
+     * Additional text data associated with the service
+     *
+     * Only valid for local and resolved remote services.
+     *
+     * This is data that provides additional information about the
+     * service.  For example, it might be used to specify a printer
+     * queue on the printer server specified by hostName() and port().
+     *
+     * You can check for the data that might be associated with a
+     * particular service on the <a
+     * href="http://www.dns-sd.org/ServiceTypes.html">service types list</a>.
+     * If a @c key=value pair is given, this will appear with the @c value
+     * in a QByteArray indexed by the @c key.  If the data is on its own
+     * (does not have an @c = in it), it will be used to index an empty
+     * QByteArray, and can be checked for with QMap::contains().
+     *
+     * For example, if you are accessing the _ipp._tcp service, you might
+     * do something like
+     * @code
+     * QString printerModel = "unknown";
+     * if (service->textData().contains("ty")) {
+     *     printQueue = QString::fromUtf8(service->textData()["ty"].constData());
+     * }
+     * @endcode
+     * since the TXT data of the IPP service may contain data like
+     * "ty=Apple LaserWriter Pro 630".  Note that you actually have to be
+     * a bit more clever than this, since the key should usually be case
+     * insensitive.
+     */
+    QMap<QString, QByteArray> textData() const;
 
-	/**
-	 * Compares services based on name, type and domain
-	 *
-	 * This is enough to for unique identification and omitting
-	 * port, host and text data allows to compare resolved and
-	 * unresolved services
-	 *
-	 * @param o the service to compare this service to
-	 * @return @c true if this service represents the same
-	 *         service (from the point of view of DNS-SD) as
-	 *         @p o, @c false otherwise
-	 */
-	bool operator==(const ServiceBase& o) const;
-	/**
-	 * Compares services based on name, type and domain
-	 *
-	 * This is enough to for unique identification and omitting
-	 * port, host and text data allows to compare resolved and
-	 * unresolved services
-	 *
-	 * @param o the service to compare this service to
-	 * @return @c false if this service represents the same
-	 *         service (from the point of view of DNS-SD) as
-	 *         @p o, @c true otherwise
-	 */
-	bool operator!=(const ServiceBase& o) const;
+    /**
+     * Compares services based on name, type and domain
+     *
+     * This is enough to for unique identification and omitting
+     * port, host and text data allows to compare resolved and
+     * unresolved services
+     *
+     * @param o the service to compare this service to
+     * @return @c true if this service represents the same
+     *         service (from the point of view of DNS-SD) as
+     *         @p o, @c false otherwise
+     */
+    bool operator==(const ServiceBase &o) const;
+    /**
+     * Compares services based on name, type and domain
+     *
+     * This is enough to for unique identification and omitting
+     * port, host and text data allows to compare resolved and
+     * unresolved services
+     *
+     * @param o the service to compare this service to
+     * @return @c false if this service represents the same
+     *         service (from the point of view of DNS-SD) as
+     *         @p o, @c true otherwise
+     */
+    bool operator!=(const ServiceBase &o) const;
 
 protected:
-	ServiceBase(ServiceBasePrivate* const d);
-	virtual void virtual_hook(int, void*);
-	ServiceBasePrivate* const d;
+    ServiceBase(ServiceBasePrivate *const d);
+    virtual void virtual_hook(int, void *);
+    ServiceBasePrivate *const d;
 
 };
 
@@ -197,7 +197,7 @@ protected:
  *
  * @return @c true if domain is link-local ('local.'), @c false otherwise
  */
-bool domainIsLocal(const QString& domain);
+bool domainIsLocal(const QString &domain);
 
 }
 

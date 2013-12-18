@@ -35,37 +35,42 @@ namespace KDNSSD
 
 class PublicServicePrivate : public QObject, public ServiceBasePrivate
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-	PublicServicePrivate(PublicService* parent, const QString& name, const QString& type, const QString& domain, unsigned int port) : 
-	    QObject(), ServiceBasePrivate(name, type, domain, QString(), port), m_published(false), m_running(false), m_group(0), 
-	     m_server(0), m_collision(false), m_parent(parent)
-	{}
-        ~PublicServicePrivate() {  
-	    if (m_group) m_group->Free(); 
-	    delete m_group;
-	    delete m_server;
-	}
+    PublicServicePrivate(PublicService *parent, const QString &name, const QString &type, const QString &domain, unsigned int port) :
+        QObject(), ServiceBasePrivate(name, type, domain, QString(), port), m_published(false), m_running(false), m_group(0),
+        m_server(0), m_collision(false), m_parent(parent)
+    {}
+    ~PublicServicePrivate()
+    {
+        if (m_group) {
+            m_group->Free();
+        }
+        delete m_group;
+        delete m_server;
+    }
 
-	bool m_published;
-	bool m_running;
-	org::freedesktop::Avahi::EntryGroup* m_group;
-	org::freedesktop::Avahi::Server* m_server;
-	bool m_collision;
-	QStringList m_subtypes;
-	PublicService* m_parent;
-	
-	void commit()
-	{
-	    if (!m_collision) m_group->Commit();
-	}    
-	void stop();
-	bool fillEntryGroup();
-	void tryApply();
+    bool m_published;
+    bool m_running;
+    org::freedesktop::Avahi::EntryGroup *m_group;
+    org::freedesktop::Avahi::Server *m_server;
+    bool m_collision;
+    QStringList m_subtypes;
+    PublicService *m_parent;
+
+    void commit()
+    {
+        if (!m_collision) {
+            m_group->Commit();
+        }
+    }
+    void stop();
+    bool fillEntryGroup();
+    void tryApply();
 
 public Q_SLOTS:
-	void serverStateChanged(int,const QString&);
-	void groupStateChanged(int,const QString&);
+    void serverStateChanged(int, const QString &);
+    void groupStateChanged(int, const QString &);
 };
 
 }

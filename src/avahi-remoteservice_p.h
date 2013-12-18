@@ -28,7 +28,6 @@
 #include "remoteservice.h"
 #include "avahi_serviceresolver_interface.h"
 
-
 #define K_D RemoteServicePrivate* d=static_cast<RemoteServicePrivate*>(this->d)
 
 namespace KDNSSD
@@ -36,21 +35,26 @@ namespace KDNSSD
 
 class RemoteServicePrivate : public QObject, public ServiceBasePrivate
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-	RemoteServicePrivate(RemoteService* parent, const QString& name, const QString& type, const QString& domain) : QObject(), 
-	ServiceBasePrivate(name, type, domain, QString(), 0), m_resolved(false), m_running(false), m_resolver(0), m_parent(parent)
-	{}
-        ~RemoteServicePrivate() {  if (m_resolver) m_resolver->Free(); delete m_resolver; }
-	bool m_resolved;
-	bool m_running;
-	org::freedesktop::Avahi::ServiceResolver* m_resolver;
-	RemoteService* m_parent;
-	void stop();
+    RemoteServicePrivate(RemoteService *parent, const QString &name, const QString &type, const QString &domain) : QObject(),
+        ServiceBasePrivate(name, type, domain, QString(), 0), m_resolved(false), m_running(false), m_resolver(0), m_parent(parent)
+    {}
+    ~RemoteServicePrivate()
+    {
+        if (m_resolver) {
+            m_resolver->Free();
+        } delete m_resolver;
+    }
+    bool m_resolved;
+    bool m_running;
+    org::freedesktop::Avahi::ServiceResolver *m_resolver;
+    RemoteService *m_parent;
+    void stop();
 
 private Q_SLOTS:
-        void gotFound(int, int, const QString &name, const QString &type, const QString &domain, const QString &host, int aprotocol, const QString &address, ushort port, const QList<QByteArray> &txt, uint flags);
-	void gotError();
+    void gotFound(int, int, const QString &name, const QString &type, const QString &domain, const QString &host, int aprotocol, const QString &address, ushort port, const QList<QByteArray> &txt, uint flags);
+    void gotError();
 };
 
 }

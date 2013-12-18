@@ -30,7 +30,9 @@ class OrgFreedesktopAvahiEntryGroupInterface: public QDBusAbstractInterface
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "org.freedesktop.Avahi.EntryGroup"; }
+    {
+        return "org.freedesktop.Avahi.EntryGroup";
+    }
 
 public:
     OrgFreedesktopAvahiEntryGroupInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
@@ -107,11 +109,14 @@ Q_SIGNALS: // SIGNALS
     void StateChanged(int state, const QString &error);
 };
 
-namespace org {
-  namespace freedesktop {
-    namespace Avahi {
-      typedef ::OrgFreedesktopAvahiEntryGroupInterface EntryGroup;
-    }
-  }
+namespace org
+{
+namespace freedesktop
+{
+namespace Avahi
+{
+typedef ::OrgFreedesktopAvahiEntryGroupInterface EntryGroup;
+}
+}
 }
 #endif

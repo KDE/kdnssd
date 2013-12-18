@@ -24,25 +24,24 @@
 namespace KDNSSD
 {
 
-ServiceTypeBrowser::ServiceTypeBrowser(const QString&, QObject *parent) : QObject(parent), d(0)
+ServiceTypeBrowser::ServiceTypeBrowser(const QString &, QObject *parent) : QObject(parent), d(0)
 {}
 
 ServiceTypeBrowser::~ServiceTypeBrowser()
 {}
-
 
 void ServiceTypeBrowser::startBrowse()
 {}
 
 QStringList ServiceTypeBrowser::serviceTypes() const
 {
-	return QStringList();
+    return QStringList();
 }
 
 #ifndef KDE_NO_DEPRECATED
 bool ServiceTypeBrowser::isRunning() const
 {
-	return false;
+    return false;
 }
 #endif
 

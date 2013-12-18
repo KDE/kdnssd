@@ -49,87 +49,87 @@ class RemoteServicePrivate;
  */
 class KDNSSD_EXPORT RemoteService : public QObject, public ServiceBase
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	typedef QExplicitlySharedDataPointer<RemoteService> Ptr;
+    typedef QExplicitlySharedDataPointer<RemoteService> Ptr;
 
-	/**
-	 * Creates an unresolved RemoteService representing the service with
-	 * the given name, type and domain
-	 *
-	 * @param name   the name of the service
-	 * @param type   the type of the service (see ServiceBrowser::ServiceBrowser())
-	 * @param domain the domain of the service
-	 *
-	 * @see ServiceBrowser::isAvailable()
-	 */
-	RemoteService(const QString& name, const QString& type, const QString& domain);
+    /**
+     * Creates an unresolved RemoteService representing the service with
+     * the given name, type and domain
+     *
+     * @param name   the name of the service
+     * @param type   the type of the service (see ServiceBrowser::ServiceBrowser())
+     * @param domain the domain of the service
+     *
+     * @see ServiceBrowser::isAvailable()
+     */
+    RemoteService(const QString &name, const QString &type, const QString &domain);
 
-	virtual ~RemoteService();
+    virtual ~RemoteService();
 
-	/**
-	 * Resolves the host name and port of service asynchronously
-	 *
-	 * The host name is not resolved into an IP address - use KResolver
-	 * for that.
-	 *
-	 * The resolved(bool) signal will be emitted when the
-	 * resolution is complete, or when it fails.
-	 *
-	 * Note that resolved(bool) may be emitted before this function
-	 * returns in case of immediate failure.
-	 *
-	 * RemoteService will keep monitoring the service for
-	 * changes in hostname and port, and re-emit resolved(bool)
-	 * when either changes.
-	 *
-	 * @see resolve(), hostName(), port()
-	 */
-	void resolveAsync();
+    /**
+     * Resolves the host name and port of service asynchronously
+     *
+     * The host name is not resolved into an IP address - use KResolver
+     * for that.
+     *
+     * The resolved(bool) signal will be emitted when the
+     * resolution is complete, or when it fails.
+     *
+     * Note that resolved(bool) may be emitted before this function
+     * returns in case of immediate failure.
+     *
+     * RemoteService will keep monitoring the service for
+     * changes in hostname and port, and re-emit resolved(bool)
+     * when either changes.
+     *
+     * @see resolve(), hostName(), port()
+     */
+    void resolveAsync();
 
-	/**
-	 * Resolves the host name and port of service synchronously
-	 *
-	 * The host name is not resolved into an IP address - use KResolver
-	 * for that.
-	 *
-	 * resolved(bool) is emitted before this function is returned.
-	 *
-	 * resolve() will not cause RemoteService to monitor for changes
-	 * in the hostname or port of the service.
-	 *
-	 * @return @c true if successful, @c false on failure
-	 *
-	 * @see resolveAsync(), hostName(), port()
-	 */
-	bool resolve();
+    /**
+     * Resolves the host name and port of service synchronously
+     *
+     * The host name is not resolved into an IP address - use KResolver
+     * for that.
+     *
+     * resolved(bool) is emitted before this function is returned.
+     *
+     * resolve() will not cause RemoteService to monitor for changes
+     * in the hostname or port of the service.
+     *
+     * @return @c true if successful, @c false on failure
+     *
+     * @see resolveAsync(), hostName(), port()
+     */
+    bool resolve();
 
-	/**
-	 * Whether the service has been successfully resolved
-	 *
-	 * @return @c true if hostName() and port() will return
-	 *         valid values, @c false otherwise
-	 */
-	bool isResolved() const;
+    /**
+     * Whether the service has been successfully resolved
+     *
+     * @return @c true if hostName() and port() will return
+     *         valid values, @c false otherwise
+     */
+    bool isResolved() const;
 
 Q_SIGNALS:
-	/**
-	 * Emitted when resolving is complete
-	 *
-	 * If operating in asynchronous mode this signal can be
-	 * emitted several times (when the hostName or port of
-	 * the service changes).
-	 *
-	 * @param successful @c true if the hostName and port were
-	 *                   successfully resolved, @c false otherwise
-	 */
-	void resolved(bool successful);
+    /**
+     * Emitted when resolving is complete
+     *
+     * If operating in asynchronous mode this signal can be
+     * emitted several times (when the hostName or port of
+     * the service changes).
+     *
+     * @param successful @c true if the hostName and port were
+     *                   successfully resolved, @c false otherwise
+     */
+    void resolved(bool successful);
 
 protected:
-	virtual void virtual_hook(int id, void *data);
+    virtual void virtual_hook(int id, void *data);
 private:
-	friend class RemoteServicePrivate;
+    friend class RemoteServicePrivate;
 
 };
 

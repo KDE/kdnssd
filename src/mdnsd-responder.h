@@ -36,33 +36,33 @@ This class should not be used directly.
  */
 class Responder : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit Responder(DNSServiceRef ref=0,QObject *parent = 0);
+    explicit Responder(DNSServiceRef ref = 0, QObject *parent = 0);
 
-	~Responder();
+    ~Responder();
 
-	/**
-	Returns true if it is possible to use mDNS service publishing and discovery.
-	It needs mDNSResponder running.
-	 */
-	bool isRunning() const;
-	void setRef(DNSServiceRef ref);
-	void stop();
+    /**
+    Returns true if it is possible to use mDNS service publishing and discovery.
+    It needs mDNSResponder running.
+     */
+    bool isRunning() const;
+    void setRef(DNSServiceRef ref);
+    void stop();
 public Q_SLOTS:
-	void process();
+    void process();
 protected:
-	DNSServiceRef m_ref;
-	bool m_running;
-	QSocketNotifier *m_socket;
+    DNSServiceRef m_ref;
+    bool m_running;
+    QSocketNotifier *m_socket;
 };
 
 /* Utils functions */
 
 // Encodes domain name using utf8() or IDN
 QByteArray domainToDNS(const QString &domain);
-QString DNSToDomain(const char* domain);
+QString DNSToDomain(const char *domain);
 
 }
 

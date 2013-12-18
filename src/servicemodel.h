@@ -31,7 +31,6 @@ namespace KDNSSD
 struct ServiceModelPrivate;
 class ServiceBrowser;
 
-
 /**
  * @class ServiceModel servicemodel.h KDNSSD/ServiceModel
  * @short Model for list of Zeroconf services
@@ -65,59 +64,59 @@ class ServiceBrowser;
 
 class KDNSSD_EXPORT ServiceModel : public QAbstractItemModel
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
 
-	/** The additional data roles provided by this model */
-	enum AdditionalRoles {
-		ServicePtrRole = 0xA06519DE  ///< gets a RemoteService::Ptr for the service
-	};
+    /** The additional data roles provided by this model */
+    enum AdditionalRoles {
+        ServicePtrRole = 0xA06519DE  ///< gets a RemoteService::Ptr for the service
+    };
 
-	/**
-	 * The default columns for this model.
-	 *
-	 * If service browser is not set to resolve automatically,
-	 * then the model will only ever have one column (the service name).
-	 */
-	enum ModelColumns {
-		ServiceName = 0,
-		Host = 1,
-		Port = 2
-	};
+    /**
+     * The default columns for this model.
+     *
+     * If service browser is not set to resolve automatically,
+     * then the model will only ever have one column (the service name).
+     */
+    enum ModelColumns {
+        ServiceName = 0,
+        Host = 1,
+        Port = 2
+    };
 
-	/**
-	 * Creates a model for the given service browser and starts browsing
-	 * for services.
-	 *
-	 * The model takes ownership of the browser,
-	 * so there is no need to delete it afterwards.
-	 *
-	 * You should @b not call ServiceBrowser::startBrowse() on @p browser
-	 * before passing it to ServiceModel.
-	 */
-	explicit ServiceModel(ServiceBrowser* browser, QObject* parent = 0);
+    /**
+     * Creates a model for the given service browser and starts browsing
+     * for services.
+     *
+     * The model takes ownership of the browser,
+     * so there is no need to delete it afterwards.
+     *
+     * You should @b not call ServiceBrowser::startBrowse() on @p browser
+     * before passing it to ServiceModel.
+     */
+    explicit ServiceModel(ServiceBrowser *browser, QObject *parent = 0);
 
-	virtual ~ServiceModel();
+    virtual ~ServiceModel();
 
-	/** @reimp */
-	virtual int columnCount(const QModelIndex& parent = QModelIndex() ) const;
-	/** @reimp */
-	virtual int rowCount(const QModelIndex& parent = QModelIndex() ) const;
-	/** @reimp */
-	virtual QModelIndex parent(const QModelIndex& index ) const;
-	/** @reimp */
-	virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex() ) const;
-	/** @reimp */
-	virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole ) const;
-	/** @reimp */
-	virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-	/** @reimp */
-	virtual bool hasIndex(int row, int column, const QModelIndex &parent) const;
+    /** @reimp */
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    /** @reimp */
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    /** @reimp */
+    virtual QModelIndex parent(const QModelIndex &index) const;
+    /** @reimp */
+    virtual QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
+    /** @reimp */
+    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    /** @reimp */
+    virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    /** @reimp */
+    virtual bool hasIndex(int row, int column, const QModelIndex &parent) const;
 
 private:
-	ServiceModelPrivate* const d;
-	friend struct ServiceModelPrivate;
+    ServiceModelPrivate *const d;
+    friend struct ServiceModelPrivate;
 
 };
 

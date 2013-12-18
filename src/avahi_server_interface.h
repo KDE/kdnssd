@@ -35,7 +35,9 @@ class OrgFreedesktopAvahiServerInterface: public QDBusAbstractInterface
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "org.freedesktop.Avahi.Server"; }
+    {
+        return "org.freedesktop.Avahi.Server";
+    }
 
 public:
     OrgFreedesktopAvahiServerInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
@@ -235,18 +237,21 @@ Q_SIGNALS: // SIGNALS
     void StateChanged(int state, const QString &error);
 };
 
-
-namespace KDNSSD {
-    void registerTypes();
-    QString domainToDNS(const QString &domain);
-    QString DNSToDomain(const QString &domain);
+namespace KDNSSD
+{
+void registerTypes();
+QString domainToDNS(const QString &domain);
+QString DNSToDomain(const QString &domain);
 }
 
-namespace org {
-  namespace freedesktop {
-    namespace Avahi {
-      typedef ::OrgFreedesktopAvahiServerInterface Server;
-    }
-  }
+namespace org
+{
+namespace freedesktop
+{
+namespace Avahi
+{
+typedef ::OrgFreedesktopAvahiServerInterface Server;
+}
+}
 }
 #endif

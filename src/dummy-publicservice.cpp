@@ -25,55 +25,56 @@
 namespace KDNSSD
 {
 
-PublicService::PublicService(const QString& name, const QString& type, unsigned int port,
-			      const QString& domain, const QStringList&)
-  		: QObject(), ServiceBase(name, type, QString(), domain, port)
+PublicService::PublicService(const QString &name, const QString &type, unsigned int port,
+                             const QString &domain, const QStringList &)
+    : QObject(), ServiceBase(name, type, QString(), domain, port)
 {
-	if (domain.isNull())  d->m_domain=QLatin1String("local.");
+    if (domain.isNull()) {
+        d->m_domain = QLatin1String("local.");
+    }
 }
-
 
 PublicService::~PublicService()
 {}
 
-void PublicService::setServiceName(const QString& serviceName)
+void PublicService::setServiceName(const QString &serviceName)
 {
-	d->m_serviceName = serviceName;
+    d->m_serviceName = serviceName;
 }
 
-void PublicService::setDomain(const QString& domain)
+void PublicService::setDomain(const QString &domain)
 {
-	d->m_domain = domain;
+    d->m_domain = domain;
 }
 
-void PublicService::setTextData(const QMap<QString,QByteArray>& textData)
+void PublicService::setTextData(const QMap<QString, QByteArray> &textData)
 {
-	d->m_textData = textData;
+    d->m_textData = textData;
 }
 
-void PublicService::setType(const QString& type)
+void PublicService::setType(const QString &type)
 {
-	d->m_type = type;
+    d->m_type = type;
 }
 
-void PublicService::setSubTypes(const QStringList&)
+void PublicService::setSubTypes(const QStringList &)
 {
     // dummy and empty
 }
 
 void PublicService::setPort(unsigned short port)
 {
-	d->m_port = port;
+    d->m_port = port;
 }
 
 QStringList PublicService::subtypes() const
 {
-	return QStringList();
+    return QStringList();
 }
 
 bool PublicService::isPublished() const
 {
-	return false;
+    return false;
 }
 
 bool PublicService::publish()
@@ -86,10 +87,10 @@ void PublicService::stop()
 
 void PublicService::publishAsync()
 {
-	emit published(false);
+    emit published(false);
 }
 
-void PublicService::virtual_hook(int, void*)
+void PublicService::virtual_hook(int, void *)
 {
 }
 

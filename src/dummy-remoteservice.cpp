@@ -24,11 +24,10 @@
 namespace KDNSSD
 {
 
-RemoteService::RemoteService(const QString& name,const QString& type,const QString& domain)
-		: ServiceBase(name, type, domain)
+RemoteService::RemoteService(const QString &name, const QString &type, const QString &domain)
+    : ServiceBase(name, type, domain)
 {
 }
-
 
 RemoteService::~RemoteService()
 {
@@ -41,20 +40,18 @@ bool RemoteService::resolve()
 
 void RemoteService::resolveAsync()
 {
-	emit resolved(false);
+    emit resolved(false);
 }
 
 bool RemoteService::isResolved() const
 {
-	return false;
+    return false;
 }
 
-
-void RemoteService::virtual_hook(int, void*)
+void RemoteService::virtual_hook(int, void *)
 {
-	// BASE::virtual_hook(int, void*);
+    // BASE::virtual_hook(int, void*);
 }
-
 
 }
 

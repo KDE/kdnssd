@@ -27,13 +27,13 @@
 namespace KDNSSD
 {
 
-ServiceBase::ServiceBase(const QString& name, const QString& type, const QString& domain,
-			 const QString& host, unsigned short port) 
-    :  d(new ServiceBasePrivate(name,type,domain,host,port))
+ServiceBase::ServiceBase(const QString &name, const QString &type, const QString &domain,
+                         const QString &host, unsigned short port)
+    :  d(new ServiceBasePrivate(name, type, domain, host, port))
 {}
 
-ServiceBase::ServiceBase(ServiceBasePrivate* const _d) 
-:  d(_d)
+ServiceBase::ServiceBase(ServiceBasePrivate *const _d)
+    :  d(_d)
 {}
 
 ServiceBase::~ServiceBase()
@@ -65,28 +65,27 @@ unsigned short ServiceBase::port() const
 {
     return d->m_port;
 }
-QMap<QString,QByteArray> ServiceBase::textData() const
+QMap<QString, QByteArray> ServiceBase::textData() const
 {
     return d->m_textData;
 }
 
-bool ServiceBase::operator==(const ServiceBase& o) const
+bool ServiceBase::operator==(const ServiceBase &o) const
 {
-    return d->m_domain==o.d->m_domain && d->m_serviceName==o.d->m_serviceName && d->m_type==o.d->m_type;
+    return d->m_domain == o.d->m_domain && d->m_serviceName == o.d->m_serviceName && d->m_type == o.d->m_type;
 }
 
-bool ServiceBase::operator!=(const ServiceBase& o) const 
+bool ServiceBase::operator!=(const ServiceBase &o) const
 {
     return !(*this == o);
 }
 
-void ServiceBase::virtual_hook(int, void*)
+void ServiceBase::virtual_hook(int, void *)
 {}
 
-
-bool domainIsLocal(const QString& domain)
+bool domainIsLocal(const QString &domain)
 {
-	return domain.section('.',-1,-1).toLower()==QLatin1String("local");
+    return domain.section('.', -1, -1).toLower() == QLatin1String("local");
 }
 
 }

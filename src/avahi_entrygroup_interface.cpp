@@ -23,5 +23,4 @@ OrgFreedesktopAvahiEntryGroupInterface::~OrgFreedesktopAvahiEntryGroupInterface(
 {
 }
 
-
 #include "moc_avahi_entrygroup_interface.cpp"

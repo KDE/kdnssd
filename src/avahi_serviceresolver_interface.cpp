@@ -24,5 +24,4 @@ OrgFreedesktopAvahiServiceResolverInterface::~OrgFreedesktopAvahiServiceResolver
 {
 }
 
-
 #include "moc_avahi_serviceresolver_interface.cpp"

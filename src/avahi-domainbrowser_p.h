@@ -28,23 +28,28 @@
 namespace KDNSSD
 {
 
-class DomainBrowserPrivate : public QObject 
-{   
-Q_OBJECT
-public: 
-    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser* parent) : m_type(type), m_browser(0), m_parent(parent),m_started(false) {}
-    ~DomainBrowserPrivate() {  if (m_browser) m_browser->Free(); }
+class DomainBrowserPrivate : public QObject
+{
+    Q_OBJECT
+public:
+    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent) : m_type(type), m_browser(0), m_parent(parent), m_started(false) {}
+    ~DomainBrowserPrivate()
+    {
+        if (m_browser) {
+            m_browser->Free();
+        }
+    }
 
     DomainBrowser::DomainType m_type;
-    org::freedesktop::Avahi::DomainBrowser* m_browser;
-    DomainBrowser* m_parent;
+    org::freedesktop::Avahi::DomainBrowser *m_browser;
+    DomainBrowser *m_parent;
     bool m_started;
     QSet<QString> m_domains;
 public Q_SLOTS:
-    void gotNewDomain(int,int,const QString&, uint);
-    void gotRemoveDomain(int,int,const QString&, uint);
-    
-};		
+    void gotNewDomain(int, int, const QString &, uint);
+    void gotRemoveDomain(int, int, const QString &, uint);
+
+};
 
 }
 #endif

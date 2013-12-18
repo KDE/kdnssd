@@ -32,33 +32,38 @@ namespace KDNSSD
 
 class ServiceBrowserPrivate : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-	ServiceBrowserPrivate(ServiceBrowser* parent) : QObject(), m_running(false), m_browser(0), m_parent(parent)
-	{}
-        ~ServiceBrowserPrivate() {  if (m_browser) m_browser->Free(); delete m_browser;}
-	QList<RemoteService::Ptr> m_services;
-	QList<RemoteService::Ptr> m_duringResolve;
-	QString m_type;
-	QString m_domain;
-	QString m_subtype;
-	bool m_autoResolve;
-	bool m_running;
-	bool m_finished;
-	bool m_browserFinished;
-	QTimer m_timer;
-	org::freedesktop::Avahi::ServiceBrowser* m_browser;
-	ServiceBrowser* m_parent;
-	
-	// get already found service identical to s or null if not found
-	RemoteService::Ptr find(RemoteService::Ptr s, const QList<RemoteService::Ptr>& where) const;
+    ServiceBrowserPrivate(ServiceBrowser *parent) : QObject(), m_running(false), m_browser(0), m_parent(parent)
+    {}
+    ~ServiceBrowserPrivate()
+    {
+        if (m_browser) {
+            m_browser->Free();
+        } delete m_browser;
+    }
+    QList<RemoteService::Ptr> m_services;
+    QList<RemoteService::Ptr> m_duringResolve;
+    QString m_type;
+    QString m_domain;
+    QString m_subtype;
+    bool m_autoResolve;
+    bool m_running;
+    bool m_finished;
+    bool m_browserFinished;
+    QTimer m_timer;
+    org::freedesktop::Avahi::ServiceBrowser *m_browser;
+    ServiceBrowser *m_parent;
+
+    // get already found service identical to s or null if not found
+    RemoteService::Ptr find(RemoteService::Ptr s, const QList<RemoteService::Ptr> &where) const;
 
 private Q_SLOTS:
-	void browserFinished();
-	void queryFinished();
-	void serviceResolved(bool success);
-	void gotNewService(int,int,const QString&,const QString&,const QString&, uint);
-	void gotRemoveService(int,int,const QString&,const QString&,const QString&, uint);
+    void browserFinished();
+    void queryFinished();
+    void serviceResolved(bool success);
+    void gotNewService(int, int, const QString &, const QString &, const QString &, uint);
+    void gotRemoveService(int, int, const QString &, const QString &, const QString &, uint);
 };
 
 }

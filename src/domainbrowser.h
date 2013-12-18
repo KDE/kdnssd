@@ -53,91 +53,90 @@ class DomainBrowserPrivate;
  */
 class KDNSSD_EXPORT DomainBrowser : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	/**
-	 * A type of domain recommendation
-	 */
-	enum DomainType
-	{
-		/** Domains recommended for browsing for services on (using ServiceBrowser) */
-		Browsing,
-		/** Domains recommended for publishing to (using PublicService) */
-		Publishing
-	};
-	/**
-	 * Standard constructor
-	 *
-	 * The global DNS-SD configuration (for example, the global Avahi
-	 * configuration for the Avahi backend) will be used.
-	 *
-	 * @param type   the type of domain to search for
-	 * @param parent parent object (see QObject documentation)
-	 *
-	 * @see startBrowse() and ServiceBrowser::isAvailable()
-	 */
-	explicit DomainBrowser(DomainType type, QObject* parent = 0);
+    /**
+     * A type of domain recommendation
+     */
+    enum DomainType {
+        /** Domains recommended for browsing for services on (using ServiceBrowser) */
+        Browsing,
+        /** Domains recommended for publishing to (using PublicService) */
+        Publishing
+    };
+    /**
+     * Standard constructor
+     *
+     * The global DNS-SD configuration (for example, the global Avahi
+     * configuration for the Avahi backend) will be used.
+     *
+     * @param type   the type of domain to search for
+     * @param parent parent object (see QObject documentation)
+     *
+     * @see startBrowse() and ServiceBrowser::isAvailable()
+     */
+    explicit DomainBrowser(DomainType type, QObject *parent = 0);
 
-	~DomainBrowser();
+    ~DomainBrowser();
 
-	/**
-	 * The current known list of domains of the requested DomainType
-	 *
-	 * @return a list of currently known domain names
-	 */
-	QStringList domains() const;
+    /**
+     * The current known list of domains of the requested DomainType
+     *
+     * @return a list of currently known domain names
+     */
+    QStringList domains() const;
 
-	/**
-	 * Starts browsing
-	 *
-	 * Only the first call to this function will have any effect.
-	 *
-	 * Browsing stops when the DomainBrowser object is destroyed.
-	 *
-	 * @warning The domainAdded() signal may be emitted before this
-	 *          function returns.
-	 *
-	 * @see domainAdded() and domainRemoved()
-	 */
-	void startBrowse();
+    /**
+     * Starts browsing
+     *
+     * Only the first call to this function will have any effect.
+     *
+     * Browsing stops when the DomainBrowser object is destroyed.
+     *
+     * @warning The domainAdded() signal may be emitted before this
+     *          function returns.
+     *
+     * @see domainAdded() and domainRemoved()
+     */
+    void startBrowse();
 
-	/**
-	 * Whether the browsing has been started
-	 *
-	 * @return @c true if startBrowse() has been called, @c false otherwise
-	 */
-	bool isRunning() const;
+    /**
+     * Whether the browsing has been started
+     *
+     * @return @c true if startBrowse() has been called, @c false otherwise
+     */
+    bool isRunning() const;
 
 Q_SIGNALS:
-	/**
-	 * A domain has disappeared from the browsed list
-	 *
-	 * Emitted when domain has been removed from browsing list
-	 * or the publishing list (depending on which list was
-	 * requested in the constructor).
-	 *
-	 * @param domain the name of the domain
-	 *
-	 * @see domainAdded()
-	 */
-	void domainRemoved(const QString& domain);
+    /**
+     * A domain has disappeared from the browsed list
+     *
+     * Emitted when domain has been removed from browsing list
+     * or the publishing list (depending on which list was
+     * requested in the constructor).
+     *
+     * @param domain the name of the domain
+     *
+     * @see domainAdded()
+     */
+    void domainRemoved(const QString &domain);
 
-	/**
-	 * A new domain has been discovered
-	 *
-	 * If the requested DomainType is Browsing, this will
-	 * also be emitted for the domains specified in the
-	 * global configuration.
-	 *
-	 * @param domain the name of the domain
-	 *
-	 * @see domainRemoved()
-	 */
-	void domainAdded(const QString& domain);
+    /**
+     * A new domain has been discovered
+     *
+     * If the requested DomainType is Browsing, this will
+     * also be emitted for the domains specified in the
+     * global configuration.
+     *
+     * @param domain the name of the domain
+     *
+     * @see domainRemoved()
+     */
+    void domainAdded(const QString &domain);
 
 private:
-	friend class DomainBrowserPrivate;
-	DomainBrowserPrivate* const d;
+    friend class DomainBrowserPrivate;
+    DomainBrowserPrivate *const d;
 };
 
 }

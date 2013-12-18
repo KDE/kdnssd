@@ -26,7 +26,7 @@
 namespace KDNSSD
 {
 
-ServiceBrowser::ServiceBrowser(const QString&,bool,const QString&, const QString&) : d(0)
+ServiceBrowser::ServiceBrowser(const QString &, bool, const QString &, const QString &) : d(0)
 {}
 
 bool ServiceBrowser::isAutoResolving() const
@@ -34,10 +34,9 @@ bool ServiceBrowser::isAutoResolving() const
     return false;
 }
 
-
 ServiceBrowser::State ServiceBrowser::isAvailable()
 {
-	return Unsupported;
+    return Unsupported;
 }
 ServiceBrowser::~ ServiceBrowser()
 {
@@ -50,21 +49,21 @@ void ServiceBrowser::startBrowse()
 
 QList<RemoteService::Ptr> ServiceBrowser::services() const
 {
-	return QList<RemoteService::Ptr>();
+    return QList<RemoteService::Ptr>();
 }
 
-void ServiceBrowser::virtual_hook(int, void*)
+void ServiceBrowser::virtual_hook(int, void *)
 {}
 
 QHostAddress ServiceBrowser::resolveHostName(const QString &hostname)
 {
-	Q_UNUSED(hostname);
-	return QHostAddress();
+    Q_UNUSED(hostname);
+    return QHostAddress();
 }
 
 QString ServiceBrowser::getLocalHostName()
 {
-	return QString();
+    return QString();
 }
 
 }

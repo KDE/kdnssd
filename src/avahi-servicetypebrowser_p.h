@@ -29,25 +29,30 @@
 namespace KDNSSD
 {
 
-class ServiceTypeBrowserPrivate : public QObject 
-{   
-Q_OBJECT
-public: 
-    ServiceTypeBrowserPrivate(ServiceTypeBrowser* parent) : m_browser(0), m_parent(parent),m_started(false) {}
-    ~ServiceTypeBrowserPrivate() {  if (m_browser) m_browser->Free(); }
+class ServiceTypeBrowserPrivate : public QObject
+{
+    Q_OBJECT
+public:
+    ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent) : m_browser(0), m_parent(parent), m_started(false) {}
+    ~ServiceTypeBrowserPrivate()
+    {
+        if (m_browser) {
+            m_browser->Free();
+        }
+    }
 
-    org::freedesktop::Avahi::ServiceTypeBrowser* m_browser;
-    ServiceTypeBrowser* m_parent;
+    org::freedesktop::Avahi::ServiceTypeBrowser *m_browser;
+    ServiceTypeBrowser *m_parent;
     bool m_started;
     QStringList m_servicetypes;
     QString m_domain;
     QTimer m_timer;
 private Q_SLOTS:
-    void gotNewServiceType(int,int,const QString&, const QString&, uint);
-    void gotRemoveServiceType(int,int,const QString&, const QString&, uint);
+    void gotNewServiceType(int, int, const QString &, const QString &, uint);
+    void gotRemoveServiceType(int, int, const QString &, const QString &, uint);
     void finished();
-    
-};		
+
+};
 
 }
 #endif

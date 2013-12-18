@@ -30,7 +30,9 @@ class OrgFreedesktopAvahiServiceResolverInterface: public QDBusAbstractInterface
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "org.freedesktop.Avahi.ServiceResolver"; }
+    {
+        return "org.freedesktop.Avahi.ServiceResolver";
+    }
 
 public:
     OrgFreedesktopAvahiServiceResolverInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
@@ -49,11 +51,14 @@ Q_SIGNALS: // SIGNALS
     void Found(int interface, int protocol, const QString &name, const QString &type, const QString &domain, const QString &host, int aprotocol, const QString &address, ushort port, const QList<QByteArray> &txt, uint flags);
 };
 
-namespace org {
-  namespace freedesktop {
-    namespace Avahi {
-      typedef ::OrgFreedesktopAvahiServiceResolverInterface ServiceResolver;
-    }
-  }
+namespace org
+{
+namespace freedesktop
+{
+namespace Avahi
+{
+typedef ::OrgFreedesktopAvahiServiceResolverInterface ServiceResolver;
+}
+}
 }
 #endif

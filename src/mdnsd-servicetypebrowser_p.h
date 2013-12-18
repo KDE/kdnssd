@@ -31,12 +31,12 @@ namespace KDNSSD
 
 class ServiceTypeBrowserPrivate : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-	ServiceTypeBrowserPrivate(ServiceTypeBrowser* parent):  m_parent(parent) {}
-	ServiceTypeBrowser* m_parent;
-	ServiceBrowser* m_browser;
-	QStringList m_servicetypes;
+    ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent):  m_parent(parent) {}
+    ServiceTypeBrowser *m_parent;
+    ServiceBrowser *m_browser;
+    QStringList m_servicetypes;
 public Q_SLOTS:
     void newService(KDNSSD::RemoteService::Ptr);
     void removeService(KDNSSD::RemoteService::Ptr);

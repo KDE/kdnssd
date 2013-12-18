@@ -30,7 +30,6 @@ namespace KDNSSD
 struct DomainModelPrivate;
 class DomainBrowser;
 
-
 /**
  * @class DomainModel domainmodel.h KDNSSD/DomainModel
  * @short Model for list of Zeroconf domains
@@ -52,43 +51,43 @@ class DomainBrowser;
 
 class KDNSSD_EXPORT DomainModel : public QAbstractItemModel
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/**
-	 * Creates a model for given domain browser and starts
-	 * browsing for domains.
-	 *
-	 * The model takes ownership of the browser,
-	 * so there is no need to delete it afterwards.
-	 *
-	 * You should @b not call DomainBrowser::startBrowse() on @p browser
-	 * before passing it to DomainModel.
-	 *
-	 * @param browser the domain browser that will provide the domains
-	 *                to be listed by the model
-	 * @param parent  the parent object (see QObject documentation)
-	 */
-	explicit DomainModel(DomainBrowser* browser, QObject* parent = 0);
+    /**
+     * Creates a model for given domain browser and starts
+     * browsing for domains.
+     *
+     * The model takes ownership of the browser,
+     * so there is no need to delete it afterwards.
+     *
+     * You should @b not call DomainBrowser::startBrowse() on @p browser
+     * before passing it to DomainModel.
+     *
+     * @param browser the domain browser that will provide the domains
+     *                to be listed by the model
+     * @param parent  the parent object (see QObject documentation)
+     */
+    explicit DomainModel(DomainBrowser *browser, QObject *parent = 0);
 
-	virtual ~DomainModel();
+    virtual ~DomainModel();
 
-	/** @reimp */
-	virtual int columnCount(const QModelIndex& parent = QModelIndex() ) const;
-	/** @reimp */
-	virtual int rowCount(const QModelIndex& parent = QModelIndex() ) const;
-	/** @reimp */
-	virtual QModelIndex parent(const QModelIndex& index ) const;
-	/** @reimp */
-	virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex() ) const;
-	/** @reimp */
-	virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole ) const;
-	/** @reimp */
-	virtual bool hasIndex(int row, int column, const QModelIndex &parent) const;
+    /** @reimp */
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    /** @reimp */
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    /** @reimp */
+    virtual QModelIndex parent(const QModelIndex &index) const;
+    /** @reimp */
+    virtual QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
+    /** @reimp */
+    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    /** @reimp */
+    virtual bool hasIndex(int row, int column, const QModelIndex &parent) const;
 
 private:
-	DomainModelPrivate* const d;
-	friend struct DomainModelPrivate;
+    DomainModelPrivate *const d;
+    friend struct DomainModelPrivate;
 
 };
 
