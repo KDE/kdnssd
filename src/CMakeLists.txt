@@ -1,22 +1,18 @@
 set(kdnssd_LIB_SRCS  servicebase.cpp servicemodel.cpp domainmodel.cpp)
 
-set(kdnssd_HEADERS
-    domainbrowser.h
-    remoteservice.h
-    servicetypebrowser.h
-    publicservice.h
-    servicebase.h
-    servicebrowser.h
-    servicemodel.h
-    domainmodel.h
-)
+ecm_generate_headers(
+  DomainBrowser
+  RemoteService
+  ServiceTypeBrowser
+  PublicService
+  ServiceBase
+  ServiceBrowser
+  ServiceModel
+  DomainModel
 
-foreach(_KDNSSD_HEADER ${kdnssd_HEADERS})
-    set(HEADER_NAME ${KDNSSD_BINARY_DIR}/kdnssd/${_KDNSSD_HEADER})
-    if (NOT EXISTS ${HEADER_NAME})
-        file(WRITE ${HEADER_NAME} "#include \"${CMAKE_CURRENT_SOURCE_DIR}/${_KDNSSD_HEADER}\"\n")
-    endif()
-endforeach()
+  MODULE_NAME KDNSSD
+  REQUIRED_HEADERS kdnssd_HEADERS
+)
 
 if (AVAHI_FOUND)
     include_directories( ${AVAHI_INCLUDE_DIR} )
@@ -56,10 +52,12 @@ else ()
 endif ()
 
 add_library(KF5DNSSD SHARED ${kdnssd_LIB_SRCS})
-generate_export_header(KF5DNSSD
-  BASE_NAME KDNSSD
+generate_export_header(KF5DNSSD BASE_NAME KDNSSD
   EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/kdnssd/kdnssd_export.h
 )
+
+# Apps must include <KDNSSD/File> or <kdnssd/file.h>
+target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}>")
 
 target_link_libraries(KF5DNSSD PUBLIC Qt5::Network)
 target_link_libraries(KF5DNSSD PRIVATE Qt5::DBus)
@@ -77,12 +75,17 @@ set_target_properties(KF5DNSSD PROPERTIES
    SOVERSION "${KDNSSD_SOVERSION}"
    EXPORT_NAME DNSSD
 )
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KDNSSD DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+
 install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
-install( FILES  ${KDNSSD_BINARY_DIR}/kdnssd/kdnssd_export.h
-                ${kdnssd_HEADERS}
-         DESTINATION  ${INCLUDE_INSTALL_DIR}/kdnssd COMPONENT Devel)
+install(FILES
+  ${KDNSSD_BINARY_DIR}/kdnssd/kdnssd_export.h
+  ${kdnssd_HEADERS}
+  DESTINATION  ${INCLUDE_INSTALL_DIR}/kdnssd COMPONENT Devel
+)
 
 if (DNSSD_FOUND)
     install( FILES ${CMAKE_CURRENT_BINARY_DIR}/settings.h

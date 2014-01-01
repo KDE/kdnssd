@@ -20,6 +20,7 @@ remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 
 include(FeatureSummary)
 include(ECMSetupVersion)
+include(ECMGenerateHeaders)
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDNSSD
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
