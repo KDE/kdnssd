@@ -22,7 +22,7 @@
 #define KDNSSDSERVICETYPEBROWSER_H
 
 #include <QtCore/QObject>
-#include <kdnssd/remoteservice.h>
+#include <dnssd/remoteservice.h>
 
 class QStringList;
 namespace KDNSSD

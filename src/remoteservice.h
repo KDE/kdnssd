@@ -23,7 +23,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QMetaType>
-#include <kdnssd/servicebase.h>
+#include <dnssd/servicebase.h>
 
 namespace KDNSSD
 {

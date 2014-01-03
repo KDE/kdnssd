@@ -22,7 +22,7 @@
 #define KDNSSDPUBLICSERVICE_H
 
 #include <QtCore/QObject>
-#include <kdnssd/servicebase.h>
+#include <dnssd/servicebase.h>
 #include <QtCore/QStringList>
 
 namespace KDNSSD

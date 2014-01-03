@@ -24,7 +24,7 @@
 #include <QtCore/QObject>
 #include <QtNetwork/QHostAddress>
 
-#include <kdnssd/remoteservice.h>
+#include <dnssd/remoteservice.h>
 
 namespace KDNSSD
 {

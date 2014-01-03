@@ -22,7 +22,7 @@
 #define KDNSSDDOMAINMODEL_H
 
 #include <QtCore/QAbstractItemModel>
-#include <kdnssd/kdnssd_export.h>
+#include <dnssd/kdnssd_export.h>
 
 namespace KDNSSD
 {
