@@ -61,7 +61,10 @@ generate_export_header(KF5DNSSD BASE_NAME KDNSSD
 target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KDNSSD>")
 
 target_link_libraries(KF5DNSSD PUBLIC Qt5::Network)
-target_link_libraries(KF5DNSSD PRIVATE Qt5::DBus)
+
+if (AVAHI_FOUND OR DNSSD_FOUND)
+    target_link_libraries(KF5DNSSD PRIVATE Qt5::DBus)
+endif ()
 
 if (DNSSD_FOUND)
   target_link_libraries(KF5DNSSD PRIVATE ${DNSSD_LIBRARIES}

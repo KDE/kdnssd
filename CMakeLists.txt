@@ -38,7 +38,6 @@ set_package_properties(Avahi PROPERTIES DESCRIPTION "Facilities for service disc
                        TYPE OPTIONAL
                        PURPOSE "Either Avahi or DNSSD is required for KDE applications to make use of multicast DNS/DNS-SD service discovery"
                       )
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
 
 if(NOT AVAHI_FOUND)
     find_package(DNSSD)
@@ -48,12 +47,14 @@ if(NOT AVAHI_FOUND)
                           PURPOSE "Either Avahi or DNSSD is required for KDE applications to make use of multicast DNS/DNS-SD service discovery"
                           )
 
-    # If using DNSSD and building standalone, we also need KConfig
-    if("${CMAKE_BINARY_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
-        find_package(KF5Config ${KF5_VERSION} REQUIRED)
+    if(DNSSD_FOUND)
+            find_package(KF5Config ${KF5_VERSION} REQUIRED)
     endif()
 endif()
 
+if(AVAHI_FOUND OR DNSSD_FOUND)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
+endif()
 
 add_subdirectory(src)
 
