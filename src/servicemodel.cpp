@@ -87,7 +87,7 @@ QVariant ServiceModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     const QList<RemoteService::Ptr> srv = d->m_browser->services();
-    switch (role) {
+    switch ((uint)role) {
     case Qt::DisplayRole:
         switch (index.column()) {
         case ServiceName: return srv[index.row()]->serviceName();
