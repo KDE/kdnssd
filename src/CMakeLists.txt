@@ -1,20 +1,5 @@
 set(kdnssd_LIB_SRCS  servicebase.cpp servicemodel.cpp domainmodel.cpp)
 
-ecm_generate_headers(
-  DomainBrowser
-  RemoteService
-  ServiceTypeBrowser
-  PublicService
-  ServiceBase
-  ServiceBrowser
-  ServiceModel
-  DomainModel
-
-  MODULE_NAME KDNSSD
-  PREFIX DNSSD
-  REQUIRED_HEADERS kdnssd_HEADERS
-)
-
 if (AVAHI_FOUND)
     include_directories( ${AVAHI_INCLUDE_DIR} )
     set(kdnssd_LIB_SRCS ${kdnssd_LIB_SRCS}
@@ -57,7 +42,7 @@ generate_export_header(KF5DNSSD BASE_NAME KDNSSD
   EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
 )
 
-# Apps must include <KDNSSD/File> or <dnssd/file.h>
+# Apps must include <DNSSD/File> or <dnssd/file.h>
 target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KDNSSD>")
 
 target_link_libraries(KF5DNSSD PUBLIC Qt5::Network)
@@ -80,7 +65,22 @@ set_target_properties(KF5DNSSD PROPERTIES
    EXPORT_NAME DNSSD
 )
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KDNSSD DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+ecm_generate_headers(KDNSSD_CamelCase_HEADERS
+  HEADER_NAMES
+  DomainBrowser
+  RemoteService
+  ServiceTypeBrowser
+  PublicService
+  ServiceBase
+  ServiceBrowser
+  ServiceModel
+  DomainModel
+
+  PREFIX DNSSD
+  REQUIRED_HEADERS kdnssd_HEADERS
+)
+
+install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/KDNSSD/DNSSD COMPONENT Devel)
 
 install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
