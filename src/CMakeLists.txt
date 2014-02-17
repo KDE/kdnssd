@@ -57,7 +57,7 @@ if (DNSSD_FOUND)
                        )
 endif ()
 
-target_include_directories(KF5DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BINARY_DIR}>" "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/KDNSSD>")
+target_include_directories(KF5DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BINARY_DIR}>")
 
 set_target_properties(KF5DNSSD PROPERTIES
    VERSION "${KDNSSD_VERSION_STRING}"
