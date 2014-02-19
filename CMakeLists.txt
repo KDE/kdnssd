@@ -22,6 +22,7 @@ include(FeatureSummary)
 include(GenerateExportHeader)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMPackageConfigHelpers)
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDNSSD
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
