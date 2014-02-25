@@ -25,8 +25,9 @@ include(ECMGenerateHeaders)
 include(ECMPackageConfigHelpers)
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDNSSD
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfigVersion.cmake")
+         SOVERSION 5               VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfigVersion.cmake"
+                        SOVERSION 5)
 
 configure_file(config-kdnssd.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdnssd.h )
 
@@ -51,7 +52,8 @@ if(NOT AVAHI_FOUND)
     if(DNSSD_FOUND)
             find_package(KF5Config ${KF5_VERSION} REQUIRED)
     endif()
-endif()
+endif(
+                        )
 
 if(AVAHI_FOUND OR DNSSD_FOUND)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
