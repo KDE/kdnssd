@@ -2,14 +2,14 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(KDNSSD)
 
-find_package(ECM 0.0.10 REQUIRED NO_MODULE)
+find_package(ECM 0.0.11 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_SOURCE_DIR}/cmake/modules) #TODO: remove cmake/modules when extra-cmake-modules is done
 
 include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 
-set(KF5_VERSION "4.96.0")
+set(KF5_VERSION "4.97.0")
 
 set(REQUIRED_QT_VERSION "5.2.0")
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
