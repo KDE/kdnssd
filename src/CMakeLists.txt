@@ -1,4 +1,9 @@
-set(kdnssd_LIB_SRCS  servicebase.cpp servicemodel.cpp domainmodel.cpp)
+set(kdnssd_LIB_SRCS
+    servicebase.cpp
+    servicemodel.cpp
+    domainmodel.cpp
+    ${kdnssd_QM_LOADER}
+)
 
 if (AVAHI_FOUND)
     include_directories( ${AVAHI_INCLUDE_DIR} )
