@@ -1,3 +1,5 @@
+ecm_create_qm_loader(kdnssd_QM_LOADER kdnssd5)
+
 set(kdnssd_LIB_SRCS
     servicebase.cpp
     servicemodel.cpp
