@@ -23,7 +23,6 @@ if (AVAHI_FOUND)
     qt5_add_dbus_interface (kdnssd_LIB_SRCS org.freedesktop.Avahi.ServiceBrowser.xml avahi_servicebrowser_interface )
     qt5_add_dbus_interface (kdnssd_LIB_SRCS org.freedesktop.Avahi.ServiceTypeBrowser.xml avahi_servicetypebrowser_interface )
 elseif (DNSSD_FOUND)
-    kconfig_add_kcfg_files(kdnssd_LIB_SRCS settings.kcfgc)
     include_directories( ${DNSSD_INCLUDE_DIR} )
     set(kdnssd_LIB_SRCS ${kdnssd_LIB_SRCS}
         mdnsd-domainbrowser.cpp
@@ -59,9 +58,7 @@ if (AVAHI_FOUND OR DNSSD_FOUND)
 endif ()
 
 if (DNSSD_FOUND)
-  target_link_libraries(KF5DNSSD PRIVATE ${DNSSD_LIBRARIES}
-                                            KF5::ConfigCore # settings.kcfgc
-                       )
+  target_link_libraries(KF5DNSSD PRIVATE ${DNSSD_LIBRARIES})
 endif ()
 
 target_include_directories(KF5DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BINARY_DIR}>")

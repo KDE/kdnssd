@@ -1,8 +1,1 @@
-tier: 2
-
-# KDNSSD can use either Avahi or DNSSD. If it is compiled with DNSSD, it
-# requires kconfig. This might not be detected when diagrams are generated
-# if the system generating the diagrams have Avahi installed, that is why
-# we hardcode the kconfig dependency here
-framework-dependencies:
-    - kconfig
+tier: 1

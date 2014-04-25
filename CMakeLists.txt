@@ -50,10 +50,6 @@ if(NOT AVAHI_FOUND)
                           TYPE OPTIONAL
                           PURPOSE "Either Avahi or DNSSD is required for KDE applications to make use of multicast DNS/DNS-SD service discovery"
                           )
-
-    if(DNSSD_FOUND)
-            find_package(KF5Config ${KF5_VERSION} REQUIRED)
-    endif()
 endif(
                         )
 

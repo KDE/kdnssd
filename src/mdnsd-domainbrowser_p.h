@@ -37,9 +37,6 @@ public:
     DomainBrowser *m_parent;
     QStringList m_domains;
     virtual void customEvent(QEvent *event);
-public Q_SLOTS:
-    void domainListChanged();
-
 };
 
 }

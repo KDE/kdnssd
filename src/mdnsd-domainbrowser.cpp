@@ -20,7 +20,6 @@
 
 #include "mdnsd-domainbrowser_p.h"
 #include "domainbrowser.h"
-#include "settings.h"
 #include "remoteservice.h"
 #include "mdnsd-responder.h"
 #include "mdnsd-sdevent.h"
@@ -28,7 +27,6 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QHash>
 #include <QtCore/QStringList>
-#include <QDBusConnection>
 
 namespace KDNSSD
 {
@@ -37,13 +35,6 @@ void domain_callback(DNSServiceRef, DNSServiceFlags flags, uint32_t, DNSServiceE
 
 DomainBrowser::DomainBrowser(DomainType type, QObject *parent) : QObject(parent), d(new DomainBrowserPrivate(type, this))
 {
-    d->m_domains = Configuration::domainList();
-
-    // Those same names have to be used in the kcontrol module too.
-    const QString dbusPath = "/libkdnssd";
-    const QString dbusInterface = "org.kde.KDNSSD.DomainBrowser";
-    QDBusConnection dbus = QDBusConnection::sessionBus();
-    dbus.connect(QString(), dbusPath, dbusInterface, "domainListChanged", this, SLOT(domainListChanged()));
 }
 
 DomainBrowser::~DomainBrowser()
@@ -53,10 +44,6 @@ DomainBrowser::~DomainBrowser()
 
 void DomainBrowser::startBrowse()
 {
-    QStringList::const_iterator itEnd = d->m_domains.cend();
-    for (QStringList::const_iterator it = d->m_domains.cbegin(); it != itEnd; ++it) {
-        emit domainAdded(*it);
-    }
     if (d->isRunning()) {
         return;
     }
@@ -85,26 +72,6 @@ void DomainBrowserPrivate::customEvent(QEvent *event)
             m_domains.removeAll(aev->m_domain);
             emit m_parent->domainRemoved(aev->m_domain);
         }
-    }
-}
-
-void DomainBrowserPrivate::domainListChanged()
-{
-    bool was_running = m_running;
-    m_running = false;
-    if (was_running) {
-        QStringList::const_iterator itEnd = m_domains.cend();
-        for (QStringList::const_iterator it = m_domains.cbegin(); it != itEnd; ++it) {
-            emit m_parent->domainRemoved(*it);
-        }
-    }
-    m_domains.clear();
-    // now reread configuration and add domains
-    Configuration::self()->readConfig();
-    m_domains = Configuration::domainList();
-    // this will emit domainAdded() for every domain if necessary
-    if (was_running) {
-        m_parent->startBrowse();
     }
 }
 
