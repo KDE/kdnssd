@@ -11,7 +11,7 @@ include(KDECMakeSettings)
 
 include(ECMCreateQmFromPoFiles)
 
-set(KF5_VERSION "4.98.0")
+set(KF5_VERSION "4.98.0") # handled by release scripts # handled by release scripts
 
 set(REQUIRED_QT_VERSION "5.2.0")
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
