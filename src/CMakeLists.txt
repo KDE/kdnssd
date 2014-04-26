@@ -49,7 +49,7 @@ generate_export_header(KF5DNSSD BASE_NAME KDNSSD
 )
 
 # Apps must include <DNSSD/File> or <dnssd/file.h>
-target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KDNSSD>")
+target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KDNSSD>")
 
 target_link_libraries(KF5DNSSD PUBLIC Qt5::Network)
 
@@ -84,20 +84,20 @@ ecm_generate_headers(KDNSSD_CamelCase_HEADERS
   REQUIRED_HEADERS kdnssd_HEADERS
 )
 
-install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/KDNSSD/DNSSD COMPONENT Devel)
+install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KDNSSD/DNSSD COMPONENT Devel)
 
-install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 install(FILES
   ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
   ${kdnssd_HEADERS}
-  DESTINATION  ${INCLUDE_INSTALL_DIR}/KDNSSD/dnssd COMPONENT Devel
+  DESTINATION  ${KF5_INCLUDE_INSTALL_DIR}/KDNSSD/dnssd COMPONENT Devel
 )
 
 if (DNSSD_FOUND)
     install( FILES ${CMAKE_CURRENT_BINARY_DIR}/settings.h
-             DESTINATION  ${INCLUDE_INSTALL_DIR}/KDNSSD/dnssd COMPONENT Devel)
+             DESTINATION  ${KF5_INCLUDE_INSTALL_DIR}/KDNSSD/dnssd COMPONENT Devel)
 endif ()
 
 include(ECMGeneratePriFile)
