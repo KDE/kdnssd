@@ -1,1 +1,9 @@
-tier: 1
+maintainer: mdawson
+description: Abstraction to system DNSSD features
+tier: 2
+type: integration
+platforms:
+    - name: All
+portingAid: false
+deprecated: false
+release: true
