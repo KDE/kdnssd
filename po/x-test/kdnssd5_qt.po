@@ -1,0 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdnssd5_qt\n"
+"PO-Revision-Date: 2014-04-28 09:02+0000\n"
+"Last-Translator: transxx.py program <null@kde.org>\n"
+"Language-Team: KDE Test Language <kde-i18n-doc@kde.org>\n"
+"Language: x-test\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdnssd/src/servicemodel.cpp:110
+msgctxt "KDNSSD::ServiceModel|"
+msgid "Name"
+msgstr "xxNamexx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdnssd/src/servicemodel.cpp:111
+msgctxt "KDNSSD::ServiceModel|"
+msgid "Host"
+msgstr "xxHostxx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdnssd/src/servicemodel.cpp:112
+msgctxt "KDNSSD::ServiceModel|"
+msgid "Port"
+msgstr "xxPortxx"
