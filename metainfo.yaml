@@ -1,6 +1,6 @@
 maintainer: mdawson
 description: Abstraction to system DNSSD features
-tier: 2
+tier: 1
 type: integration
 platforms:
     - name: All
