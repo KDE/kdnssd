@@ -48,14 +48,6 @@ void ServiceTypeBrowser::startBrowse()
     d->m_browser->startBrowse();
 }
 
-//@todo: remove on Monday
-#ifndef KDE_NO_DEPRECATED
-bool ServiceTypeBrowser::isRunning() const
-{
-    return false;
-}
-#endif
-
 void ServiceTypeBrowserPrivate::newService(KDNSSD::RemoteService::Ptr srv)
 {
     QString type = srv->serviceName() + '.' + srv->type();

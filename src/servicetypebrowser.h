@@ -89,13 +89,16 @@ public:
      */
     void startBrowse();
 
+#ifndef KDNSSD_NO_DEPRECATED
     /**
-     * @deprecated
      * This method is unnecessary, since it is safe to call startBrowse()
      * multiple times.
+     * @deprecated since 4.0, just call startBrowse() again.
      */
-#ifndef KDE_NO_DEPRECATED
-    KDNSSD_DEPRECATED bool isRunning() const;
+    KDNSSD_DEPRECATED bool isRunning() const
+    {
+        return false;
+    }
 #endif
 
 Q_SIGNALS:
