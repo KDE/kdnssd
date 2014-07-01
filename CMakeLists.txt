@@ -33,7 +33,6 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDNSSD
 
 configure_file(config-kdnssd.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdnssd.h )
 
-remove_definitions(-DQT_NO_CAST_TO_ASCII)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 find_package(Avahi)
