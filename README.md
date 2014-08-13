@@ -42,9 +42,3 @@ documentation][appledocs] for Apple's implementation of Zeroconf,
 [appledocs]: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/NetServices/Articles/about.html
 
 
-## Links
-
-- Home page: <https://projects.kde.org/projects/frameworks/kdnssd-frameworks>
-- Mailing list: <https://mail.kde.org/mailman/listinfo/kde-frameworks-devel>
-- IRC channel: #kde-devel on Freenode
-- Git repository: <https://projects.kde.org/projects/frameworks/kdnssd-framework/repository>
