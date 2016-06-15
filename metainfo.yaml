@@ -3,7 +3,9 @@ description: Abstraction to system DNSSD features
 tier: 1
 type: integration
 platforms:
-    - name: All
+    - name: Linux
+    - name: Windows
+    - name: MacOSX
 portingAid: false
 deprecated: false
 release: true
