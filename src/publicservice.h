@@ -227,7 +227,7 @@ private:
     friend class PublicServicePrivate;
 
 protected:
-    virtual void virtual_hook(int, void *);
+    void virtual_hook(int, void *) Q_DECL_OVERRIDE;
 };
 
 }
