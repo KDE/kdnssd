@@ -1,5 +1,6 @@
 @PACKAGE_INIT@
 
+include(CMakeFindDependencyMacro)
 find_dependency(Qt5Network @REQUIRED_QT_VERSION@)
 
 
