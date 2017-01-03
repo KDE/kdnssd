@@ -28,7 +28,7 @@ remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 include(GenerateExportHeader)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
-include(ECMPackageConfigHelpers)
+include(CMakePackageConfigHelpers)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDNSSD
          SOVERSION 5               VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
@@ -67,7 +67,7 @@ endif()
 add_subdirectory(src)
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5DNSSD")
-ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5DNSSDConfig.cmake.in"
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5DNSSDConfig.cmake.in"
                               "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfig.cmake"
                               INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
                               )
