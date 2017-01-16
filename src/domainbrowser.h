@@ -75,7 +75,7 @@ public:
      *
      * @see startBrowse() and ServiceBrowser::isAvailable()
      */
-    explicit DomainBrowser(DomainType type, QObject *parent = 0);
+    explicit DomainBrowser(DomainType type, QObject *parent = nullptr);
 
     ~DomainBrowser();
 

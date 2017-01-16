@@ -33,7 +33,7 @@ class ServiceTypeBrowserPrivate : public QObject
 {
     Q_OBJECT
 public:
-    ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent) : m_browser(0), m_parent(parent), m_started(false) {}
+    ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent) : m_browser(nullptr), m_parent(parent), m_started(false) {}
     ~ServiceTypeBrowserPrivate()
     {
         if (m_browser) {

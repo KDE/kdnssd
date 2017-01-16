@@ -38,7 +38,7 @@ class RemoteServicePrivate : public QObject, public ServiceBasePrivate
     Q_OBJECT
 public:
     RemoteServicePrivate(RemoteService *parent, const QString &name, const QString &type, const QString &domain) : QObject(),
-        ServiceBasePrivate(name, type, domain, QString(), 0), m_resolved(false), m_running(false), m_resolver(0), m_parent(parent)
+        ServiceBasePrivate(name, type, domain, QString(), 0), m_resolved(false), m_running(false), m_resolver(nullptr), m_parent(parent)
     {}
     ~RemoteServicePrivate()
     {

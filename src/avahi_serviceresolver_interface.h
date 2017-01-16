@@ -35,7 +35,7 @@ public:
     }
 
 public:
-    OrgFreedesktopAvahiServiceResolverInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
+    OrgFreedesktopAvahiServiceResolverInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
 
     ~OrgFreedesktopAvahiServiceResolverInterface();
 

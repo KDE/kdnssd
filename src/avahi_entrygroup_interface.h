@@ -35,7 +35,7 @@ public:
     }
 
 public:
-    OrgFreedesktopAvahiEntryGroupInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
+    OrgFreedesktopAvahiEntryGroupInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
 
     ~OrgFreedesktopAvahiEntryGroupInterface();
 

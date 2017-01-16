@@ -113,7 +113,7 @@ void RemoteServicePrivate::stop()
         m_resolver->Free();
     }
     delete m_resolver;
-    m_resolver = 0;
+    m_resolver = nullptr;
     m_running = false;
 }
 

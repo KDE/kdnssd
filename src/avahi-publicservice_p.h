@@ -38,8 +38,8 @@ class PublicServicePrivate : public QObject, public ServiceBasePrivate
     Q_OBJECT
 public:
     PublicServicePrivate(PublicService *parent, const QString &name, const QString &type, const QString &domain, unsigned int port) :
-        QObject(), ServiceBasePrivate(name, type, domain, QString(), port), m_published(false), m_running(false), m_group(0),
-        m_server(0), m_collision(false), m_parent(parent)
+        QObject(), ServiceBasePrivate(name, type, domain, QString(), port), m_published(false), m_running(false), m_group(nullptr),
+        m_server(nullptr), m_collision(false), m_parent(parent)
     {}
     ~PublicServicePrivate()
     {

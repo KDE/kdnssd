@@ -68,7 +68,7 @@ public:
      *                to be listed by the model
      * @param parent  the parent object (see QObject documentation)
      */
-    explicit DomainModel(DomainBrowser *browser, QObject *parent = 0);
+    explicit DomainModel(DomainBrowser *browser, QObject *parent = nullptr);
 
     virtual ~DomainModel();
 

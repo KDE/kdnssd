@@ -95,7 +95,7 @@ public:
      * You should @b not call ServiceBrowser::startBrowse() on @p browser
      * before passing it to ServiceModel.
      */
-    explicit ServiceModel(ServiceBrowser *browser, QObject *parent = 0);
+    explicit ServiceModel(ServiceBrowser *browser, QObject *parent = nullptr);
 
     virtual ~ServiceModel();
 

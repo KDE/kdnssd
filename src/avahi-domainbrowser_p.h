@@ -32,7 +32,7 @@ class DomainBrowserPrivate : public QObject
 {
     Q_OBJECT
 public:
-    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent) : m_type(type), m_browser(0), m_parent(parent), m_started(false) {}
+    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent) : m_type(type), m_browser(nullptr), m_parent(parent), m_started(false) {}
     ~DomainBrowserPrivate()
     {
         if (m_browser) {
