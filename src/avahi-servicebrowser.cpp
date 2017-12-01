@@ -40,7 +40,7 @@ ServiceBrowser::ServiceBrowser(const QString &type, bool autoResolve, const QStr
 
 ServiceBrowser::State ServiceBrowser::isAvailable()
 {
-    org::freedesktop::Avahi::Server s("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
+    org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
     QDBusReply<int> rep = s.GetState();
     return (rep.isValid() && rep.value() == 2) ? Working : Stopped;
 }
@@ -59,10 +59,10 @@ void ServiceBrowser::startBrowse()
     if (d->m_running) {
         return;
     }
-    org::freedesktop::Avahi::Server s("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
+    org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
     QString fullType = d->m_type;
     if (!d->m_subtype.isEmpty()) {
-        fullType = d->m_subtype + "._sub." + d->m_type;
+        fullType = d->m_subtype + QStringLiteral("._sub.") + d->m_type;
     }
     QDBusReply<QDBusObjectPath> rep = s.ServiceBrowserNew(-1, -1, fullType, domainToDNS(d->m_domain), 0);
 
@@ -72,7 +72,7 @@ void ServiceBrowser::startBrowse()
     }
     d->m_running = true;
     d->m_browserFinished = true;
-    org::freedesktop::Avahi::ServiceBrowser *b = new org::freedesktop::Avahi::ServiceBrowser("org.freedesktop.Avahi", rep.value().path(),
+    org::freedesktop::Avahi::ServiceBrowser *b = new org::freedesktop::Avahi::ServiceBrowser(QStringLiteral("org.freedesktop.Avahi"), rep.value().path(),
             QDBusConnection::systemBus());
     connect(b, SIGNAL(ItemNew(int,int,QString,QString,QString,uint)), d,
             SLOT(gotNewService(int,int,QString,QString,QString,uint)));
@@ -167,7 +167,7 @@ void ServiceBrowser::virtual_hook(int, void *)
 
 QHostAddress ServiceBrowser::resolveHostName(const QString &hostname)
 {
-    org::freedesktop::Avahi::Server s("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
+    org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
 
     int protocol = 0;
     QString name;
@@ -186,7 +186,7 @@ QHostAddress ServiceBrowser::resolveHostName(const QString &hostname)
 
 QString ServiceBrowser::getLocalHostName()
 {
-    org::freedesktop::Avahi::Server s("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
+    org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
 
     QDBusReply<QString> reply = s.GetHostName();
 

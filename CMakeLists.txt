@@ -54,8 +54,7 @@ if(NOT AVAHI_FOUND)
                           TYPE OPTIONAL
                           PURPOSE "Either Avahi or DNSSD is required for KDE applications to make use of multicast DNS/DNS-SD service discovery"
                           )
-endif(
-                        )
+endif( )
 
 if(AVAHI_FOUND OR DNSSD_FOUND)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
@@ -64,6 +63,8 @@ endif()
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ecm_install_po_files_as_qm(po)
 endif()
+
+remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 add_subdirectory(src)
 

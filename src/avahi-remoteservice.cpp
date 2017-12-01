@@ -57,7 +57,7 @@ void RemoteService::resolveAsync()
     d->m_resolved = false;
     registerTypes();
     //qDebug() << this << ":Starting resolve of : " << d->m_serviceName << " " << d->m_type << " " << d->m_domain << "\n";
-    org::freedesktop::Avahi::Server s("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
+    org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
     //FIXME: don't use LOOKUP_NO_ADDRESS if NSS unavailable
     QDBusReply<QDBusObjectPath> rep = s.ServiceResolverNew(-1, -1, d->m_serviceName, d->m_type,
                                       domainToDNS(d->m_domain), -1, 8 /*AVAHI_LOOKUP_NO_ADDRESS*/);

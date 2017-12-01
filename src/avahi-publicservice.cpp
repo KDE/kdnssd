@@ -241,7 +241,7 @@ void PublicService::publishAsync()
     }
 
     if (!d->m_server) {
-        d->m_server = new org::freedesktop::Avahi::Server("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
+        d->m_server = new org::freedesktop::Avahi::Server(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
         connect(d->m_server, SIGNAL(StateChanged(int,QString)), d, SLOT(serverStateChanged(int,QString)));
     }
 

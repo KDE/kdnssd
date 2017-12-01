@@ -45,29 +45,29 @@ void DomainBrowser::startBrowse()
         return;
     }
     d->m_started = true;
-    org::freedesktop::Avahi::Server s("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
-    QDBusReply<QDBusObjectPath> rep = s.DomainBrowserNew(-1, -1, "", (d->m_type == Browsing) ?
+    org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
+    QDBusReply<QDBusObjectPath> rep = s.DomainBrowserNew(-1, -1, QString(), (d->m_type == Browsing) ?
                                       AVAHI_DOMAIN_BROWSER_BROWSE : AVAHI_DOMAIN_BROWSER_REGISTER, 0);
 
     if (!rep.isValid()) {
         return;
     }
-    org::freedesktop::Avahi::DomainBrowser *b = new org::freedesktop::Avahi::DomainBrowser("org.freedesktop.Avahi", rep.value().path(),
+    org::freedesktop::Avahi::DomainBrowser *b = new org::freedesktop::Avahi::DomainBrowser(QStringLiteral("org.freedesktop.Avahi"), rep.value().path(),
             QDBusConnection::systemBus());
     connect(b, SIGNAL(ItemNew(int,int,QString,uint)), d, SLOT(gotNewDomain(int,int,QString,uint)));
     connect(b, SIGNAL(ItemRemove(int,int,QString,uint)), d, SLOT(gotRemoveDomain(int,int,QString,uint)));
     d->m_browser = b;
     if (d->m_type == Browsing) {
-        QString domains_evar = qgetenv("AVAHI_BROWSE_DOMAINS");
+        QString domains_evar = QString::fromLocal8Bit(qgetenv("AVAHI_BROWSE_DOMAINS"));
         if (!domains_evar.isEmpty()) {
-            QStringList edomains = domains_evar.split(':');
+            QStringList edomains = domains_evar.split(QLatin1Char(':'));
             Q_FOREACH (const QString &s, edomains) {
                 d->gotNewDomain(-1, -1, s, 0);
             }
         }
         //FIXME: watch this file and restart browser if it changes
         QString confDir = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
-        QFile domains_cfg(confDir + "/avahi/browse-domains");
+        QFile domains_cfg(confDir + QStringLiteral("/avahi/browse-domains"));
         if (domains_cfg.open(QIODevice::ReadOnly | QIODevice::Text))
             while (!domains_cfg.atEnd()) {
                 d->gotNewDomain(-1, -1, QString::fromUtf8(domains_cfg.readLine().data()).trimmed(), 0);

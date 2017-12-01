@@ -45,13 +45,13 @@ void ServiceTypeBrowser::startBrowse()
         return;
     }
     d->m_started = true;
-    org::freedesktop::Avahi::Server s("org.freedesktop.Avahi", "/", QDBusConnection::systemBus());
+    org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
     QDBusReply<QDBusObjectPath> rep = s.ServiceTypeBrowserNew(-1, -1, d->m_domain, 0);
 
     if (!rep.isValid()) {
         return;
     }
-    org::freedesktop::Avahi::ServiceTypeBrowser *b = new org::freedesktop::Avahi::ServiceTypeBrowser("org.freedesktop.Avahi", rep.value().path(),
+    org::freedesktop::Avahi::ServiceTypeBrowser *b = new org::freedesktop::Avahi::ServiceTypeBrowser(QStringLiteral("org.freedesktop.Avahi"), rep.value().path(),
             QDBusConnection::systemBus());
     connect(b, SIGNAL(ItemNew(int,int,QString,QString,uint)), d, SLOT(gotNewServiceType(int,int,QString,QString,uint)));
     connect(b, SIGNAL(ItemRemove(int,int,QString,QString,uint)), d, SLOT(gotRemoveServiceType(int,int,QString,QString,uint)));
