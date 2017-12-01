@@ -85,7 +85,7 @@ void ServiceBase::virtual_hook(int, void *)
 
 bool domainIsLocal(const QString &domain)
 {
-    return domain.section('.', -1, -1).toLower() == QLatin1String("local");
+    return domain.section(QLatin1Char('.'), -1, -1).toLower() == QLatin1String("local");
 }
 
 }

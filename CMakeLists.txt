@@ -39,7 +39,6 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KDNSSD
 
 configure_file(config-kdnssd.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdnssd.h )
 
-remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 find_package(Avahi)
 set_package_properties(Avahi PROPERTIES DESCRIPTION "Facilities for service discovery on a local network (DNSSD)"
