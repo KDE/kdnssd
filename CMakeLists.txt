@@ -26,8 +26,6 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
-
 
 include(GenerateExportHeader)
 include(ECMSetupVersion)
