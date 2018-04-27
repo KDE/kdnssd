@@ -34,7 +34,7 @@ class DomainBrowserPrivate : public Responder
 public:
     DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent): Responder(), m_type(type), m_parent(parent) {}
     DomainBrowser::DomainType m_type;
-    DomainBrowser *m_parent;
+    DomainBrowser *m_parent = nullptr;
     QStringList m_domains;
     virtual void customEvent(QEvent *event);
 };

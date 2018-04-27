@@ -47,13 +47,13 @@ public:
     QString m_type;
     QString m_domain;
     QString m_subtype;
-    bool m_autoResolve;
-    bool m_running;
-    bool m_finished;
-    bool m_browserFinished;
+    bool m_autoResolve = false;
+    bool m_running = false;
+    bool m_finished = false;
+    bool m_browserFinished = false;
     QTimer m_timer;
-    org::freedesktop::Avahi::ServiceBrowser *m_browser;
-    ServiceBrowser *m_parent;
+    org::freedesktop::Avahi::ServiceBrowser *m_browser = nullptr;
+    ServiceBrowser *m_parent = nullptr;
 
     // get already found service identical to s or null if not found
     RemoteService::Ptr find(RemoteService::Ptr s, const QList<RemoteService::Ptr> &where) const;

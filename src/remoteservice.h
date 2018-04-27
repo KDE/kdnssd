@@ -66,7 +66,7 @@ public:
      */
     RemoteService(const QString &name, const QString &type, const QString &domain);
 
-    virtual ~RemoteService();
+    ~RemoteService() override;
 
     /**
      * Resolves the host name and port of service asynchronously

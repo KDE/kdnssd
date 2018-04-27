@@ -33,9 +33,9 @@ class ServiceTypeBrowserPrivate : public QObject
 {
     Q_OBJECT
 public:
-    ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent):  m_parent(parent) {}
-    ServiceTypeBrowser *m_parent;
-    ServiceBrowser *m_browser;
+    explicit ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent):  m_parent(parent) {}
+    ServiceTypeBrowser *m_parent = nullptr;
+    ServiceBrowser *m_browser = nullptr;
     QStringList m_servicetypes;
 public Q_SLOTS:
     void newService(KDNSSD::RemoteService::Ptr);

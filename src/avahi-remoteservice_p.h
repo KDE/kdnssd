@@ -46,10 +46,10 @@ public:
             m_resolver->Free();
         } delete m_resolver;
     }
-    bool m_resolved;
-    bool m_running;
-    org::freedesktop::Avahi::ServiceResolver *m_resolver;
-    RemoteService *m_parent;
+    bool m_resolved = false;
+    bool m_running = false;
+    org::freedesktop::Avahi::ServiceResolver *m_resolver = nullptr;
+    RemoteService *m_parent = nullptr;
     void stop();
 
 private Q_SLOTS:

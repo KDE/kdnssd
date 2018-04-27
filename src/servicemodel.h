@@ -97,7 +97,7 @@ public:
      */
     explicit ServiceModel(ServiceBrowser *browser, QObject *parent = nullptr);
 
-    virtual ~ServiceModel();
+    ~ServiceModel() Q_DECL_OVERRIDE;
 
     /** @reimp */
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;

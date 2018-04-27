@@ -41,9 +41,9 @@ public:
         }
     }
 
-    org::freedesktop::Avahi::ServiceTypeBrowser *m_browser;
-    ServiceTypeBrowser *m_parent;
-    bool m_started;
+    org::freedesktop::Avahi::ServiceTypeBrowser *m_browser = nullptr;
+    ServiceTypeBrowser *m_parent = nullptr;
+    bool m_started = false;
     QStringList m_servicetypes;
     QString m_domain;
     QTimer m_timer;

@@ -94,7 +94,7 @@ public:
                            const QString &domain = QString(),
                            const QStringList &subtypes = QStringList());
 
-    ~PublicService();
+    ~PublicService() override;
 
     /**
      * Stops publishing or aborts an incomplete publish request.

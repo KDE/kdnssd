@@ -41,9 +41,9 @@ public:
     }
 
     DomainBrowser::DomainType m_type;
-    org::freedesktop::Avahi::DomainBrowser *m_browser;
-    DomainBrowser *m_parent;
-    bool m_started;
+    org::freedesktop::Avahi::DomainBrowser *m_browser = nullptr;
+    DomainBrowser *m_parent = nullptr;
+    bool m_started = false;
     QSet<QString> m_domains;
 public Q_SLOTS:
     void gotNewDomain(int, int, const QString &, uint);

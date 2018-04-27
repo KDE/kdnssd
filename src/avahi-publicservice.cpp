@@ -274,7 +274,6 @@ void PublicServicePrivate::groupStateChanged(int s,  const QString &reason)
         break;
     case AVAHI_ENTRY_GROUP_FAILURE:
         serverStateChanged(AVAHI_SERVER_INVALID, reason);
-    default:
         break;
     }
 }
