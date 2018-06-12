@@ -127,7 +127,7 @@ Q_SIGNALS:
     void resolved(bool successful);
 
 protected:
-    void virtual_hook(int id, void *data) Q_DECL_OVERRIDE;
+    void virtual_hook(int id, void *data) override;
 private:
     friend class RemoteServicePrivate;
 
