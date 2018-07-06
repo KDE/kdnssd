@@ -26,7 +26,7 @@
 namespace KDNSSD
 {
 
-ServiceBrowser::ServiceBrowser(const QString &, bool, const QString &, const QString &) : d(0)
+ServiceBrowser::ServiceBrowser(const QString &, bool, const QString &, const QString &) : d(nullptr)
 {}
 
 bool ServiceBrowser::isAutoResolving() const

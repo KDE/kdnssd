@@ -24,7 +24,7 @@
 namespace KDNSSD
 {
 
-ServiceTypeBrowser::ServiceTypeBrowser(const QString &, QObject *parent) : QObject(parent), d(0)
+ServiceTypeBrowser::ServiceTypeBrowser(const QString &, QObject *parent) : QObject(parent), d(nullptr)
 {}
 
 ServiceTypeBrowser::~ServiceTypeBrowser()

@@ -24,7 +24,7 @@
 namespace KDNSSD
 {
 
-DomainBrowser::DomainBrowser(DomainType, QObject *parent) : QObject(parent), d(0)
+DomainBrowser::DomainBrowser(DomainType, QObject *parent) : QObject(parent), d(nullptr)
 {}
 
 DomainBrowser::~DomainBrowser()
