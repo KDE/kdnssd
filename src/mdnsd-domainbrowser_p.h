@@ -23,7 +23,7 @@
 
 #include "mdnsd-responder.h"
 #include "domainbrowser.h"
-#include <QtCore/QStringList>
+#include <QStringList>
 
 namespace KDNSSD
 {

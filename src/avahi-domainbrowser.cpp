@@ -19,10 +19,10 @@
  */
 
 #include "avahi-domainbrowser_p.h"
-#include <QtCore/QSet>
-#include <QtCore/QFile>
-#include <QtCore/QIODevice>
-#include <QtCore/QStandardPaths>
+#include <QSet>
+#include <QFile>
+#include <QIODevice>
+#include <QStandardPaths>
 #include <avahi-common/defs.h>
 #include "avahi_server_interface.h"
 #include "domainbrowser.h"

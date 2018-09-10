@@ -11,7 +11,7 @@
 
 #include "avahi_server_interface.h"
 #include "servicebase.h"
-#include <QtCore/QUrl>
+#include <QUrl>
 #include <QDBusMetaType>
 /*
  * Implementation of interface class OrgFreedesktopAvahiServerInterface

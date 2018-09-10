@@ -21,7 +21,7 @@
 #ifndef MDNSD_SERVICETYPEBROWSER_P_H
 #define MDNSD_SERVICETYPEBROWSER_P_H
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 #include "servicebrowser.h"
 #include "servicetypebrowser.h"

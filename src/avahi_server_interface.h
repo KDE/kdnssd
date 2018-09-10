@@ -11,13 +11,13 @@
 #ifndef AVAHI_SERVER_INTERFACE_H_1175535514
 #define AVAHI_SERVER_INTERFACE_H_1175535514
 
-#include <QtCore/QObject>
-#include <QtCore/QByteRef>
-#include <QtCore/QList>
-#include <QtCore/QMap>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QVariant>
+#include <QObject>
+#include <QByteRef>
+#include <QList>
+#include <QMap>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
 #include <QDBusConnection>
 #include <QDBusReply>
 #include <QDBusAbstractInterface>

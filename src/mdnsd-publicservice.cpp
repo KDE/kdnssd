@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QStringList>
+#include <QCoreApplication>
+#include <QStringList>
 #include <netinet/in.h>
 #include "publicservice.h"
 #include "servicebase_p.h"

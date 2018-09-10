@@ -19,12 +19,12 @@
  */
 
 #include "avahi-servicebrowser_p.h"
-#include <QtCore/QStringList>
+#include <QStringList>
 #include "servicebrowser.h"
 #include "avahi_servicebrowser_interface.h"
 #include "avahi_server_interface.h"
-#include <QtCore/QHash>
-#include <QtNetwork/QHostAddress>
+#include <QHash>
+#include <QHostAddress>
 namespace KDNSSD
 {
 

@@ -19,7 +19,7 @@
  */
 
 #include "remoteservice.h"
-#include <QtCore/QDataStream>
+#include <QDataStream>
 
 namespace KDNSSD
 {

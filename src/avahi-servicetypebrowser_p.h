@@ -21,8 +21,8 @@
 #ifndef AVAHI_SERVICETYPEBROWSER_P_H
 #define AVAHI_SERVICETYPEBROWSER_P_H
 
-#include <QtCore/QStringList>
-#include <QtCore/QTimer>
+#include <QStringList>
+#include <QTimer>
 #include "servicetypebrowser.h"
 #include "avahi_servicetypebrowser_interface.h"
 

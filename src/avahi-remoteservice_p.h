@@ -21,9 +21,9 @@
 #ifndef AVAHI_REMOTESERVICE_P_H
 #define AVAHI_REMOTESERVICE_P_H
 
-#include <QtCore/QString>
-#include <QtCore/QList>
-#include <QtCore/QMap>
+#include <QString>
+#include <QList>
+#include <QMap>
 #include "servicebase_p.h"
 #include "remoteservice.h"
 #include "avahi_serviceresolver_interface.h"

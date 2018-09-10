@@ -21,9 +21,9 @@
 #ifndef AVAHI_SERVICEBROWSER_P_H
 #define AVAHI_SERVICEBROWSER_P_H
 
-#include <QtCore/QString>
-#include <QtCore/QList>
-#include <QtCore/QTimer>
+#include <QString>
+#include <QList>
+#include <QTimer>
 #include "servicebrowser.h"
 #include "avahi_servicebrowser_interface.h"
 

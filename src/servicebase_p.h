@@ -21,8 +21,8 @@
 #ifndef SERVICEBASE_P_H
 #define SERVICEBASE_P_H
 
-#include <QtCore/QMap>
-#include <QtCore/QString>
+#include <QMap>
+#include <QString>
 
 namespace KDNSSD
 {

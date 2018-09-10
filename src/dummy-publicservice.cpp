@@ -20,7 +20,7 @@
 
 #include "publicservice.h"
 #include "servicebase_p.h"
-#include <QtCore/QStringList>
+#include <QStringList>
 
 namespace KDNSSD
 {

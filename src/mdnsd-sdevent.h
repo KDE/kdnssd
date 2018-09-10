@@ -21,9 +21,9 @@
 #ifndef MDNSD_SDEVENT_H
 #define MDNSD_SDEVENT_H
 
-#include <QtCore/QEvent>
-#include <QtCore/QString>
-#include <QtCore/QMap>
+#include <QEvent>
+#include <QString>
+#include <QMap>
 
 namespace KDNSSD
 {

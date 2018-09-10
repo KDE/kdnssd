@@ -20,8 +20,8 @@
 
 #include "avahi-publicservice_p.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QStringList>
+#include <QCoreApplication>
+#include <QStringList>
 
 #include "publicservice.h"
 

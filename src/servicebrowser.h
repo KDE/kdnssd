@@ -21,8 +21,8 @@
 #ifndef KDNSSDSERVICEBROWSER_H
 #define KDNSSDSERVICEBROWSER_H
 
-#include <QtCore/QObject>
-#include <QtNetwork/QHostAddress>
+#include <QObject>
+#include <QHostAddress>
 
 #include <dnssd/remoteservice.h>
 

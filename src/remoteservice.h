@@ -21,8 +21,8 @@
 #ifndef KDNSSDREMOTESERVICE_H
 #define KDNSSDREMOTESERVICE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QMetaType>
+#include <QObject>
+#include <QMetaType>
 #include <dnssd/servicebase.h>
 
 namespace KDNSSD

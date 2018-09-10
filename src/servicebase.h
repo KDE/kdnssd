@@ -21,8 +21,8 @@
 #ifndef KDNSSDSERVICEBASE_H
 #define KDNSSDSERVICEBASE_H
 
-#include <QtCore/QMap>
-#include <QtCore/QString>
+#include <QMap>
+#include <QString>
 #include <QExplicitlySharedDataPointer>
 #include <dnssd/kdnssd_export.h>
 

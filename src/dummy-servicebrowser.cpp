@@ -18,10 +18,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <QtCore/QStringList>
+#include <QStringList>
 #include "domainbrowser.h"
 #include "servicebrowser.h"
-#include <QtCore/QHash>
+#include <QHash>
 
 namespace KDNSSD
 {

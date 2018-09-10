@@ -21,8 +21,8 @@
 #ifndef MDNSD_RESPONDER_H
 #define MDNSD_RESPONDER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QSocketNotifier>
+#include <QObject>
+#include <QSocketNotifier>
 #include <dns_sd.h>
 
 namespace KDNSSD

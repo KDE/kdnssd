@@ -21,7 +21,7 @@
 #ifndef AVAHI_DOMAINBROWSER_P_H
 #define AVAHI_DOMAINBROWSER_P_H
 
-#include <QtCore/QSet>
+#include <QSet>
 #include "domainbrowser.h"
 #include "avahi_domainbrowser_interface.h"
 

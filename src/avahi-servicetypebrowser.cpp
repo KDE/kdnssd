@@ -19,7 +19,7 @@
  */
 
 #include "avahi-servicetypebrowser_p.h"
-#include <QtCore/QSet>
+#include <QSet>
 #include "avahi_server_interface.h"
 #include "servicetypebrowser.h"
 #include "avahi_servicetypebrowser_interface.h"

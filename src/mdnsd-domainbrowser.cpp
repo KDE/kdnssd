@@ -24,9 +24,9 @@
 #include "mdnsd-responder.h"
 #include "mdnsd-sdevent.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QHash>
-#include <QtCore/QStringList>
+#include <QCoreApplication>
+#include <QHash>
+#include <QStringList>
 
 namespace KDNSSD
 {

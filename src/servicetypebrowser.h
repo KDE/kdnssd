@@ -21,7 +21,7 @@
 #ifndef KDNSSDSERVICETYPEBROWSER_H
 #define KDNSSDSERVICETYPEBROWSER_H
 
-#include <QtCore/QObject>
+#include <QObject>
 #include <dnssd/remoteservice.h>
 
 class QStringList;

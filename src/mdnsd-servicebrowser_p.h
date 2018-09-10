@@ -21,8 +21,8 @@
 #ifndef MDNSD_SERVICEBROWSER_P_H
 #define MDNSD_SERVICEBROWSER_P_H
 
-#include <QtCore/QObject>
-#include <QtCore/QTimer>
+#include <QObject>
+#include <QTimer>
 
 #include "mdnsd-responder.h"
 #include "servicebrowser.h"

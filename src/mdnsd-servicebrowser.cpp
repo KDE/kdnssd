@@ -25,11 +25,11 @@
 #include "remoteservice.h"
 #include "mdnsd-sdevent.h"
 #include <dns_sd.h>
-#include <QtCore/QStringList>
-#include <QtCore/QHash>
-#include <QtCore/QCoreApplication>
-#include <QtCore/QTimer>
-#include <QtNetwork/QHostInfo>
+#include <QStringList>
+#include <QHash>
+#include <QCoreApplication>
+#include <QTimer>
+#include <QHostInfo>
 
 #define TIMEOUT_WAN 2000
 #define TIMEOUT_LAN 200

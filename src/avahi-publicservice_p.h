@@ -21,7 +21,7 @@
 #ifndef AVAHI_PUBLICSERVICE_P_H
 #define AVAHI_PUBLICSERVICE_P_H
 
-#include <QtCore/QStringList>
+#include <QStringList>
 #include "servicebase_p.h"
 #include <avahi-common/defs.h>
 #include "publicservice.h"

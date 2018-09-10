@@ -20,9 +20,9 @@
 
 #include "servicebase.h"
 #include "servicebase_p.h"
-#include <QtCore/QRegExp>
-#include <QtCore/QDataStream>
-#include <QtCore/QUrl>
+#include <QRegExp>
+#include <QDataStream>
+#include <QUrl>
 
 namespace KDNSSD
 {

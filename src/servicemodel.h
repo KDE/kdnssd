@@ -21,7 +21,7 @@
 #ifndef KDNSSDSERVICEMODEL_H
 #define KDNSSDSERVICEMODEL_H
 
-#include <QtCore/QAbstractItemModel>
+#include <QAbstractItemModel>
 #include <dnssd/kdnssd_export.h>
 #include <dnssd/remoteservice.h>
 

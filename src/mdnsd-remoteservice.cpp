@@ -19,8 +19,8 @@
  */
 
 #include <netinet/in.h>
-#include <QtCore/QEventLoop>
-#include <QtCore/QCoreApplication>
+#include <QEventLoop>
+#include <QCoreApplication>
 #include <QDebug>
 #include "remoteservice.h"
 #include "servicebase_p.h"
