@@ -41,11 +41,13 @@ class ServiceBrowserPrivate;
  * Suppose that you need list of web servers running.  Then you
  * might do something like
  * @code
- * KDNSSD::ServiceBrowser* browser = new KDNSSD::ServiceBrowser("_http._tcp");
- * connect(browser, SIGNAL(serviceAdded(RemoteService::Ptr)),
- *         this,    SLOT(addService(RemoteService::Ptr)));
- * connect(browser, SIGNAL(serviceRemoved(RemoteService::Ptr)),
- *         this,    SLOT(delService(RemoteService::Ptr)));
+ * KDNSSD::ServiceBrowser *browser = new KDNSSD::ServiceBrowser(QStringLiteral("_http._tcp"));
+ * connect(browser, &KDNSSD::ServiceBrowser::serviceAdded,
+ *         this, [](KDNSSD::RemoteService::Ptr service) {
+ *         });
+ * connect(browser, &KDNSSD::ServiceBrowser::serviceRemoved,
+ *         this, [](KDNSSD::RemoteService::Ptr service) {
+ *         });
  * browser->startBrowse();
  * @endcode
  *

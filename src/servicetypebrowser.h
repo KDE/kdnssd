@@ -30,11 +30,11 @@ namespace KDNSSD
 class ServiceTypeBrowserPrivate;
 
 /**
- * @class ServiceBrowser servicebrowser.h KDNSSD/ServiceBrowser
+ * @class ServiceTypeBrowser servicetypebrowser.h KDNSSD/ServiceTypeBrowser
  * @short Browses the service types being published on a domain
  *
  * This class is mostly useful for generic utilities for
- * browsing all the published services on a local network.
+ * browsing all the published service types on a local network.
  * Applications that wish to find out about available services
  * of a particular type (such as web servers) should use
  * ServiceBrowser.
