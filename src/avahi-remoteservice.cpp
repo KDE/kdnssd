@@ -1,6 +1,7 @@
 /* This file is part of the KDE project
  *
  * Copyright (C) 2004, 2005 Jakub Stachowski <qbast@go2.pl>
+ * Copyright (C) 2018 Harald Sitter <sitter@kde.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -56,6 +57,38 @@ void RemoteService::resolveAsync()
     }
     d->m_resolved = false;
     registerTypes();
+
+    // Do not race!
+    // https://github.com/lathiat/avahi/issues/9
+    // Avahi's DBus API is incredibly racey with signals getting fired
+    // immediately after a request was made even though we may not yet be
+    // listening. In lieu of a proper upstream fix for this we'll unfortunately
+    // have to resort to this hack:
+    // We register to all signals regardless of path and then filter them once
+    // we know what "our" path is. This is much more fragile than a proper
+    // QDBusInterface assisted signal connection but unfortunately the only way
+    // we can reliably prevent signals getting lost in the race.
+    // This uses a fancy trick whereby using QDBusMessage as last argument will
+    // give us the correct signal argument types as well as the underlying
+    // message so that we may check the message path.
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.ServiceResolver",
+                     "Found",
+                     d,
+                     SLOT(gotGlobalFound(int,int,QString,QString,QString,QString,
+                                         int,QString,ushort,QList<QByteArray>,
+                                         uint,QDBusMessage)));
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.ServiceResolver",
+                     "Failure",
+                     d,
+                     SLOT(gotGlobalError(QDBusMessage)));
+    d->m_dbusObjectPath.clear();
+
     //qDebug() << this << ":Starting resolve of : " << d->m_serviceName << " " << d->m_type << " " << d->m_domain << "\n";
     org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
     //FIXME: don't use LOOKUP_NO_ADDRESS if NSS unavailable
@@ -66,12 +99,12 @@ void RemoteService::resolveAsync()
         return;
     }
 
-    org::freedesktop::Avahi::ServiceResolver *b = new org::freedesktop::Avahi::ServiceResolver("org.freedesktop.Avahi", rep.value().path(),
-            QDBusConnection::systemBus());
-    connect(b, SIGNAL(Found(int, int, const QString &, const QString &, const QString &, const QString &, int, const QString &, ushort,
-                            const QList<QByteArray> &, uint)), d, SLOT(gotFound(int, int, const QString &, const QString &, const QString &, const QString &,
-                                    int, const QString &, ushort, const QList<QByteArray> &, uint)));
-    connect(b, SIGNAL(Failure(QString)), d, SLOT(gotError()));
+    d->m_dbusObjectPath = rep.value().path();
+
+    new org::freedesktop::Avahi::ServiceResolver(
+                s.service(),
+                d->m_dbusObjectPath,
+                s.connection());
     d->m_running = true;
 }
 
@@ -87,6 +120,34 @@ void RemoteServicePrivate::gotError()
     stop();
 
     emit m_parent->resolved(false);
+}
+
+void RemoteServicePrivate::gotGlobalFound(int interface,
+                                          int protocol,
+                                          const QString &name,
+                                          const QString &type,
+                                          const QString &domain,
+                                          const QString &host,
+                                          int aprotocol,
+                                          const QString &address,
+                                          ushort port,
+                                          const QList<QByteArray> &txt,
+                                          uint flags,
+                                          QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    gotFound(interface, protocol, name, type, domain, host, aprotocol, address,
+             port, txt, flags);
+}
+
+void RemoteServicePrivate::gotGlobalError(QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    gotError();
 }
 
 void RemoteServicePrivate::gotFound(int, int, const QString &name, const QString &, const QString &domain, const QString &host, int, const QString &, ushort port, const QList<QByteArray> &txt, uint)

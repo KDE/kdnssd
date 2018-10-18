@@ -23,12 +23,13 @@
 
 #include <QSet>
 #include "domainbrowser.h"
+#include "avahi_listener_p.h"
 #include "avahi_domainbrowser_interface.h"
 
 namespace KDNSSD
 {
 
-class DomainBrowserPrivate : public QObject
+class DomainBrowserPrivate : public QObject, public AvahiListener
 {
     Q_OBJECT
 public:
@@ -45,10 +46,24 @@ public:
     DomainBrowser *m_parent = nullptr;
     bool m_started = false;
     QSet<QString> m_domains;
+
 public Q_SLOTS:
+    // NB: The global slots are runtime connected! If their signature changes
+    // make sure the SLOT() signature gets updated!
+    void gotGlobalItemNew(int interface,
+                          int protocol,
+                          const QString &domain,
+                          uint flags,
+                          QDBusMessage msg);
+    void gotGlobalItemRemove(int interface,
+                             int protocol,
+                             const QString &domain,
+                             uint flags,
+                             QDBusMessage msg);
+    void gotGlobalAllForNow(QDBusMessage msg);
+
     void gotNewDomain(int, int, const QString &, uint);
     void gotRemoveDomain(int, int, const QString &, uint);
-
 };
 
 }

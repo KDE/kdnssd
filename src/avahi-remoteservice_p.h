@@ -26,6 +26,7 @@
 #include <QMap>
 #include "servicebase_p.h"
 #include "remoteservice.h"
+#include "avahi_listener_p.h"
 #include "avahi_serviceresolver_interface.h"
 
 #define K_D RemoteServicePrivate* d=static_cast<RemoteServicePrivate*>(this->d)
@@ -33,7 +34,7 @@
 namespace KDNSSD
 {
 
-class RemoteServicePrivate : public QObject, public ServiceBasePrivate
+class RemoteServicePrivate : public QObject, public ServiceBasePrivate, public AvahiListener
 {
     Q_OBJECT
 public:
@@ -53,7 +54,35 @@ public:
     void stop();
 
 private Q_SLOTS:
-    void gotFound(int, int, const QString &name, const QString &type, const QString &domain, const QString &host, int aprotocol, const QString &address, ushort port, const QList<QByteArray> &txt, uint flags);
+    // NB: The global slots are runtime connected! If their signature changes
+    // make sure the SLOT() signature gets updated!
+    void gotGlobalFound(
+            int interface,
+            int protocol,
+            const QString &name,
+            const QString &type,
+            const QString &domain,
+            const QString &host,
+            int aprotocol,
+            const QString &address,
+            ushort port,
+            const QList<QByteArray> &txt,
+            uint flags,
+            QDBusMessage msg);
+    void gotGlobalError(QDBusMessage msg);
+
+    void gotFound(
+            int interface,
+            int protocol,
+            const QString &name,
+            const QString &type,
+            const QString &domain,
+            const QString &host,
+            int aprotocol,
+            const QString &address,
+            ushort port,
+            const QList<QByteArray> &txt,
+            uint flags);
     void gotError();
 };
 

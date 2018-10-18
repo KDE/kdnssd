@@ -1,6 +1,7 @@
 /* This file is part of the KDE project
  *
  * Copyright (C) 2004 Jakub Stachowski <qbast@go2.pl>
+ * Copyright (C) 2018 Harald Sitter <sitter@kde.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,6 +26,7 @@
 #include "avahi_server_interface.h"
 #include <QHash>
 #include <QHostAddress>
+
 namespace KDNSSD
 {
 
@@ -59,28 +61,67 @@ void ServiceBrowser::startBrowse()
     if (d->m_running) {
         return;
     }
+
+    // Do not race!
+    // https://github.com/lathiat/avahi/issues/9
+    // Avahi's DBus API is incredibly racey with signals getting fired
+    // immediately after a request was made even though we may not yet be
+    // listening. In lieu of a proper upstream fix for this we'll unfortunately
+    // have to resort to this hack:
+    // We register to all signals regardless of path and then filter them once
+    // we know what "our" path is. This is much more fragile than a proper
+    // QDBusInterface assisted signal connection but unfortunately the only way
+    // we can reliably prevent signals getting lost in the race.
+    // This uses a fancy trick whereby using QDBusMessage as last argument will
+    // give us the correct signal argument types as well as the underlying
+    // message so that we may check the message path.
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.ServiceBrowser",
+                     "ItemNew",
+                     d,
+                     SLOT(gotGlobalItemNew(int,int,QString,QString,QString,uint,QDBusMessage)));
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.ServiceBrowser",
+                     "ItemRemove",
+                     d,
+                     SLOT(gotGlobalItemRemove(int,int,QString,QString,QString,uint,QDBusMessage)));
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.ServiceBrowser",
+                     "AllForNow",
+                     d,
+                     SLOT(gotGlobalAllForNow(QDBusMessage)));
+    d->m_dbusObjectPath.clear();
+
     org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
+
     QString fullType = d->m_type;
     if (!d->m_subtype.isEmpty()) {
         fullType = d->m_subtype + QStringLiteral("._sub.") + d->m_type;
     }
     QDBusReply<QDBusObjectPath> rep = s.ServiceBrowserNew(-1, -1, fullType, domainToDNS(d->m_domain), 0);
-
     if (!rep.isValid()) {
         emit finished();
         return;
     }
+
+    d->m_dbusObjectPath = rep.value().path();
     d->m_running = true;
     d->m_browserFinished = true;
-    org::freedesktop::Avahi::ServiceBrowser *b = new org::freedesktop::Avahi::ServiceBrowser(QStringLiteral("org.freedesktop.Avahi"), rep.value().path(),
-            QDBusConnection::systemBus());
-    connect(b, SIGNAL(ItemNew(int,int,QString,QString,QString,uint)), d,
-            SLOT(gotNewService(int,int,QString,QString,QString,uint)));
-    connect(b, SIGNAL(ItemRemove(int,int,QString,QString,QString,uint)), d,
-            SLOT(gotRemoveService(int,int,QString,QString,QString,uint)));
-    connect(b, SIGNAL(AllForNow()), d, SLOT(browserFinished()));
-    d->m_browser = b;
-    connect(&d->m_timer, SIGNAL(timeout()), d, SLOT(browserFinished()));
+
+    // This is held because we need to explicitly Free it!
+    d->m_browser = new org::freedesktop::Avahi::ServiceBrowser(
+                s.service(),
+                d->m_dbusObjectPath,
+                s.connection());
+
+    connect(&d->m_timer, &QTimer::timeout,
+            d, &ServiceBrowserPrivate::browserFinished);
     d->m_timer.start(domainIsLocal(d->m_domain) ? TIMEOUT_LAST_SERVICE : TIMEOUT_START_WAN);
 }
 
@@ -102,6 +143,42 @@ void ServiceBrowserPrivate::serviceResolved(bool success)
         m_duringResolve.erase(it);
         queryFinished();
     }
+}
+
+void ServiceBrowserPrivate::gotGlobalItemNew(int interface,
+                                             int protocol,
+                                             const QString &name,
+                                             const QString &type,
+                                             const QString &domain,
+                                             uint flags,
+                                             QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    gotNewService(interface, protocol, name, type, domain, flags);
+}
+
+void ServiceBrowserPrivate::gotGlobalItemRemove(int interface,
+                                                int protocol,
+                                                const QString &name,
+                                                const QString &type,
+                                                const QString &domain,
+                                                uint flags,
+                                                QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    gotRemoveService(interface, protocol, name, type, domain, flags);
+}
+
+void ServiceBrowserPrivate::gotGlobalAllForNow(QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    browserFinished();
 }
 
 RemoteService::Ptr ServiceBrowserPrivate::find(RemoteService::Ptr s, const QList<RemoteService::Ptr> &where) const

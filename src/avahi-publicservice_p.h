@@ -25,6 +25,7 @@
 #include "servicebase_p.h"
 #include <avahi-common/defs.h>
 #include "publicservice.h"
+#include "avahi_listener_p.h"
 #include "avahi_server_interface.h"
 #include "avahi_entrygroup_interface.h"
 
@@ -33,7 +34,7 @@
 namespace KDNSSD
 {
 
-class PublicServicePrivate : public QObject, public ServiceBasePrivate
+class PublicServicePrivate : public QObject, public ServiceBasePrivate, public AvahiListener
 {
     Q_OBJECT
 public:
@@ -69,6 +70,10 @@ public:
     void tryApply();
 
 public Q_SLOTS:
+    // NB: The global slots are runtime connected! If their signature changes
+    // make sure the SLOT() signature gets updated!
+    void gotGlobalStateChanged(int state, const QString &error, QDBusMessage msg);
+
     void serverStateChanged(int, const QString &);
     void groupStateChanged(int, const QString &);
 };

@@ -25,14 +25,16 @@
 #include <QList>
 #include <QTimer>
 #include "servicebrowser.h"
+#include "avahi_listener_p.h"
 #include "avahi_servicebrowser_interface.h"
 
 namespace KDNSSD
 {
 
-class ServiceBrowserPrivate : public QObject
+class ServiceBrowserPrivate : public QObject, public AvahiListener
 {
     Q_OBJECT
+    friend class ServiceBrowser; // So the public class may functor connect.
 public:
     ServiceBrowserPrivate(ServiceBrowser *parent) : QObject(), m_running(false), m_browser(nullptr), m_parent(parent)
     {}
@@ -62,6 +64,25 @@ private Q_SLOTS:
     void browserFinished();
     void queryFinished();
     void serviceResolved(bool success);
+
+    // NB: The global slots are runtime connected! If their signature changes
+    // make sure the SLOT() signature gets updated!
+    void gotGlobalItemNew(int interface,
+                          int protocol,
+                          const QString &name,
+                          const QString &type,
+                          const QString &domain,
+                          uint flags,
+                          QDBusMessage msg);
+    void gotGlobalItemRemove(int interface,
+                             int protocol,
+                             const QString &name,
+                             const QString &type,
+                             const QString &domain,
+                             uint flags,
+                             QDBusMessage msg);
+    void gotGlobalAllForNow(QDBusMessage msg);
+
     void gotNewService(int, int, const QString &, const QString &, const QString &, uint);
     void gotRemoveService(int, int, const QString &, const QString &, const QString &, uint);
 };

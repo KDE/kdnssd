@@ -24,12 +24,13 @@
 #include <QStringList>
 #include <QTimer>
 #include "servicetypebrowser.h"
+#include "avahi_listener_p.h"
 #include "avahi_servicetypebrowser_interface.h"
 
 namespace KDNSSD
 {
 
-class ServiceTypeBrowserPrivate : public QObject
+class ServiceTypeBrowserPrivate : public QObject, public AvahiListener
 {
     Q_OBJECT
 public:
@@ -47,11 +48,28 @@ public:
     QStringList m_servicetypes;
     QString m_domain;
     QTimer m_timer;
+
 private Q_SLOTS:
+    // NB: The global slots are runtime connected! If their signature changes
+    // make sure the SLOT() signature gets updated!
+    void gotGlobalItemNew(int interface,
+                          int protocol,
+                          const QString &type,
+                          const QString &domain,
+                          uint flags,
+                          QDBusMessage msg);
+    void gotGlobalItemRemove(int interface,
+                             int protocol,
+                             const QString &type,
+                             const QString &domain,
+                             uint flags,
+                             QDBusMessage msg);
+    void gotGlobalAllForNow(QDBusMessage msg);
+
+
     void gotNewServiceType(int, int, const QString &, const QString &, uint);
     void gotRemoveServiceType(int, int, const QString &, const QString &, uint);
     void finished();
-
 };
 
 }

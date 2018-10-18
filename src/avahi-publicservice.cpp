@@ -62,6 +62,16 @@ void PublicServicePrivate::tryApply()
     }
 }
 
+void PublicServicePrivate::gotGlobalStateChanged(int state,
+                                                 const QString &error,
+                                                 QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    groupStateChanged(state, error);
+}
+
 void PublicService::setServiceName(const QString &serviceName)
 {
     K_D;
@@ -157,12 +167,38 @@ bool PublicServicePrivate::fillEntryGroup()
 {
     registerTypes();
     if (!m_group) {
+        // Do not race!
+        // https://github.com/lathiat/avahi/issues/9
+        // Avahi's DBus API is incredibly racey with signals getting fired
+        // immediately after a request was made even though we may not yet be
+        // listening. In lieu of a proper upstream fix for this we'll unfortunately
+        // have to resort to this hack:
+        // We register to all signals regardless of path and then filter them once
+        // we know what "our" path is. This is much more fragile than a proper
+        // QDBusInterface assisted signal connection but unfortunately the only way
+        // we can reliably prevent signals getting lost in the race.
+        // This uses a fancy trick whereby using QDBusMessage as last argument will
+        // give us the correct signal argument types as well as the underlying
+        // message so that we may check the message path.
+        QDBusConnection::systemBus()
+                .connect("org.freedesktop.Avahi",
+                         "",
+                         "org.freedesktop.Avahi.EntryGroup",
+                         "StateChanged",
+                         this,
+                         SLOT(gotGlobalStateChanged(int,QString,QDBusMessage)));
+        m_dbusObjectPath.clear();
+
         QDBusReply<QDBusObjectPath> rep = m_server->EntryGroupNew();
         if (!rep.isValid()) {
             return false;
         }
-        m_group = new org::freedesktop::Avahi::EntryGroup("org.freedesktop.Avahi", rep.value().path(), QDBusConnection::systemBus());
-        connect(m_group, SIGNAL(StateChanged(int,QString)), this, SLOT(groupStateChanged(int,QString)));
+
+        m_dbusObjectPath = rep.value().path();
+
+        m_group = new org::freedesktop::Avahi::EntryGroup("org.freedesktop.Avahi",
+                                                          m_dbusObjectPath,
+                                                          QDBusConnection::systemBus());
     }
     if (m_serviceName.isNull()) {
         QDBusReply<QString> rep = m_server->GetHostName();

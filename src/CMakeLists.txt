@@ -18,6 +18,7 @@ if (AVAHI_FOUND)
         avahi_server_interface.cpp
         avahi_serviceresolver_interface.cpp
         avahi_entrygroup_interface.cpp
+        avahi_listener.cpp
     )
     qt5_add_dbus_interface (kdnssd_LIB_SRCS org.freedesktop.Avahi.DomainBrowser.xml avahi_domainbrowser_interface )
     qt5_add_dbus_interface (kdnssd_LIB_SRCS org.freedesktop.Avahi.ServiceBrowser.xml avahi_servicebrowser_interface )

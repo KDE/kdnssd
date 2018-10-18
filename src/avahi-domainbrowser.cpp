@@ -1,6 +1,7 @@
 /* This file is part of the KDE project
  *
  * Copyright (C) 2004 Jakub Stachowski <qbast@go2.pl>
+ * Copyright (C) 2018 Harald Sitter <sitter@kde.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -45,18 +46,58 @@ void DomainBrowser::startBrowse()
         return;
     }
     d->m_started = true;
+
+    // Do not race!
+    // https://github.com/lathiat/avahi/issues/9
+    // Avahi's DBus API is incredibly racey with signals getting fired
+    // immediately after a request was made even though we may not yet be
+    // listening. In lieu of a proper upstream fix for this we'll unfortunately
+    // have to resort to this hack:
+    // We register to all signals regardless of path and then filter them once
+    // we know what "our" path is. This is much more fragile than a proper
+    // QDBusInterface assisted signal connection but unfortunately the only way
+    // we can reliably prevent signals getting lost in the race.
+    // This uses a fancy trick whereby using QDBusMessage as last argument will
+    // give us the correct signal argument types as well as the underlying
+    // message so that we may check the message path.
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.DomainBrowser",
+                     "ItemNew",
+                     d,
+                     SLOT(gotGlobalItemNew(int,int,QString,uint,QDBusMessage)));
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.DomainBrowser",
+                     "ItemRemove",
+                     d,
+                     SLOT(gotGlobalItemRemove(int,int,QString,uint,QDBusMessage)));
+    QDBusConnection::systemBus()
+            .connect("org.freedesktop.Avahi",
+                     "",
+                     "org.freedesktop.Avahi.DomainBrowser",
+                     "AllForNow",
+                     d,
+                     SLOT(gotGlobalAllForNow(QDBusMessage)));
+    d->m_dbusObjectPath.clear();
+
     org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
     QDBusReply<QDBusObjectPath> rep = s.DomainBrowserNew(-1, -1, QString(), (d->m_type == Browsing) ?
                                       AVAHI_DOMAIN_BROWSER_BROWSE : AVAHI_DOMAIN_BROWSER_REGISTER, 0);
-
     if (!rep.isValid()) {
         return;
     }
-    org::freedesktop::Avahi::DomainBrowser *b = new org::freedesktop::Avahi::DomainBrowser(QStringLiteral("org.freedesktop.Avahi"), rep.value().path(),
-            QDBusConnection::systemBus());
-    connect(b, SIGNAL(ItemNew(int,int,QString,uint)), d, SLOT(gotNewDomain(int,int,QString,uint)));
-    connect(b, SIGNAL(ItemRemove(int,int,QString,uint)), d, SLOT(gotRemoveDomain(int,int,QString,uint)));
-    d->m_browser = b;
+
+    d->m_dbusObjectPath = rep.value().path();
+
+    // This is held because we need to explicitly Free it!
+    d->m_browser = new org::freedesktop::Avahi::DomainBrowser(
+                s.service(),
+                d->m_dbusObjectPath,
+                s.connection());
+
     if (d->m_type == Browsing) {
         QString domains_evar = QString::fromLocal8Bit(qgetenv("AVAHI_BROWSE_DOMAINS"));
         if (!domains_evar.isEmpty()) {
@@ -72,9 +113,38 @@ void DomainBrowser::startBrowse()
             while (!domains_cfg.atEnd()) {
                 d->gotNewDomain(-1, -1, QString::fromUtf8(domains_cfg.readLine().data()).trimmed(), 0);
             }
-
     }
+}
 
+void DomainBrowserPrivate::gotGlobalItemNew(int interface,
+                                            int protocol,
+                                            const QString &domain,
+                                            uint flags,
+                                            QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    gotNewDomain(interface, protocol, domain, flags);
+}
+
+void DomainBrowserPrivate::gotGlobalItemRemove(int interface,
+                                               int protocol,
+                                               const QString &domain,
+                                               uint flags,
+                                               QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
+    gotRemoveDomain(interface, protocol, domain, flags);
+}
+
+void DomainBrowserPrivate::gotGlobalAllForNow(QDBusMessage msg)
+{
+    if (!isOurMsg(msg)) {
+        return;
+    }
 }
 
 void DomainBrowserPrivate::gotNewDomain(int, int, const QString &domain, uint)
