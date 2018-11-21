@@ -101,7 +101,8 @@ void RemoteService::resolveAsync()
 
     d->m_dbusObjectPath = rep.value().path();
 
-    new org::freedesktop::Avahi::ServiceResolver(
+    // This is held because we need to explicitly Free it!
+    d->m_resolver = new org::freedesktop::Avahi::ServiceResolver(
                 s.service(),
                 d->m_dbusObjectPath,
                 s.connection());
