@@ -128,7 +128,7 @@ void ServiceBrowser::virtual_hook(int, void *)
 
 RemoteService::Ptr ServiceBrowserPrivate::find(RemoteService::Ptr s, const QList<RemoteService::Ptr> &where) const
 {
-    Q_FOREACH (const RemoteService::Ptr &i, where) if (*s == *i) {
+    for (const RemoteService::Ptr &i : where) if (*s == *i) {
             return i;
         }
     return RemoteService::Ptr();

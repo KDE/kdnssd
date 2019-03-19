@@ -168,7 +168,7 @@ void PublicService::publishAsync()
     }
     DNSServiceRef ref;
     QString fullType = d->m_type;
-    Q_FOREACH (const QString &subtype, d->m_subtypes) {
+    for (const QString &subtype : qAsConst(d->m_subtypes)) {
         fullType += ',' + subtype;
     }
     if (DNSServiceRegister(&ref, 0, 0, d->m_serviceName.toUtf8().constData(), fullType.toLatin1().constData(), domainToDNS(d->m_domain).constData(), NULL,

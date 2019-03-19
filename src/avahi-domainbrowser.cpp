@@ -101,8 +101,8 @@ void DomainBrowser::startBrowse()
     if (d->m_type == Browsing) {
         QString domains_evar = QString::fromLocal8Bit(qgetenv("AVAHI_BROWSE_DOMAINS"));
         if (!domains_evar.isEmpty()) {
-            QStringList edomains = domains_evar.split(QLatin1Char(':'));
-            Q_FOREACH (const QString &s, edomains) {
+            const QStringList edomains = domains_evar.split(QLatin1Char(':'));
+            for (const QString &s : edomains) {
                 d->gotNewDomain(-1, -1, s, 0);
             }
         }
