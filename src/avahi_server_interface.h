@@ -48,14 +48,14 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<QDBusObjectPath> AddressResolverNew(int interface, int protocol, const QString &address, uint flags)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(address) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(address) << QVariant::fromValue(flags);
         return callWithArgumentList(QDBus::Block, QLatin1String("AddressResolverNew"), argumentList);
     }
 
     inline QDBusReply<QDBusObjectPath> DomainBrowserNew(int interface, int protocol, const QString &domain, int btype, uint flags)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(domain) << qVariantFromValue(btype) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(domain) << QVariant::fromValue(btype) << QVariant::fromValue(flags);
         return callWithArgumentList(QDBus::Block, QLatin1String("DomainBrowserNew"), argumentList);
     }
 
@@ -74,14 +74,14 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<QString> GetAlternativeHostName(const QString &name)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(name);
+        argumentList << QVariant::fromValue(name);
         return callWithArgumentList(QDBus::Block, QLatin1String("GetAlternativeHostName"), argumentList);
     }
 
     inline QDBusReply<QString> GetAlternativeServiceName(const QString &name)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(name);
+        argumentList << QVariant::fromValue(name);
         return callWithArgumentList(QDBus::Block, QLatin1String("GetAlternativeServiceName"), argumentList);
     }
 
@@ -112,14 +112,14 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<int> GetNetworkInterfaceIndexByName(const QString &name)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(name);
+        argumentList << QVariant::fromValue(name);
         return callWithArgumentList(QDBus::Block, QLatin1String("GetNetworkInterfaceIndexByName"), argumentList);
     }
 
     inline QDBusReply<QString> GetNetworkInterfaceNameByIndex(int index)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(index);
+        argumentList << QVariant::fromValue(index);
         return callWithArgumentList(QDBus::Block, QLatin1String("GetNetworkInterfaceNameByIndex"), argumentList);
     }
 
@@ -138,7 +138,7 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<QDBusObjectPath> HostNameResolverNew(int interface, int protocol, const QString &name, int aprotocol, uint flags)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(name) << qVariantFromValue(aprotocol) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(name) << QVariant::fromValue(aprotocol) << QVariant::fromValue(flags);
         return callWithArgumentList(QDBus::Block, QLatin1String("HostNameResolverNew"), argumentList);
     }
 
@@ -151,14 +151,14 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<QDBusObjectPath> RecordBrowserNew(int interface, int protocol, const QString &name, ushort clazz, ushort type, uint flags)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(name) << qVariantFromValue(clazz) << qVariantFromValue(type) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(name) << QVariant::fromValue(clazz) << QVariant::fromValue(type) << QVariant::fromValue(flags);
         return callWithArgumentList(QDBus::Block, QLatin1String("RecordBrowserNew"), argumentList);
     }
 
     inline QDBusReply<int> ResolveAddress(int interface, int protocol, const QString &address, uint flags, int &protocol_, int &aprotocol, QString &address_, QString &name, uint &flags_)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(address) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(address) << QVariant::fromValue(flags);
         QDBusMessage reply = callWithArgumentList(QDBus::Block, QLatin1String("ResolveAddress"), argumentList);
         if (reply.type() == QDBusMessage::ReplyMessage && reply.arguments().count() == 6) {
             protocol_ = qdbus_cast<int>(reply.arguments().at(1));
@@ -173,7 +173,7 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<int> ResolveHostName(int interface, int protocol, const QString &name, int aprotocol, uint flags, int &protocol_, QString &name_, int &aprotocol_, QString &address, uint &flags_)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(name) << qVariantFromValue(aprotocol) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(name) << QVariant::fromValue(aprotocol) << QVariant::fromValue(flags);
         QDBusMessage reply = callWithArgumentList(QDBus::Block, QLatin1String("ResolveHostName"), argumentList);
         if (reply.type() == QDBusMessage::ReplyMessage && reply.arguments().count() == 6) {
             protocol_ = qdbus_cast<int>(reply.arguments().at(1));
@@ -188,7 +188,7 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<int> ResolveService(int interface, int protocol, const QString &name, const QString &type, const QString &domain, int aprotocol, uint flags, int &protocol_, QString &name_, QString &type_, QString &domain_, QString &host, int &aprotocol_, QString &address, ushort &port, QList<QByteArray> &txt, uint &flags_)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(name) << qVariantFromValue(type) << qVariantFromValue(domain) << qVariantFromValue(aprotocol) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(name) << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(aprotocol) << QVariant::fromValue(flags);
         QDBusMessage reply = callWithArgumentList(QDBus::Block, QLatin1String("ResolveService"), argumentList);
         if (reply.type() == QDBusMessage::ReplyMessage && reply.arguments().count() == 11) {
             protocol_ = qdbus_cast<int>(reply.arguments().at(1));
@@ -208,28 +208,28 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<QDBusObjectPath> ServiceBrowserNew(int interface, int protocol, const QString &type, const QString &domain, uint flags)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(type) << qVariantFromValue(domain) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(flags);
         return callWithArgumentList(QDBus::Block, QLatin1String("ServiceBrowserNew"), argumentList);
     }
 
     inline QDBusReply<QDBusObjectPath> ServiceResolverNew(int interface, int protocol, const QString &name, const QString &type, const QString &domain, int aprotocol, uint flags)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(name) << qVariantFromValue(type) << qVariantFromValue(domain) << qVariantFromValue(aprotocol) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(name) << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(aprotocol) << QVariant::fromValue(flags);
         return callWithArgumentList(QDBus::Block, QLatin1String("ServiceResolverNew"), argumentList);
     }
 
     inline QDBusReply<QDBusObjectPath> ServiceTypeBrowserNew(int interface, int protocol, const QString &domain, uint flags)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(interface) << qVariantFromValue(protocol) << qVariantFromValue(domain) << qVariantFromValue(flags);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(domain) << QVariant::fromValue(flags);
         return callWithArgumentList(QDBus::Block, QLatin1String("ServiceTypeBrowserNew"), argumentList);
     }
 
     inline QDBusReply<void> SetHostName(const QString &name)
     {
         QList<QVariant> argumentList;
-        argumentList << qVariantFromValue(name);
+        argumentList << QVariant::fromValue(name);
         return callWithArgumentList(QDBus::Block, QLatin1String("SetHostName"), argumentList);
     }
 
