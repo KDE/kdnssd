@@ -62,7 +62,8 @@ if (DNSSD_FOUND)
   target_link_libraries(KF5DNSSD PRIVATE ${DNSSD_LIBRARIES})
 endif ()
 
-target_include_directories(KF5DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BINARY_DIR}>")
+set(KDNSSD_BUILD_INCLUDE_DIRS ${KDNSSD_BINARY_DIR})
+target_include_directories(KF5DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BUILD_INCLUDE_DIRS}>")
 
 set_target_properties(KF5DNSSD PROPERTIES
    VERSION "${KDNSSD_VERSION_STRING}"
@@ -108,6 +109,9 @@ if(BUILD_QCH)
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
             Qt5Network_QCH
+        INCLUDE_DIRS
+            ${CMAKE_CURRENT_BINARY_DIR}
+            ${KDNSSD_BUILD_INCLUDE_DIRS}
         BLANK_MACROS
             KDNSSD_EXPORT
             KDNSSD_DEPRECATED
