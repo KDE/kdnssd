@@ -45,8 +45,14 @@ else ()
 endif ()
 
 add_library(KF5DNSSD SHARED ${kdnssd_LIB_SRCS})
-generate_export_header(KF5DNSSD BASE_NAME KDNSSD
-  EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
+ecm_generate_export_header(KF5DNSSD
+    EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
+    BASE_NAME KDNSSD
+    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    VERSION ${KF5_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    DEPRECATION_VERSIONS 4.0
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
 # Apps must include <DNSSD/File> or <dnssd/file.h>
