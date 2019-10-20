@@ -48,7 +48,7 @@ add_library(KF5DNSSD SHARED ${kdnssd_LIB_SRCS})
 ecm_generate_export_header(KF5DNSSD
     EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
     BASE_NAME KDNSSD
-    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    GROUP_BASE_NAME KF
     VERSION ${KF5_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.0
