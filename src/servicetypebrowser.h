@@ -80,7 +80,7 @@ public:
      *
      * Only the first call to this function will have any effect.
      *
-     * Browsing stops when the ServiceBrowser object is destroyed.
+     * Browsing stops when the ServiceTypeBrowser object is destroyed.
      *
      * @warning The serviceTypeAdded() signal may be emitted before this
      *          function returns.
