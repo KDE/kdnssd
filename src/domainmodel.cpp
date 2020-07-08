@@ -8,7 +8,7 @@
 
 #include "domainmodel.h"
 #include "domainbrowser.h"
-#include <qstringlist.h>
+#include <QStringList>
 
 namespace KDNSSD
 {
