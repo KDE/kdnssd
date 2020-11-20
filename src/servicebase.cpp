@@ -8,7 +8,6 @@
 
 #include "servicebase.h"
 #include "servicebase_p.h"
-#include <QRegExp>
 #include <QDataStream>
 #include <QUrl>
 
