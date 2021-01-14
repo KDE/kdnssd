@@ -29,10 +29,7 @@ DomainModel::DomainModel(DomainBrowser *browser, QObject *parent)
     browser->startBrowse();
 }
 
-DomainModel::~DomainModel()
-{
-    delete d;
-}
+DomainModel::~DomainModel() = default;
 
 int DomainModel::columnCount(const QModelIndex &parent) const
 {

@@ -25,13 +25,11 @@ DomainBrowser::DomainBrowser(DomainType type, QObject *parent) : QObject(parent)
 {
 }
 
-DomainBrowser::~DomainBrowser()
-{
-    delete d;
-}
+DomainBrowser::~DomainBrowser() = default;
 
 void DomainBrowser::startBrowse()
 {
+    Q_D(DomainBrowser);
     if (d->isRunning()) {
         return;
     }
@@ -65,11 +63,13 @@ void DomainBrowserPrivate::customEvent(QEvent *event)
 
 QStringList DomainBrowser::domains() const
 {
+    Q_D(const DomainBrowser);
     return d->m_domains;
 }
 
 bool DomainBrowser::isRunning() const
 {
+    Q_D(const DomainBrowser);
     return d->isRunning();
 }
 

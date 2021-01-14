@@ -14,6 +14,8 @@
 namespace KDNSSD
 {
 
+class ServiceBrowserPrivate {};
+
 ServiceBrowser::ServiceBrowser(const QString &, bool, const QString &, const QString &) : d(nullptr)
 {}
 

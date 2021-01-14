@@ -23,13 +23,11 @@ namespace KDNSSD
 DomainBrowser::DomainBrowser(DomainType type, QObject *parent) : QObject(parent), d(new DomainBrowserPrivate(type, this))
 {}
 
-DomainBrowser::~DomainBrowser()
-{
-    delete d;
-}
+DomainBrowser::~DomainBrowser() = default;
 
 void DomainBrowser::startBrowse()
 {
+    Q_D(DomainBrowser);
     if (d->m_started) {
         return;
     }
@@ -157,11 +155,13 @@ void DomainBrowserPrivate::gotRemoveDomain(int, int, const QString &domain, uint
 
 QStringList DomainBrowser::domains() const
 {
+    Q_D(const DomainBrowser);
     return d->m_domains.values();
 }
 
 bool DomainBrowser::isRunning() const
 {
+    Q_D(const DomainBrowser);
     return d->m_started;
 }
 

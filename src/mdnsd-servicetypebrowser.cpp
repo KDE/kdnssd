@@ -15,24 +15,24 @@ namespace KDNSSD
 
 ServiceTypeBrowser::ServiceTypeBrowser(const QString &domain, QObject *parent) : QObject(parent), d(new ServiceTypeBrowserPrivate(this))
 {
+    Q_D(ServiceTypeBrowser);
     d->m_browser = new ServiceBrowser("_services._dns-sd._udp", false, domain);
     connect(d->m_browser, SIGNAL(serviceAdded(KDNSSD::RemoteService::Ptr)), d, SLOT(newService(KDNSSD::RemoteService::Ptr)));
     connect(d->m_browser, SIGNAL(serviceRemoved(KDNSSD::RemoteService::Ptr)), d, SLOT(removeService(KDNSSD::RemoteService::Ptr)));
     connect(d->m_browser, SIGNAL(finished()), this, SIGNAL(finished()));
 }
 
-ServiceTypeBrowser::~ServiceTypeBrowser()
-{
-    delete d;
-}
+ServiceTypeBrowser::~ServiceTypeBrowser() = default;
 
 QStringList ServiceTypeBrowser::serviceTypes() const
 {
+    Q_D(const ServiceTypeBrowser);
     return d->m_servicetypes;
 }
 
 void ServiceTypeBrowser::startBrowse()
 {
+    Q_D(ServiceTypeBrowser);
     d->m_browser->startBrowse();
 }
 

@@ -12,6 +12,8 @@
 namespace KDNSSD
 {
 
+class ServiceTypeBrowserPrivate {};
+
 ServiceTypeBrowser::ServiceTypeBrowser(const QString &, QObject *parent) : QObject(parent), d(nullptr)
 {}
 

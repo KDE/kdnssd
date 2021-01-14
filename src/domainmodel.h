@@ -11,6 +11,7 @@
 
 #include <QAbstractItemModel>
 #include <dnssd/kdnssd_export.h>
+#include <memory>
 
 namespace KDNSSD
 {
@@ -74,7 +75,7 @@ public:
     virtual bool hasIndex(int row, int column, const QModelIndex &parent) const;
 
 private:
-    DomainModelPrivate *const d;
+    std::unique_ptr<DomainModelPrivate> const d;
     friend struct DomainModelPrivate;
 
 };

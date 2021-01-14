@@ -19,17 +19,16 @@ namespace KDNSSD
 
 ServiceTypeBrowser::ServiceTypeBrowser(const QString &domain, QObject *parent) : QObject(parent), d(new ServiceTypeBrowserPrivate(this))
 {
+    Q_D(ServiceTypeBrowser);
     d->m_domain = domain;
     d->m_timer.setSingleShot(true);
 }
 
-ServiceTypeBrowser::~ServiceTypeBrowser()
-{
-    delete d;
-}
+ServiceTypeBrowser::~ServiceTypeBrowser() = default;
 
 void ServiceTypeBrowser::startBrowse()
 {
+    Q_D(ServiceTypeBrowser);
     if (d->m_started) {
         return;
     }
@@ -146,6 +145,7 @@ void ServiceTypeBrowserPrivate::gotRemoveServiceType(int, int, const QString &ty
 
 QStringList ServiceTypeBrowser::serviceTypes() const
 {
+    Q_D(const ServiceTypeBrowser);
     return d->m_servicetypes;
 }
 

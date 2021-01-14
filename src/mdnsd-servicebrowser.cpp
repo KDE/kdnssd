@@ -30,6 +30,7 @@ void query_callback(DNSServiceRef, DNSServiceFlags flags, uint32_t, DNSServiceEr
 ServiceBrowser::ServiceBrowser(const QString &type, bool autoResolve, const QString &domain, const QString &subtype)
     : d(new ServiceBrowserPrivate(this))
 {
+    Q_D(ServiceBrowser);
     d->m_type = type;
     d->m_autoResolve = autoResolve;
     d->m_domain = domain;
@@ -46,13 +47,12 @@ ServiceBrowser::State ServiceBrowser::isAvailable()
 //  return (ok) ? Working : Stopped;
     return Working;
 }
-ServiceBrowser::~ ServiceBrowser()
-{
-    delete d;
-}
+
+ServiceBrowser::~ ServiceBrowser() = default;
 
 bool ServiceBrowser::isAutoResolving() const
 {
+    Q_D(const ServiceBrowser);
     return d->m_autoResolve;
 }
 
@@ -78,6 +78,7 @@ void ServiceBrowserPrivate::serviceResolved(bool success)
 
 void ServiceBrowser::startBrowse()
 {
+    Q_D(ServiceBrowser);
     if (d->isRunning()) {
         return;
     }
@@ -108,6 +109,7 @@ void ServiceBrowserPrivate::queryFinished()
 
 QList<RemoteService::Ptr> ServiceBrowser::services() const
 {
+    Q_D(const ServiceBrowser);
     return d->m_services;
 }
 

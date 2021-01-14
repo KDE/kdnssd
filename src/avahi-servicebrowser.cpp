@@ -21,6 +21,7 @@ namespace KDNSSD
 ServiceBrowser::ServiceBrowser(const QString &type, bool autoResolve, const QString &domain, const QString &subtype)
     : d(new ServiceBrowserPrivate(this))
 {
+    Q_D(ServiceBrowser);
     d->m_type = type;
     d->m_subtype = subtype;
     d->m_autoResolve = autoResolve;
@@ -34,18 +35,18 @@ ServiceBrowser::State ServiceBrowser::isAvailable()
     QDBusReply<int> rep = s.GetState();
     return (rep.isValid() && rep.value() == 2) ? Working : Stopped;
 }
-ServiceBrowser::~ServiceBrowser()
-{
-    delete d;
-}
+
+ServiceBrowser::~ServiceBrowser() = default;
 
 bool ServiceBrowser::isAutoResolving() const
 {
+    Q_D(const ServiceBrowser);
     return d->m_autoResolve;
 }
 
 void ServiceBrowser::startBrowse()
 {
+    Q_D(ServiceBrowser);
     if (d->m_running) {
         return;
     }
@@ -224,6 +225,7 @@ void ServiceBrowserPrivate::queryFinished()
 
 QList<RemoteService::Ptr> ServiceBrowser::services() const
 {
+    Q_D(const ServiceBrowser);
     return d->m_services;
 }
 

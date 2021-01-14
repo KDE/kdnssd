@@ -12,6 +12,7 @@
 #include <QAbstractItemModel>
 #include <dnssd/kdnssd_export.h>
 #include <dnssd/remoteservice.h>
+#include <memory>
 
 namespace KDNSSD
 {
@@ -103,9 +104,8 @@ public:
     virtual bool hasIndex(int row, int column, const QModelIndex &parent) const;
 
 private:
-    ServiceModelPrivate *const d;
+    std::unique_ptr<ServiceModelPrivate> const d;
     friend struct ServiceModelPrivate;
-
 };
 
 }

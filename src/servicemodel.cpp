@@ -28,10 +28,7 @@ ServiceModel::ServiceModel(ServiceBrowser *browser, QObject *parent)
     browser->startBrowse();
 }
 
-ServiceModel::~ServiceModel()
-{
-    delete d;
-}
+ServiceModel::~ServiceModel() = default;
 
 int ServiceModel::columnCount(const QModelIndex &) const
 {

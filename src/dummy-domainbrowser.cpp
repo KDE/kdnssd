@@ -12,6 +12,8 @@
 namespace KDNSSD
 {
 
+class DomainBrowserPrivate {};
+
 DomainBrowser::DomainBrowser(DomainType, QObject *parent) : QObject(parent), d(nullptr)
 {}
 

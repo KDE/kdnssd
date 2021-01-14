@@ -11,6 +11,7 @@
 
 #include <QObject>
 #include <dnssd/remoteservice.h>
+#include <memory>
 
 class QStringList;
 namespace KDNSSD
@@ -139,7 +140,8 @@ Q_SIGNALS:
 
 private:
     friend class ServiceTypeBrowserPrivate;
-    ServiceTypeBrowserPrivate *const d;
+    std::unique_ptr<ServiceTypeBrowserPrivate> const d;
+    Q_DECLARE_PRIVATE_D(d, ServiceTypeBrowser)
 };
 
 }

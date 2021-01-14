@@ -13,6 +13,7 @@
 #include <QHostAddress>
 
 #include <dnssd/remoteservice.h>
+#include <memory>
 
 namespace KDNSSD
 {
@@ -273,8 +274,8 @@ protected:
 
 private:
     friend class ServiceBrowserPrivate;
-    ServiceBrowserPrivate *const d;
-
+    std::unique_ptr<ServiceBrowserPrivate> const d;
+    Q_DECLARE_PRIVATE_D(d, ServiceBrowser)
 };
 
 }
