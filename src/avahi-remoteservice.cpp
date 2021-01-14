@@ -29,7 +29,7 @@ RemoteService::~RemoteService()
 
 bool RemoteService::resolve()
 {
-    K_D;
+    Q_D(RemoteService);
     resolveAsync();
     while (d->m_running && !d->m_resolved) {
         QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -39,7 +39,7 @@ bool RemoteService::resolve()
 
 void RemoteService::resolveAsync()
 {
-    K_D;
+    Q_D(RemoteService);
     if (d->m_running) {
         return;
     }
@@ -99,7 +99,7 @@ void RemoteService::resolveAsync()
 
 bool RemoteService::isResolved() const
 {
-    K_D;
+    Q_D(const RemoteService);
     return d->m_resolved;
 }
 

@@ -23,42 +23,53 @@ ServiceBase::ServiceBase(ServiceBasePrivate *const _d)
     :  d(_d)
 {}
 
-ServiceBase::~ServiceBase()
-{
-    delete d;
-}
+ServiceBase::~ServiceBase() = default;
 
 QString ServiceBase::serviceName() const
 {
+    Q_D(const ServiceBase);
+
     return d->m_serviceName;
 }
 
 QString ServiceBase::type() const
 {
+    Q_D(const ServiceBase);
+
     return d->m_type;
 }
 
 QString ServiceBase::domain() const
 {
+    Q_D(const ServiceBase);
+
     return d->m_domain;
 }
 
 QString ServiceBase::hostName() const
 {
+    Q_D(const ServiceBase);
+
     return d->m_hostName;
 }
 
 unsigned short ServiceBase::port() const
 {
+    Q_D(const ServiceBase);
+
     return d->m_port;
 }
 QMap<QString, QByteArray> ServiceBase::textData() const
 {
+    Q_D(const ServiceBase);
+
     return d->m_textData;
 }
 
 bool ServiceBase::operator==(const ServiceBase &o) const
 {
+    Q_D(const ServiceBase);
+
     return d->m_domain == o.d->m_domain && d->m_serviceName == o.d->m_serviceName && d->m_type == o.d->m_type;
 }
 

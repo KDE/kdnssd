@@ -13,6 +13,7 @@
 #include <QString>
 #include <QExplicitlySharedDataPointer>
 #include <dnssd/kdnssd_export.h>
+#include <memory>
 
 namespace KDNSSD
 {
@@ -174,8 +175,10 @@ public:
 protected:
     ServiceBase(ServiceBasePrivate *const d);
     virtual void virtual_hook(int, void *);
-    ServiceBasePrivate *const d;
 
+protected:
+    std::unique_ptr<ServiceBasePrivate> const d;
+    Q_DECLARE_PRIVATE_D(d, ServiceBase)
 };
 
 /* Utility functions */

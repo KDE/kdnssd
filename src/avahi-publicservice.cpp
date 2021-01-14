@@ -28,7 +28,7 @@ PublicService::PublicService(const QString &name, const QString &type, unsigned 
                              const QString &domain, const QStringList &subtypes)
     : QObject(), ServiceBase(new PublicServicePrivate(this, name, type, domain, port))
 {
-    K_D;
+    Q_D(PublicService);
     if (domain.isNull()) {
         d->m_domain = "local.";
     }
@@ -62,7 +62,7 @@ void PublicServicePrivate::gotGlobalStateChanged(int state,
 
 void PublicService::setServiceName(const QString &serviceName)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_serviceName = serviceName;
     if (d->m_running) {
         d->m_group->Reset();
@@ -72,7 +72,7 @@ void PublicService::setServiceName(const QString &serviceName)
 
 void PublicService::setDomain(const QString &domain)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_domain = domain;
     if (d->m_running) {
         d->m_group->Reset();
@@ -82,7 +82,7 @@ void PublicService::setDomain(const QString &domain)
 
 void PublicService::setType(const QString &type)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_type = type;
     if (d->m_running) {
         d->m_group->Reset();
@@ -92,7 +92,7 @@ void PublicService::setType(const QString &type)
 
 void PublicService::setSubTypes(const QStringList &subtypes)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_subtypes = subtypes;
     if (d->m_running) {
         d->m_group->Reset();
@@ -102,13 +102,13 @@ void PublicService::setSubTypes(const QStringList &subtypes)
 
 QStringList PublicService::subtypes() const
 {
-    K_D;
+    Q_D(const PublicService);
     return d->m_subtypes;
 }
 
 void PublicService::setPort(unsigned short port)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_port = port;
     if (d->m_running) {
         d->m_group->Reset();
@@ -118,7 +118,7 @@ void PublicService::setPort(unsigned short port)
 
 void PublicService::setTextData(const QMap<QString, QByteArray> &textData)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_textData = textData;
     if (d->m_running) {
         d->m_group->Reset();
@@ -128,13 +128,13 @@ void PublicService::setTextData(const QMap<QString, QByteArray> &textData)
 
 bool PublicService::isPublished() const
 {
-    K_D;
+    Q_D(const PublicService);
     return d->m_published;
 }
 
 bool PublicService::publish()
 {
-    K_D;
+    Q_D(PublicService);
     publishAsync();
     while (d->m_running && !d->m_published) {
         QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -144,7 +144,7 @@ bool PublicService::publish()
 
 void PublicService::stop()
 {
-    K_D;
+    Q_D(PublicService);
     if (d->m_group) {
         d->m_group->Reset();
     }
@@ -259,7 +259,7 @@ void PublicServicePrivate::serverStateChanged(int s, const QString &)
 
 void PublicService::publishAsync()
 {
-    K_D;
+    Q_D(PublicService);
     if (d->m_running) {
         stop();
     }

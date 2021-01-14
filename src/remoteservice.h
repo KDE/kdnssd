@@ -116,9 +116,10 @@ Q_SIGNALS:
 
 protected:
     void virtual_hook(int id, void *data) override;
+
 private:
     friend class RemoteServicePrivate;
-
+    Q_DECLARE_PRIVATE_D(ServiceBase::d, RemoteService)
 };
 
 }

@@ -14,8 +14,6 @@
 #include "mdnsd-sdevent.h"
 #include "mdnsd-responder.h"
 
-#define K_D PublicServicePrivate* d=static_cast<PublicServicePrivate*>(this->d)
-
 namespace KDNSSD
 {
 void publish_callback(DNSServiceRef, DNSServiceFlags, DNSServiceErrorType errorCode, const char *name,
@@ -37,7 +35,7 @@ PublicService::PublicService(const QString &name, const QString &type, unsigned 
                              const QString &domain, const QStringList &subtypes)
     : QObject(), ServiceBase(new PublicServicePrivate(this, name, type, port, domain))
 {
-    K_D;
+    Q_D(PublicService);
     if (domain.isNull()) {
         d->m_domain = "local.";
     }
@@ -51,7 +49,7 @@ PublicService::~PublicService()
 
 void PublicService::setServiceName(const QString &serviceName)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_serviceName = serviceName;
     if (d->isRunning()) {
         stop();
@@ -61,7 +59,7 @@ void PublicService::setServiceName(const QString &serviceName)
 
 void PublicService::setDomain(const QString &domain)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_domain = domain;
     if (d->isRunning()) {
         stop();
@@ -71,13 +69,13 @@ void PublicService::setDomain(const QString &domain)
 
 QStringList PublicService::subtypes() const
 {
-    K_D;
+    Q_D(const PublicService);
     return d->m_subtypes;
 }
 
 void PublicService::setType(const QString &type)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_type = type;
     if (d->isRunning()) {
         stop();
@@ -87,7 +85,7 @@ void PublicService::setType(const QString &type)
 
 void PublicService::setSubTypes(const QStringList &subtypes)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_subtypes = subtypes;
     if (d->isRunning()) {
         stop();
@@ -97,7 +95,7 @@ void PublicService::setSubTypes(const QStringList &subtypes)
 
 void PublicService::setPort(unsigned short port)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_port = port;
     if (d->isRunning()) {
         stop();
@@ -107,13 +105,13 @@ void PublicService::setPort(unsigned short port)
 
 bool PublicService::isPublished() const
 {
-    K_D;
+    Q_D(const PublicService);
     return d->m_published;
 }
 
 void PublicService::setTextData(const QMap<QString, QByteArray> &textData)
 {
-    K_D;
+    Q_D(PublicService);
     d->m_textData = textData;
     if (d->isRunning()) {
         stop();
@@ -123,7 +121,7 @@ void PublicService::setTextData(const QMap<QString, QByteArray> &textData)
 
 bool PublicService::publish()
 {
-    K_D;
+    Q_D(PublicService);
     publishAsync();
     while (d->isRunning() && !d->m_published) {
         d->process();
@@ -133,14 +131,14 @@ bool PublicService::publish()
 
 void PublicService::stop()
 {
-    K_D;
+    Q_D(PublicService);
     d->stop();
     d->m_published = false;
 }
 
 void PublicService::publishAsync()
 {
-    K_D;
+    Q_D(PublicService);
     if (d->isRunning()) {
         stop();
     }

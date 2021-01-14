@@ -211,11 +211,12 @@ Q_SIGNALS:
      */
     void published(bool successful);
 
-private:
-    friend class PublicServicePrivate;
-
 protected:
     void virtual_hook(int, void *) override;
+
+private:
+    friend class PublicServicePrivate;
+    Q_DECLARE_PRIVATE_D(ServiceBase::d, PublicService)
 };
 
 }
