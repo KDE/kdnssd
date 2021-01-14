@@ -44,7 +44,7 @@ configure_file(config-kdnssd.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdnssd.h
 
 find_package(Avahi)
 set_package_properties(Avahi PROPERTIES DESCRIPTION "Facilities for service discovery on a local network (DNSSD)"
-                       URL "http://avahi.org"
+                       URL "https://avahi.org"
                        TYPE OPTIONAL
                        PURPOSE "Either Avahi or DNSSD is required for KDE applications to make use of multicast DNS/DNS-SD service discovery"
                       )
@@ -52,7 +52,7 @@ set_package_properties(Avahi PROPERTIES DESCRIPTION "Facilities for service disc
 if(NOT AVAHI_FOUND)
     find_package(DNSSD)
     set_package_properties(DNSSD PROPERTIES DESCRIPTION "Facilities for service discovery on a local network"
-                          URL "http://avahi.org"
+                          URL "https://avahi.org"
                           TYPE OPTIONAL
                           PURPOSE "Either Avahi or DNSSD is required for KDE applications to make use of multicast DNS/DNS-SD service discovery"
                           )
