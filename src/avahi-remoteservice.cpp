@@ -83,7 +83,7 @@ void RemoteService::resolveAsync()
     QDBusReply<QDBusObjectPath> rep = s.ServiceResolverNew(-1, -1, d->m_serviceName, d->m_type,
                                       domainToDNS(d->m_domain), -1, 8 /*AVAHI_LOOKUP_NO_ADDRESS*/);
     if (!rep.isValid()) {
-        emit resolved(false);
+        Q_EMIT resolved(false);
         return;
     }
 
@@ -108,7 +108,7 @@ void RemoteServicePrivate::gotError()
     m_resolved = false;
     stop();
 
-    emit m_parent->resolved(false);
+    Q_EMIT m_parent->resolved(false);
 }
 
 void RemoteServicePrivate::gotGlobalFound(int interface,
@@ -154,7 +154,7 @@ void RemoteServicePrivate::gotFound(int, int, const QString &name, const QString
         }
     }
     m_resolved = true;
-    emit m_parent->resolved(true);
+    Q_EMIT m_parent->resolved(true);
 }
 
 void RemoteServicePrivate::stop()

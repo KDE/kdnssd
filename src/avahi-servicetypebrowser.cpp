@@ -92,7 +92,7 @@ void ServiceTypeBrowser::startBrowse()
 void ServiceTypeBrowserPrivate::finished()
 {
     m_timer.stop();
-    emit m_parent->finished();
+    Q_EMIT m_parent->finished();
 }
 
 void ServiceTypeBrowserPrivate::gotGlobalItemNew(int interface,
@@ -133,14 +133,14 @@ void ServiceTypeBrowserPrivate::gotNewServiceType(int, int, const QString &type,
 {
     m_timer.start(TIMEOUT_LAST_SERVICE);
     m_servicetypes += type;
-    emit m_parent->serviceTypeAdded(type);
+    Q_EMIT m_parent->serviceTypeAdded(type);
 }
 
 void ServiceTypeBrowserPrivate::gotRemoveServiceType(int, int, const QString &type, const QString &, uint)
 {
     m_timer.start(TIMEOUT_LAST_SERVICE);
     m_servicetypes.removeAll(type);
-    emit m_parent->serviceTypeRemoved(type);
+    Q_EMIT m_parent->serviceTypeRemoved(type);
 }
 
 QStringList ServiceTypeBrowser::serviceTypes() const

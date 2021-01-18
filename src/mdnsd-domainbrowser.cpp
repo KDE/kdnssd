@@ -53,10 +53,10 @@ void DomainBrowserPrivate::customEvent(QEvent *event)
                 return;
             }
             m_domains.append(aev->m_domain);
-            emit m_parent->domainAdded(aev->m_domain);
+            Q_EMIT m_parent->domainAdded(aev->m_domain);
         } else {
             m_domains.removeAll(aev->m_domain);
-            emit m_parent->domainRemoved(aev->m_domain);
+            Q_EMIT m_parent->domainRemoved(aev->m_domain);
         }
     }
 }

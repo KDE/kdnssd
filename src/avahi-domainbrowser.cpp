@@ -140,7 +140,7 @@ void DomainBrowserPrivate::gotNewDomain(int, int, const QString &domain, uint)
         return;
     }
     m_domains += decoded;
-    emit m_parent->domainAdded(decoded);
+    Q_EMIT m_parent->domainAdded(decoded);
 }
 
 void DomainBrowserPrivate::gotRemoveDomain(int, int, const QString &domain, uint)
@@ -149,7 +149,7 @@ void DomainBrowserPrivate::gotRemoveDomain(int, int, const QString &domain, uint
     if (!m_domains.contains(decoded)) {
         return;
     }
-    emit m_parent->domainRemoved(decoded);
+    Q_EMIT m_parent->domainRemoved(decoded);
     m_domains.remove(decoded);
 }
 

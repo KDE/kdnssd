@@ -95,7 +95,7 @@ void ServiceBrowser::startBrowse()
     }
     QDBusReply<QDBusObjectPath> rep = s.ServiceBrowserNew(-1, -1, fullType, domainToDNS(d->m_domain), 0);
     if (!rep.isValid()) {
-        emit finished();
+        Q_EMIT finished();
         return;
     }
 
@@ -127,7 +127,7 @@ void ServiceBrowserPrivate::serviceResolved(bool success)
     if (it != itEnd) {
         if (success) {
             m_services += (*it);
-            emit m_parent->serviceAdded(RemoteService::Ptr(svr));
+            Q_EMIT m_parent->serviceAdded(RemoteService::Ptr(svr));
         }
         m_duringResolve.erase(it);
         queryFinished();
@@ -188,7 +188,7 @@ void ServiceBrowserPrivate::gotNewService(int, int, const QString &name, const Q
         svr->resolveAsync();
     } else  {
         m_services += svr;
-        emit m_parent->serviceAdded(svr);
+        Q_EMIT m_parent->serviceAdded(svr);
     }
 }
 
@@ -206,7 +206,7 @@ void ServiceBrowserPrivate::gotRemoveService(int, int, const QString &name, cons
         return;
     }
 
-    emit m_parent->serviceRemoved(found);
+    Q_EMIT m_parent->serviceRemoved(found);
     m_services.removeAll(found);
 }
 void ServiceBrowserPrivate::browserFinished()
@@ -219,7 +219,7 @@ void ServiceBrowserPrivate::browserFinished()
 void ServiceBrowserPrivate::queryFinished()
 {
     if (!m_duringResolve.count() && m_browserFinished) {
-        emit m_parent->finished();
+        Q_EMIT m_parent->finished();
     }
 }
 

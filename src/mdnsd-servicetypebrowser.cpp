@@ -40,14 +40,14 @@ void ServiceTypeBrowserPrivate::newService(KDNSSD::RemoteService::Ptr srv)
 {
     QString type = srv->serviceName() + '.' + srv->type();
     m_servicetypes += type;
-    emit m_parent->serviceTypeAdded(type);
+    Q_EMIT m_parent->serviceTypeAdded(type);
 }
 
 void ServiceTypeBrowserPrivate::removeService(KDNSSD::RemoteService::Ptr srv)
 {
     QString type = srv->serviceName() + '.' + srv->type();
     m_servicetypes.removeAll(type);
-    emit m_parent->serviceTypeRemoved(type);
+    Q_EMIT m_parent->serviceTypeRemoved(type);
 }
 
 }

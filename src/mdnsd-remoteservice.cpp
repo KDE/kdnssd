@@ -74,7 +74,7 @@ void RemoteService::resolveAsync()
         d->setRef(ref);
     }
     if (!d->isRunning()) {
-        emit resolved(false);
+        Q_EMIT resolved(false);
     }
 }
 
@@ -89,7 +89,7 @@ void RemoteServicePrivate::customEvent(QEvent *event)
     if (event->type() == QEvent::User + SD_ERROR) {
         stop();
         m_resolved = false;
-        emit m_parent->resolved(false);
+        Q_EMIT m_parent->resolved(false);
     }
     if (event->type() == QEvent::User + SD_RESOLVE) {
         ResolveEvent *rev = static_cast<ResolveEvent *>(event);
@@ -97,7 +97,7 @@ void RemoteServicePrivate::customEvent(QEvent *event)
         m_port = rev->m_port;
         m_textData = rev->m_txtdata;
         m_resolved = true;
-        emit m_parent->resolved(true);
+        Q_EMIT m_parent->resolved(true);
     }
 }
 

@@ -75,7 +75,7 @@ void PublicService::stop()
 
 void PublicService::publishAsync()
 {
-    emit published(false);
+    Q_EMIT published(false);
 }
 
 void PublicService::virtual_hook(int, void *)

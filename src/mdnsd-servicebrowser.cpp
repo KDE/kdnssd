@@ -69,7 +69,7 @@ void ServiceBrowserPrivate::serviceResolved(bool success)
     if (it != itEnd) {
         if (success) {
             m_services += (*it);
-            emit m_parent->serviceAdded(RemoteService::Ptr(svr));
+            Q_EMIT m_parent->serviceAdded(RemoteService::Ptr(svr));
         }
         m_duringResolve.erase(it);
         queryFinished();
@@ -94,7 +94,7 @@ void ServiceBrowser::startBrowse()
         d->setRef(ref);
     }
     if (!d->isRunning()) {
-        emit finished();
+        Q_EMIT finished();
     } else {
         d->timeout.start(domainIsLocal(d->m_domain) ? TIMEOUT_LAN : TIMEOUT_WAN);
     }
@@ -103,7 +103,7 @@ void ServiceBrowser::startBrowse()
 void ServiceBrowserPrivate::queryFinished()
 {
     if (!m_duringResolve.count() && m_finished) {
-        emit m_parent->finished();
+        Q_EMIT m_parent->finished();
     }
 }
 
@@ -142,7 +142,7 @@ void ServiceBrowserPrivate::customEvent(QEvent *event)
                 svr->resolveAsync();
             } else {
                 m_services += svr;
-                emit m_parent->serviceAdded(svr);
+                Q_EMIT m_parent->serviceAdded(svr);
             }
         } else {
 
@@ -152,7 +152,7 @@ void ServiceBrowserPrivate::customEvent(QEvent *event)
             } else {
                 found = find(svr, m_services);
                 if (found) {
-                    emit m_parent->serviceRemoved(found);
+                    Q_EMIT m_parent->serviceRemoved(found);
                     m_services.removeAll(found);
                 }
             }

@@ -148,7 +148,7 @@ void PublicService::publishAsync()
     for (QMap<QString, QByteArray>::ConstIterator it = d->m_textData.cbegin(); it != itEnd; ++it) {
         if (TXTRecordSetValue(&txt, it.key().toUtf8().constData(), it.value().length(), it.value().constData()) != kDNSServiceErr_NoError) {
             TXTRecordDeallocate(&txt);
-            emit published(false);
+            Q_EMIT published(false);
             return;
         }
     }
@@ -164,7 +164,7 @@ void PublicService::publishAsync()
     }
     TXTRecordDeallocate(&txt);
     if (!d->isRunning()) {
-        emit published(false);
+        Q_EMIT published(false);
     }
 }
 
@@ -185,11 +185,11 @@ void PublicServicePrivate::customEvent(QEvent *event)
 {
     if (event->type() == QEvent::User + SD_ERROR) {
         m_parent->stop();
-        emit m_parent->published(false);
+        Q_EMIT m_parent->published(false);
     }
     if (event->type() == QEvent::User + SD_PUBLISH) {
         m_published = true;
-        emit m_parent->published(true);
+        Q_EMIT m_parent->published(true);
         m_serviceName = static_cast<PublishEvent *>(event)->m_name;
     }
 }

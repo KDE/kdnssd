@@ -46,7 +46,7 @@ void PublicServicePrivate::tryApply()
         commit();
     } else {
         m_parent->stop();
-        emit m_parent->published(false);
+        Q_EMIT m_parent->published(false);
     }
 }
 
@@ -240,7 +240,7 @@ void PublicServicePrivate::serverStateChanged(int s, const QString &)
     switch (s) {
     case AVAHI_SERVER_INVALID:
         m_parent->stop();
-        emit m_parent->published(false);
+        Q_EMIT m_parent->published(false);
         break;
     case AVAHI_SERVER_REGISTERING:
     case AVAHI_SERVER_COLLISION:
@@ -294,7 +294,7 @@ void PublicServicePrivate::groupStateChanged(int s,  const QString &reason)
     }
     case AVAHI_ENTRY_GROUP_ESTABLISHED:
         m_published = true;
-        emit m_parent->published(true);
+        Q_EMIT m_parent->published(true);
         break;
     case AVAHI_ENTRY_GROUP_FAILURE:
         serverStateChanged(AVAHI_SERVER_INVALID, reason);

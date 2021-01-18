@@ -34,7 +34,7 @@ ServiceBrowser::~ ServiceBrowser()
 
 void ServiceBrowser::startBrowse()
 {
-    emit finished();
+    Q_EMIT finished();
 }
 
 QList<RemoteService::Ptr> ServiceBrowser::services() const

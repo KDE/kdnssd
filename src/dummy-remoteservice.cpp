@@ -28,7 +28,7 @@ bool RemoteService::resolve()
 
 void RemoteService::resolveAsync()
 {
-    emit resolved(false);
+    Q_EMIT resolved(false);
 }
 
 bool RemoteService::isResolved() const
