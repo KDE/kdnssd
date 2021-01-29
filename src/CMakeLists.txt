@@ -49,7 +49,7 @@ ecm_generate_export_header(KF5DNSSD
     EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
     BASE_NAME KDNSSD
     GROUP_BASE_NAME KF
-    VERSION ${KF5_VERSION}
+    VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.0
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
@@ -108,7 +108,7 @@ if(BUILD_QCH)
         KF5DNSSD_QCH
         NAME KDNSSD
         BASE_NAME KF5DNSSD
-        VERSION ${KF5_VERSION}
+        VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
             ${kdnssd_HEADERS}
