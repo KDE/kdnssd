@@ -10,10 +10,10 @@
 #define KDNSSDDOMAINBROWSER_H
 
 #include <QObject>
+#include <QtContainerFwd>
 #include <dnssd/remoteservice.h>
 #include <memory>
 
-class QStringList;
 namespace KDNSSD
 {
 class DomainBrowserPrivate;
