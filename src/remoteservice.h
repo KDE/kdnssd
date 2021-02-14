@@ -119,7 +119,6 @@ protected:
 
 private:
     friend class RemoteServicePrivate;
-    Q_DECLARE_PRIVATE_D(ServiceBase::d, RemoteService)
 };
 
 }

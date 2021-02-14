@@ -17,6 +17,8 @@
 #include "avahi_listener_p.h"
 #include "avahi_serviceresolver_interface.h"
 
+#define KDNSSD_D RemoteServicePrivate* d = static_cast<RemoteServicePrivate*>(this->d.operator->())
+
 namespace KDNSSD
 {
 
