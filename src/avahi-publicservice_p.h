@@ -17,6 +17,8 @@
 #include "avahi_server_interface.h"
 #include "avahi_entrygroup_interface.h"
 
+#define KDNSSD_D PublicServicePrivate* d = static_cast<PublicServicePrivate*>(this->d.operator->())
+
 namespace KDNSSD
 {
 

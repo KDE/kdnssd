@@ -29,6 +29,8 @@ void resolve_callback(DNSServiceRef,
                       void                                *context
                      );
 
+#define KDNSSD_D RemoteServicePrivate* d = static_cast<RemoteServicePrivate*>(this->d.operator->())
+
 class RemoteServicePrivate : public Responder, public ServiceBasePrivate
 {
 public:
@@ -50,7 +52,7 @@ RemoteService::~RemoteService()
 
 bool RemoteService::resolve()
 {
-    Q_D(RemoteService);
+    KDNSSD_D;
     resolveAsync();
     while (d->isRunning() && !d->m_resolved) {
         d->process();
@@ -61,7 +63,7 @@ bool RemoteService::resolve()
 
 void RemoteService::resolveAsync()
 {
-    Q_D(RemoteService);
+    KDNSSD_D;
     if (d->isRunning()) {
         return;
     }
@@ -80,7 +82,7 @@ void RemoteService::resolveAsync()
 
 bool RemoteService::isResolved() const
 {
-    Q_D(const RemoteService);
+    KDNSSD_D;
     return d->m_resolved;
 }
 

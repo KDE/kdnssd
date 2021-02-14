@@ -216,7 +216,6 @@ protected:
 
 private:
     friend class PublicServicePrivate;
-    Q_DECLARE_PRIVATE_D(ServiceBase::d, PublicService)
 };
 
 }

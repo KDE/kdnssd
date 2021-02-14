@@ -178,7 +178,12 @@ protected:
 
 protected:
     std::unique_ptr<ServiceBasePrivate> const d;
-    Q_DECLARE_PRIVATE_D(d, ServiceBase)
+    // We cannot use Q_DECLARE_PRIVATE_D & Q_D here because of multiple inheritance with some
+    // of the subclasses of ServiceBasePrivate, where ServiceBasePrivate is not the first base class,
+    // so reinterpret_cast as used by the functions defined with Q_DECLARE_PRIVATE_D would fail.
+    // Using a custom macro here with static_cast would require to know about the type definition
+    // of the private classes, which we though want to avoid here in the public class.
+    // So instead some custom KDNSSD_D macros are used internally...
 };
 
 /* Utility functions */
