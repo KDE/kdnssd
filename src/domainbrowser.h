@@ -51,7 +51,7 @@ public:
         /** Domains recommended for browsing for services on (using ServiceBrowser) */
         Browsing,
         /** Domains recommended for publishing to (using PublicService) */
-        Publishing
+        Publishing,
     };
     /**
      * Standard constructor

@@ -65,7 +65,7 @@ public:
         /** not available because mDnsd or Avahi daemon is not running */
         Stopped,
         /** not available because KDE was compiled without DNS-SD support */
-        Unsupported
+        Unsupported,
     };
 
     /**

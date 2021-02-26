@@ -59,7 +59,7 @@ public:
 
     /** The additional data roles provided by this model */
     enum AdditionalRoles {
-        ServicePtrRole = 0xA06519DE  ///< gets a RemoteService::Ptr for the service
+        ServicePtrRole = 0xA06519DE, ///< gets a RemoteService::Ptr for the service
     };
 
     /**
@@ -71,7 +71,7 @@ public:
     enum ModelColumns {
         ServiceName = 0,
         Host = 1,
-        Port = 2
+        Port = 2,
     };
 
     /**
