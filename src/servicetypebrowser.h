@@ -52,8 +52,7 @@ public:
      *
      * @see startBrowse() and ServiceBrowser::isAvailable()
      */
-    explicit ServiceTypeBrowser(const QString &domain = QString(),
-                                QObject *parent = nullptr);
+    explicit ServiceTypeBrowser(const QString &domain = QString(), QObject *parent = nullptr);
 
     ~ServiceTypeBrowser();
 

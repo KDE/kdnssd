@@ -6,37 +6,40 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include <netinet/in.h>
-#include <QEventLoop>
-#include <QCoreApplication>
-#include <QDebug>
-#include "remoteservice.h"
-#include "servicebase_p.h"
 #include "mdnsd-responder.h"
 #include "mdnsd-sdevent.h"
+#include "remoteservice.h"
+#include "servicebase_p.h"
+#include <QCoreApplication>
+#include <QDebug>
+#include <QEventLoop>
+#include <netinet/in.h>
 
 namespace KDNSSD
 {
 void resolve_callback(DNSServiceRef,
                       DNSServiceFlags,
                       uint32_t,
-                      DNSServiceErrorType                 errorCode,
+                      DNSServiceErrorType errorCode,
                       const char *,
-                      const char                          *hosttarget,
-                      uint16_t                            port,
-                      uint16_t                            txtLen,
-                      const unsigned char                 *txtRecord,
-                      void                                *context
-                     );
+                      const char *hosttarget,
+                      uint16_t port,
+                      uint16_t txtLen,
+                      const unsigned char *txtRecord,
+                      void *context);
 
-#define KDNSSD_D RemoteServicePrivate* d = static_cast<RemoteServicePrivate*>(this->d.operator->())
+#define KDNSSD_D RemoteServicePrivate *d = static_cast<RemoteServicePrivate *>(this->d.operator->())
 
 class RemoteServicePrivate : public Responder, public ServiceBasePrivate
 {
 public:
-    RemoteServicePrivate(RemoteService *parent, const QString &name, const QString &type, const QString &domain) :
-        Responder(), ServiceBasePrivate(name, type, domain, QString(), 0),  m_resolved(false), m_parent(parent)
-    {}
+    RemoteServicePrivate(RemoteService *parent, const QString &name, const QString &type, const QString &domain)
+        : Responder()
+        , ServiceBasePrivate(name, type, domain, QString(), 0)
+        , m_resolved(false)
+        , m_parent(parent)
+    {
+    }
     bool m_resolved;
     RemoteService *m_parent;
     virtual void customEvent(QEvent *event);
@@ -48,7 +51,8 @@ RemoteService::RemoteService(const QString &name, const QString &type, const QSt
 }
 
 RemoteService::~RemoteService()
-{}
+{
+}
 
 bool RemoteService::resolve()
 {
@@ -68,11 +72,17 @@ void RemoteService::resolveAsync()
         return;
     }
     d->m_resolved = false;
-    //qDebug() << this << ":Starting resolve of : " << d->m_serviceName << " " << d->m_type << " " << d->m_domain << "\n";
+    // qDebug() << this << ":Starting resolve of : " << d->m_serviceName << " " << d->m_type << " " << d->m_domain << "\n";
     DNSServiceRef ref;
-    if (DNSServiceResolve(&ref, 0, 0, d->m_serviceName.toUtf8().constData(), d->m_type.toLatin1().constData(),
-                          domainToDNS(d->m_domain).constData(), (DNSServiceResolveReply)resolve_callback, reinterpret_cast<void *>(d))
-            == kDNSServiceErr_NoError) {
+    if (DNSServiceResolve(&ref,
+                          0,
+                          0,
+                          d->m_serviceName.toUtf8().constData(),
+                          d->m_type.toLatin1().constData(),
+                          domainToDNS(d->m_domain).constData(),
+                          (DNSServiceResolveReply)resolve_callback,
+                          reinterpret_cast<void *>(d))
+        == kDNSServiceErr_NoError) {
         d->setRef(ref);
     }
     if (!d->isRunning()) {
@@ -111,14 +121,13 @@ void RemoteService::virtual_hook(int, void *)
 void resolve_callback(DNSServiceRef,
                       DNSServiceFlags,
                       uint32_t,
-                      DNSServiceErrorType                 errorCode,
+                      DNSServiceErrorType errorCode,
                       const char *,
-                      const char                          *hosttarget,
-                      uint16_t                            port,
-                      uint16_t                            txtLen,
-                      const unsigned char                 *txtRecord,
-                      void                                *context
-                     )
+                      const char *hosttarget,
+                      uint16_t port,
+                      uint16_t txtLen,
+                      const unsigned char *txtRecord,
+                      void *context)
 {
     QObject *obj = reinterpret_cast<QObject *>(context);
     if (errorCode != kDNSServiceErr_NoError) {
@@ -129,11 +138,10 @@ void resolve_callback(DNSServiceRef,
     char key[256];
     int index = 0;
     unsigned char valueLen;
-    //qDebug() << "Resolve callback\n";
+    // qDebug() << "Resolve callback\n";
     QMap<QString, QByteArray> map;
     const void *voidValue = 0;
-    while (TXTRecordGetItemAtIndex(txtLen, txtRecord, index++, 256, key, &valueLen,
-                                   &voidValue) == kDNSServiceErr_NoError) {
+    while (TXTRecordGetItemAtIndex(txtLen, txtRecord, index++, 256, key, &valueLen, &voidValue) == kDNSServiceErr_NoError) {
         if (voidValue) {
             map[QString::fromUtf8(key)] = QByteArray((const char *)voidValue, valueLen);
         } else {

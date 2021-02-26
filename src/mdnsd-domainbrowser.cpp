@@ -6,11 +6,11 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include "mdnsd-domainbrowser_p.h"
 #include "domainbrowser.h"
-#include "remoteservice.h"
+#include "mdnsd-domainbrowser_p.h"
 #include "mdnsd-responder.h"
 #include "mdnsd-sdevent.h"
+#include "remoteservice.h"
 
 #include <QCoreApplication>
 #include <QHash>
@@ -18,10 +18,11 @@
 
 namespace KDNSSD
 {
-
 void domain_callback(DNSServiceRef, DNSServiceFlags flags, uint32_t, DNSServiceErrorType errorCode, const char *replyDomain, void *context);
 
-DomainBrowser::DomainBrowser(DomainType type, QObject *parent) : QObject(parent), d(new DomainBrowserPrivate(type, this))
+DomainBrowser::DomainBrowser(DomainType type, QObject *parent)
+    : QObject(parent)
+    , d(new DomainBrowserPrivate(type, this))
 {
 }
 
@@ -34,8 +35,12 @@ void DomainBrowser::startBrowse()
         return;
     }
     DNSServiceRef ref;
-    if (DNSServiceEnumerateDomains(&ref, (d->m_type == Browsing) ? kDNSServiceFlagsBrowseDomains : kDNSServiceFlagsBrowseDomains,
-                                   0, domain_callback, reinterpret_cast<void *>(d)) == kDNSServiceErr_NoError) {
+    if (DNSServiceEnumerateDomains(&ref,
+                                   (d->m_type == Browsing) ? kDNSServiceFlagsBrowseDomains : kDNSServiceFlagsBrowseDomains,
+                                   0,
+                                   domain_callback,
+                                   reinterpret_cast<void *>(d))
+        == kDNSServiceErr_NoError) {
         d->setRef(ref);
     }
 }
@@ -48,7 +53,7 @@ void DomainBrowserPrivate::customEvent(QEvent *event)
     if (event->type() == QEvent::User + SD_ADDREMOVE) {
         AddRemoveEvent *aev = static_cast<AddRemoveEvent *>(event);
         if (aev->m_op == AddRemoveEvent::Add) {
-            //FIXME: check if domain name is not name+domain (there was some mdnsd weirdness)
+            // FIXME: check if domain name is not name+domain (there was some mdnsd weirdness)
             if (m_domains.contains(aev->m_domain)) {
                 return;
             }
@@ -84,9 +89,11 @@ void domain_callback(DNSServiceRef, DNSServiceFlags flags, uint32_t, DNSServiceE
         if (flags & kDNSServiceFlagsDefault) {
             return;
         }
-        AddRemoveEvent arev((flags & kDNSServiceFlagsAdd) ? AddRemoveEvent::Add :
-                            AddRemoveEvent::Remove, QString(), QString(),
-                            DNSToDomain(replyDomain), !(flags & kDNSServiceFlagsMoreComing));
+        AddRemoveEvent arev((flags & kDNSServiceFlagsAdd) ? AddRemoveEvent::Add : AddRemoveEvent::Remove,
+                            QString(),
+                            QString(),
+                            DNSToDomain(replyDomain),
+                            !(flags & kDNSServiceFlagsMoreComing));
         QCoreApplication::sendEvent(obj, &arev);
     }
 }

@@ -11,13 +11,16 @@
 
 #include "avahi_server_interface.h"
 #include "servicebase.h"
-#include <QUrl>
 #include <QDBusMetaType>
+#include <QUrl>
 /*
  * Implementation of interface class OrgFreedesktopAvahiServerInterface
  */
 
-OrgFreedesktopAvahiServerInterface::OrgFreedesktopAvahiServerInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent)
+OrgFreedesktopAvahiServerInterface::OrgFreedesktopAvahiServerInterface(const QString &service,
+                                                                       const QString &path,
+                                                                       const QDBusConnection &connection,
+                                                                       QObject *parent)
     : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent)
 {
 }
@@ -28,12 +31,11 @@ OrgFreedesktopAvahiServerInterface::~OrgFreedesktopAvahiServerInterface()
 
 namespace KDNSSD
 {
-
 void registerTypes()
 {
     static bool registered = false;
     if (!registered) {
-        qDBusRegisterMetaType<QList<QByteArray> >();
+        qDBusRegisterMetaType<QList<QByteArray>>();
         registered = true;
     }
 }

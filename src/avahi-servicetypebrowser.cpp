@@ -8,16 +8,17 @@
 */
 
 #include "avahi-servicetypebrowser_p.h"
-#include <QSet>
 #include "avahi_server_interface.h"
-#include "servicetypebrowser.h"
 #include "avahi_servicetypebrowser_interface.h"
+#include "servicetypebrowser.h"
+#include <QSet>
 
 #define UNSPEC -1
 namespace KDNSSD
 {
-
-ServiceTypeBrowser::ServiceTypeBrowser(const QString &domain, QObject *parent) : QObject(parent), d(new ServiceTypeBrowserPrivate(this))
+ServiceTypeBrowser::ServiceTypeBrowser(const QString &domain, QObject *parent)
+    : QObject(parent)
+    , d(new ServiceTypeBrowserPrivate(this))
 {
     Q_D(ServiceTypeBrowser);
     d->m_domain = domain;
@@ -47,27 +48,20 @@ void ServiceTypeBrowser::startBrowse()
     // This uses a fancy trick whereby using QDBusMessage as last argument will
     // give us the correct signal argument types as well as the underlying
     // message so that we may check the message path.
+    QDBusConnection::systemBus().connect("org.freedesktop.Avahi",
+                                         "",
+                                         "org.freedesktop.Avahi.ServiceTypeBrowser",
+                                         "ItemNew",
+                                         d,
+                                         SLOT(gotGlobalItemNew(int, int, QString, QString, uint, QDBusMessage)));
+    QDBusConnection::systemBus().connect("org.freedesktop.Avahi",
+                                         "",
+                                         "org.freedesktop.Avahi.ServiceTypeBrowser",
+                                         "ItemRemove",
+                                         d,
+                                         SLOT(gotGlobalItemRemove(int, int, QString, QString, uint, QDBusMessage)));
     QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceTypeBrowser",
-                     "ItemNew",
-                     d,
-                     SLOT(gotGlobalItemNew(int,int,QString,QString,uint,QDBusMessage)));
-    QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceTypeBrowser",
-                     "ItemRemove",
-                     d,
-                     SLOT(gotGlobalItemRemove(int,int,QString,QString,uint,QDBusMessage)));
-    QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceTypeBrowser",
-                     "AllForNow",
-                     d,
-                     SLOT(gotGlobalAllForNow(QDBusMessage)));
+        .connect("org.freedesktop.Avahi", "", "org.freedesktop.Avahi.ServiceTypeBrowser", "AllForNow", d, SLOT(gotGlobalAllForNow(QDBusMessage)));
     d->m_dbusObjectPath.clear();
 
     org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
@@ -80,10 +74,7 @@ void ServiceTypeBrowser::startBrowse()
     d->m_dbusObjectPath = rep.value().path();
 
     // This is held because we need to explicitly Free it!
-    d->m_browser = new org::freedesktop::Avahi::ServiceTypeBrowser(
-                s.service(),
-                d->m_dbusObjectPath,
-                s.connection());
+    d->m_browser = new org::freedesktop::Avahi::ServiceTypeBrowser(s.service(), d->m_dbusObjectPath, s.connection());
 
     connect(&d->m_timer, SIGNAL(timeout()), d, SLOT(finished()));
     d->m_timer.start(domainIsLocal(d->m_domain) ? TIMEOUT_LAST_SERVICE : TIMEOUT_START_WAN);
@@ -95,12 +86,7 @@ void ServiceTypeBrowserPrivate::finished()
     Q_EMIT m_parent->finished();
 }
 
-void ServiceTypeBrowserPrivate::gotGlobalItemNew(int interface,
-                                                 int protocol,
-                                                 const QString &type,
-                                                 const QString &domain,
-                                                 uint flags,
-                                                 QDBusMessage msg)
+void ServiceTypeBrowserPrivate::gotGlobalItemNew(int interface, int protocol, const QString &type, const QString &domain, uint flags, QDBusMessage msg)
 {
     if (!isOurMsg(msg)) {
         return;
@@ -108,12 +94,7 @@ void ServiceTypeBrowserPrivate::gotGlobalItemNew(int interface,
     gotNewServiceType(interface, protocol, type, domain, flags);
 }
 
-void ServiceTypeBrowserPrivate::gotGlobalItemRemove(int interface,
-                                                    int protocol,
-                                                    const QString &type,
-                                                    const QString &domain,
-                                                    uint flags,
-                                                    QDBusMessage msg)
+void ServiceTypeBrowserPrivate::gotGlobalItemRemove(int interface, int protocol, const QString &type, const QString &domain, uint flags, QDBusMessage msg)
 {
     if (!isOurMsg(msg)) {
         return;
@@ -150,5 +131,5 @@ QStringList ServiceTypeBrowser::serviceTypes() const
 }
 
 }
-#include "moc_servicetypebrowser.cpp"
 #include "moc_avahi-servicetypebrowser_p.cpp"
+#include "moc_servicetypebrowser.cpp"

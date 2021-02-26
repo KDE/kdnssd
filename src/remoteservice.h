@@ -9,8 +9,8 @@
 #ifndef KDNSSDREMOTESERVICE_H
 #define KDNSSDREMOTESERVICE_H
 
-#include <QObject>
 #include <QMetaType>
+#include <QObject>
 #include <dnssd/servicebase.h>
 
 namespace KDNSSD

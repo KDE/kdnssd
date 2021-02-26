@@ -6,26 +6,32 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include "mdnsd-servicebrowser_p.h"
 #include "domainbrowser.h"
-#include "servicebrowser.h"
 #include "mdnsd-responder.h"
-#include "remoteservice.h"
 #include "mdnsd-sdevent.h"
-#include <dns_sd.h>
-#include <QStringList>
-#include <QHash>
+#include "mdnsd-servicebrowser_p.h"
+#include "remoteservice.h"
+#include "servicebrowser.h"
 #include <QCoreApplication>
-#include <QTimer>
+#include <QHash>
 #include <QHostInfo>
+#include <QStringList>
+#include <QTimer>
+#include <dns_sd.h>
 
 #define TIMEOUT_WAN 2000
 #define TIMEOUT_LAN 200
 
 namespace KDNSSD
 {
-void query_callback(DNSServiceRef, DNSServiceFlags flags, uint32_t, DNSServiceErrorType errorCode,
-                    const char *serviceName, const char *regtype, const char *replyDomain, void *context);
+void query_callback(DNSServiceRef,
+                    DNSServiceFlags flags,
+                    uint32_t,
+                    DNSServiceErrorType errorCode,
+                    const char *serviceName,
+                    const char *regtype,
+                    const char *replyDomain,
+                    void *context);
 
 ServiceBrowser::ServiceBrowser(const QString &type, bool autoResolve, const QString &domain, const QString &subtype)
     : d(new ServiceBrowserPrivate(this))
@@ -41,14 +47,14 @@ ServiceBrowser::ServiceBrowser(const QString &type, bool autoResolve, const QStr
 
 ServiceBrowser::State ServiceBrowser::isAvailable()
 {
-//  DNSServiceRef ref;
-//  bool ok (DNSServiceCreateConnection(&ref)==kDNSServiceErr_NoError);
-//  if (ok) DNSServiceRefDeallocate(ref);
-//  return (ok) ? Working : Stopped;
+    //  DNSServiceRef ref;
+    //  bool ok (DNSServiceCreateConnection(&ref)==kDNSServiceErr_NoError);
+    //  if (ok) DNSServiceRefDeallocate(ref);
+    //  return (ok) ? Working : Stopped;
     return Working;
 }
 
-ServiceBrowser::~ ServiceBrowser() = default;
+ServiceBrowser::~ServiceBrowser() = default;
 
 bool ServiceBrowser::isAutoResolving() const
 {
@@ -88,9 +94,8 @@ void ServiceBrowser::startBrowse()
     if (!d->m_subtype.isEmpty()) {
         fullType = d->m_subtype + "._sub." + d->m_type;
     }
-    if (DNSServiceBrowse(&ref, 0, 0, fullType.toLatin1().constData(),
-                         domainToDNS(d->m_domain).constData(), query_callback, reinterpret_cast<void *>(d))
-            == kDNSServiceErr_NoError) {
+    if (DNSServiceBrowse(&ref, 0, 0, fullType.toLatin1().constData(), domainToDNS(d->m_domain).constData(), query_callback, reinterpret_cast<void *>(d))
+        == kDNSServiceErr_NoError) {
         d->setRef(ref);
     }
     if (!d->isRunning()) {
@@ -114,11 +119,13 @@ QList<RemoteService::Ptr> ServiceBrowser::services() const
 }
 
 void ServiceBrowser::virtual_hook(int, void *)
-{}
+{
+}
 
 RemoteService::Ptr ServiceBrowserPrivate::find(RemoteService::Ptr s, const QList<RemoteService::Ptr> &where) const
 {
-    for (const RemoteService::Ptr &i : where) if (*s == *i) {
+    for (const RemoteService::Ptr &i : where)
+        if (*s == *i) {
             return i;
         }
     return RemoteService::Ptr();
@@ -145,7 +152,6 @@ void ServiceBrowserPrivate::customEvent(QEvent *event)
                 Q_EMIT m_parent->serviceAdded(svr);
             }
         } else {
-
             RemoteService::Ptr found = find(svr, m_duringResolve);
             if (found) {
                 m_duringResolve.removeAll(found);
@@ -170,8 +176,13 @@ void ServiceBrowserPrivate::onTimeout()
     queryFinished();
 }
 
-void query_callback(DNSServiceRef, DNSServiceFlags flags, uint32_t, DNSServiceErrorType errorCode,
-                    const char *serviceName, const char *regtype, const char *replyDomain,
+void query_callback(DNSServiceRef,
+                    DNSServiceFlags flags,
+                    uint32_t,
+                    DNSServiceErrorType errorCode,
+                    const char *serviceName,
+                    const char *regtype,
+                    const char *replyDomain,
                     void *context)
 {
     QObject *obj = reinterpret_cast<QObject *>(context);
@@ -179,9 +190,11 @@ void query_callback(DNSServiceRef, DNSServiceFlags flags, uint32_t, DNSServiceEr
         ErrorEvent err;
         QCoreApplication::sendEvent(obj, &err);
     } else {
-        AddRemoveEvent arev((flags & kDNSServiceFlagsAdd) ? AddRemoveEvent::Add :
-                            AddRemoveEvent::Remove, QString::fromUtf8(serviceName), regtype,
-                            DNSToDomain(replyDomain), !(flags & kDNSServiceFlagsMoreComing));
+        AddRemoveEvent arev((flags & kDNSServiceFlagsAdd) ? AddRemoveEvent::Add : AddRemoveEvent::Remove,
+                            QString::fromUtf8(serviceName),
+                            regtype,
+                            DNSToDomain(replyDomain),
+                            !(flags & kDNSServiceFlagsMoreComing));
         QCoreApplication::sendEvent(obj, &arev);
     }
 }

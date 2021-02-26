@@ -15,7 +15,6 @@
 
 namespace KDNSSD
 {
-
 /**
 This class should not be used directly.
 
@@ -40,6 +39,7 @@ public:
     void stop();
 public Q_SLOTS:
     void process();
+
 protected:
     DNSServiceRef m_ref;
     bool m_running;

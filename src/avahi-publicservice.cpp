@@ -17,16 +17,15 @@
 #if HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
-#include "servicebrowser.h"
-#include "avahi_server_interface.h"
 #include "avahi_entrygroup_interface.h"
+#include "avahi_server_interface.h"
+#include "servicebrowser.h"
 
 namespace KDNSSD
 {
-
-PublicService::PublicService(const QString &name, const QString &type, unsigned int port,
-                             const QString &domain, const QStringList &subtypes)
-    : QObject(), ServiceBase(new PublicServicePrivate(this, name, type, domain, port))
+PublicService::PublicService(const QString &name, const QString &type, unsigned int port, const QString &domain, const QStringList &subtypes)
+    : QObject()
+    , ServiceBase(new PublicServicePrivate(this, name, type, domain, port))
 {
     KDNSSD_D;
     if (domain.isNull()) {
@@ -50,9 +49,7 @@ void PublicServicePrivate::tryApply()
     }
 }
 
-void PublicServicePrivate::gotGlobalStateChanged(int state,
-                                                 const QString &error,
-                                                 QDBusMessage msg)
+void PublicServicePrivate::gotGlobalStateChanged(int state, const QString &error, QDBusMessage msg)
 {
     if (!isOurMsg(msg)) {
         return;
@@ -168,13 +165,12 @@ bool PublicServicePrivate::fillEntryGroup()
         // This uses a fancy trick whereby using QDBusMessage as last argument will
         // give us the correct signal argument types as well as the underlying
         // message so that we may check the message path.
-        QDBusConnection::systemBus()
-                .connect("org.freedesktop.Avahi",
-                         "",
-                         "org.freedesktop.Avahi.EntryGroup",
-                         "StateChanged",
-                         this,
-                         SLOT(gotGlobalStateChanged(int,QString,QDBusMessage)));
+        QDBusConnection::systemBus().connect("org.freedesktop.Avahi",
+                                             "",
+                                             "org.freedesktop.Avahi.EntryGroup",
+                                             "StateChanged",
+                                             this,
+                                             SLOT(gotGlobalStateChanged(int, QString, QDBusMessage)));
         m_dbusObjectPath.clear();
 
         QDBusReply<QDBusObjectPath> rep = m_server->EntryGroupNew();
@@ -184,9 +180,7 @@ bool PublicServicePrivate::fillEntryGroup()
 
         m_dbusObjectPath = rep.value().path();
 
-        m_group = new org::freedesktop::Avahi::EntryGroup("org.freedesktop.Avahi",
-                                                          m_dbusObjectPath,
-                                                          QDBusConnection::systemBus());
+        m_group = new org::freedesktop::Avahi::EntryGroup("org.freedesktop.Avahi", m_dbusObjectPath, QDBusConnection::systemBus());
     }
     if (m_serviceName.isNull()) {
         QDBusReply<QString> rep = m_server->GetHostName();
@@ -206,8 +200,7 @@ bool PublicServicePrivate::fillEntryGroup()
         }
 
     for (;;) {
-        QDBusReply<void> ret = m_group->AddService(-1, -1, 0, m_serviceName, m_type, domainToDNS(m_domain),
-                               m_hostName, m_port, txt);
+        QDBusReply<void> ret = m_group->AddService(-1, -1, 0, m_serviceName, m_type, domainToDNS(m_domain), m_hostName, m_port, txt);
         if (ret.isValid()) {
             break;
         }
@@ -266,7 +259,7 @@ void PublicService::publishAsync()
 
     if (!d->m_server) {
         d->m_server = new org::freedesktop::Avahi::Server(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
-        connect(d->m_server, SIGNAL(StateChanged(int,QString)), d, SLOT(serverStateChanged(int,QString)));
+        connect(d->m_server, SIGNAL(StateChanged(int, QString)), d, SLOT(serverStateChanged(int, QString)));
     }
 
     int state = AVAHI_SERVER_INVALID;
@@ -280,7 +273,7 @@ void PublicService::publishAsync()
     d->serverStateChanged(state, QString());
 }
 
-void PublicServicePrivate::groupStateChanged(int s,  const QString &reason)
+void PublicServicePrivate::groupStateChanged(int s, const QString &reason)
 {
     switch (s) {
     case AVAHI_ENTRY_GROUP_COLLISION: {
@@ -308,5 +301,5 @@ void PublicService::virtual_hook(int, void *)
 
 }
 
-#include "moc_publicservice.cpp"
 #include "moc_avahi-publicservice_p.cpp"
+#include "moc_publicservice.cpp"

@@ -9,9 +9,9 @@
 #ifndef KDNSSDSERVICEBASE_H
 #define KDNSSDSERVICEBASE_H
 
+#include <QExplicitlySharedDataPointer>
 #include <QMap>
 #include <QString>
-#include <QExplicitlySharedDataPointer>
 #include <dnssd/kdnssd_export.h>
 #include <memory>
 
@@ -37,7 +37,7 @@ class ServiceBasePrivate;
  *
  * @see PublicService
  */
-class KDNSSD_EXPORT ServiceBase : public QSharedData //krazy:exclude=dpointer (protected)
+class KDNSSD_EXPORT ServiceBase : public QSharedData // krazy:exclude=dpointer (protected)
 {
 public:
     typedef QExplicitlySharedDataPointer<ServiceBase> Ptr;
@@ -65,7 +65,7 @@ public:
                          const QString &host = QString(),
                          unsigned short port = 0);
 
-    virtual  ~ServiceBase();
+    virtual ~ServiceBase();
 
     /**
      * The name of the service

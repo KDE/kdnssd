@@ -8,14 +8,15 @@
 
 #include "mdnsd-responder.h"
 #include "servicebase.h"
-#include <QUrl>
 #include <QCoreApplication>
+#include <QUrl>
 
 namespace KDNSSD
 {
-
 Responder::Responder(DNSServiceRef ref, QObject *parent)
-    : QObject(parent), m_ref(0), m_socket(0)
+    : QObject(parent)
+    , m_ref(0)
+    , m_socket(0)
 {
     setRef(ref);
 }

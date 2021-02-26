@@ -9,18 +9,22 @@
 #ifndef MDNSD_DOMAINBROWSER_P_H
 #define MDNSD_DOMAINBROWSER_P_H
 
-#include "mdnsd-responder.h"
 #include "domainbrowser.h"
+#include "mdnsd-responder.h"
 #include <QStringList>
 
 namespace KDNSSD
 {
-
 class DomainBrowserPrivate : public Responder
 {
     Q_OBJECT
 public:
-    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent): Responder(), m_type(type), m_parent(parent) {}
+    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent)
+        : Responder()
+        , m_type(type)
+        , m_parent(parent)
+    {
+    }
     DomainBrowser::DomainType m_type;
     DomainBrowser *m_parent = nullptr;
     QStringList m_domains;

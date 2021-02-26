@@ -6,22 +6,28 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include <QStringList>
 #include "domainbrowser.h"
+#include <QStringList>
 
 namespace KDNSSD
 {
+class DomainBrowserPrivate
+{
+};
 
-class DomainBrowserPrivate {};
-
-DomainBrowser::DomainBrowser(DomainType, QObject *parent) : QObject(parent), d(nullptr)
-{}
+DomainBrowser::DomainBrowser(DomainType, QObject *parent)
+    : QObject(parent)
+    , d(nullptr)
+{
+}
 
 DomainBrowser::~DomainBrowser()
-{}
+{
+}
 
 void DomainBrowser::startBrowse()
-{}
+{
+}
 
 QStringList DomainBrowser::domains() const
 {

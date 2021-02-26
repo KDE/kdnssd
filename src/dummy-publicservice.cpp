@@ -12,10 +12,9 @@
 
 namespace KDNSSD
 {
-
-PublicService::PublicService(const QString &name, const QString &type, unsigned int port,
-                             const QString &domain, const QStringList &)
-    : QObject(), ServiceBase(name, type, QString(), domain, port)
+PublicService::PublicService(const QString &name, const QString &type, unsigned int port, const QString &domain, const QStringList &)
+    : QObject()
+    , ServiceBase(name, type, QString(), domain, port)
 {
     if (domain.isNull()) {
         d->m_domain = QLatin1String("local.");
@@ -23,7 +22,8 @@ PublicService::PublicService(const QString &name, const QString &type, unsigned 
 }
 
 PublicService::~PublicService()
-{}
+{
+}
 
 void PublicService::setServiceName(const QString &serviceName)
 {
@@ -71,7 +71,8 @@ bool PublicService::publish()
 }
 
 void PublicService::stop()
-{}
+{
+}
 
 void PublicService::publishAsync()
 {

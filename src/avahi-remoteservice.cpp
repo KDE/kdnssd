@@ -8,16 +8,15 @@
 */
 
 #include "avahi-remoteservice_p.h"
-#include <netinet/in.h>
-#include <QEventLoop>
-#include <QCoreApplication>
-#include <QDebug>
-#include "remoteservice.h"
 #include "avahi_server_interface.h"
 #include "avahi_serviceresolver_interface.h"
+#include "remoteservice.h"
+#include <QCoreApplication>
+#include <QDebug>
+#include <QEventLoop>
+#include <netinet/in.h>
 namespace KDNSSD
 {
-
 RemoteService::RemoteService(const QString &name, const QString &type, const QString &domain)
     : ServiceBase(new RemoteServicePrivate(this, name, type, domain))
 {
@@ -59,29 +58,21 @@ void RemoteService::resolveAsync()
     // This uses a fancy trick whereby using QDBusMessage as last argument will
     // give us the correct signal argument types as well as the underlying
     // message so that we may check the message path.
+    QDBusConnection::systemBus().connect(
+        "org.freedesktop.Avahi",
+        "",
+        "org.freedesktop.Avahi.ServiceResolver",
+        "Found",
+        d,
+        SLOT(gotGlobalFound(int, int, QString, QString, QString, QString, int, QString, ushort, QList<QByteArray>, uint, QDBusMessage)));
     QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceResolver",
-                     "Found",
-                     d,
-                     SLOT(gotGlobalFound(int,int,QString,QString,QString,QString,
-                                         int,QString,ushort,QList<QByteArray>,
-                                         uint,QDBusMessage)));
-    QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceResolver",
-                     "Failure",
-                     d,
-                     SLOT(gotGlobalError(QDBusMessage)));
+        .connect("org.freedesktop.Avahi", "", "org.freedesktop.Avahi.ServiceResolver", "Failure", d, SLOT(gotGlobalError(QDBusMessage)));
     d->m_dbusObjectPath.clear();
 
-    //qDebug() << this << ":Starting resolve of : " << d->m_serviceName << " " << d->m_type << " " << d->m_domain << "\n";
+    // qDebug() << this << ":Starting resolve of : " << d->m_serviceName << " " << d->m_type << " " << d->m_domain << "\n";
     org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
-    //FIXME: don't use LOOKUP_NO_ADDRESS if NSS unavailable
-    QDBusReply<QDBusObjectPath> rep = s.ServiceResolverNew(-1, -1, d->m_serviceName, d->m_type,
-                                      domainToDNS(d->m_domain), -1, 8 /*AVAHI_LOOKUP_NO_ADDRESS*/);
+    // FIXME: don't use LOOKUP_NO_ADDRESS if NSS unavailable
+    QDBusReply<QDBusObjectPath> rep = s.ServiceResolverNew(-1, -1, d->m_serviceName, d->m_type, domainToDNS(d->m_domain), -1, 8 /*AVAHI_LOOKUP_NO_ADDRESS*/);
     if (!rep.isValid()) {
         Q_EMIT resolved(false);
         return;
@@ -90,10 +81,7 @@ void RemoteService::resolveAsync()
     d->m_dbusObjectPath = rep.value().path();
 
     // This is held because we need to explicitly Free it!
-    d->m_resolver = new org::freedesktop::Avahi::ServiceResolver(
-                s.service(),
-                d->m_dbusObjectPath,
-                s.connection());
+    d->m_resolver = new org::freedesktop::Avahi::ServiceResolver(s.service(), d->m_dbusObjectPath, s.connection());
     d->m_running = true;
 }
 
@@ -127,8 +115,7 @@ void RemoteServicePrivate::gotGlobalFound(int interface,
     if (!isOurMsg(msg)) {
         return;
     }
-    gotFound(interface, protocol, name, type, domain, host, aprotocol, address,
-             port, txt, flags);
+    gotFound(interface, protocol, name, type, domain, host, aprotocol, address, port, txt, flags);
 }
 
 void RemoteServicePrivate::gotGlobalError(QDBusMessage msg)
@@ -139,7 +126,17 @@ void RemoteServicePrivate::gotGlobalError(QDBusMessage msg)
     gotError();
 }
 
-void RemoteServicePrivate::gotFound(int, int, const QString &name, const QString &, const QString &domain, const QString &host, int, const QString &, ushort port, const QList<QByteArray> &txt, uint)
+void RemoteServicePrivate::gotFound(int,
+                                    int,
+                                    const QString &name,
+                                    const QString &,
+                                    const QString &domain,
+                                    const QString &host,
+                                    int,
+                                    const QString &,
+                                    ushort port,
+                                    const QList<QByteArray> &txt,
+                                    uint)
 {
     m_serviceName = name;
     m_hostName = host;
@@ -174,5 +171,5 @@ void RemoteService::virtual_hook(int, void *)
 
 }
 
-#include "moc_remoteservice.cpp"
 #include "moc_avahi-remoteservice_p.cpp"
+#include "moc_remoteservice.cpp"

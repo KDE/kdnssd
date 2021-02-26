@@ -9,20 +9,24 @@
 #ifndef AVAHI_SERVICETYPEBROWSER_P_H
 #define AVAHI_SERVICETYPEBROWSER_P_H
 
-#include <QStringList>
-#include <QTimer>
-#include "servicetypebrowser.h"
 #include "avahi_listener_p.h"
 #include "avahi_servicetypebrowser_interface.h"
+#include "servicetypebrowser.h"
+#include <QStringList>
+#include <QTimer>
 
 namespace KDNSSD
 {
-
 class ServiceTypeBrowserPrivate : public QObject, public AvahiListener
 {
     Q_OBJECT
 public:
-    ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent) : m_browser(nullptr), m_parent(parent), m_started(false) {}
+    ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent)
+        : m_browser(nullptr)
+        , m_parent(parent)
+        , m_started(false)
+    {
+    }
     ~ServiceTypeBrowserPrivate()
     {
         if (m_browser) {
@@ -40,20 +44,9 @@ public:
 private Q_SLOTS:
     // NB: The global slots are runtime connected! If their signature changes
     // make sure the SLOT() signature gets updated!
-    void gotGlobalItemNew(int interface,
-                          int protocol,
-                          const QString &type,
-                          const QString &domain,
-                          uint flags,
-                          QDBusMessage msg);
-    void gotGlobalItemRemove(int interface,
-                             int protocol,
-                             const QString &type,
-                             const QString &domain,
-                             uint flags,
-                             QDBusMessage msg);
+    void gotGlobalItemNew(int interface, int protocol, const QString &type, const QString &domain, uint flags, QDBusMessage msg);
+    void gotGlobalItemRemove(int interface, int protocol, const QString &type, const QString &domain, uint flags, QDBusMessage msg);
     void gotGlobalAllForNow(QDBusMessage msg);
-
 
     void gotNewServiceType(int, int, const QString &, const QString &, uint);
     void gotRemoveServiceType(int, int, const QString &, const QString &, uint);

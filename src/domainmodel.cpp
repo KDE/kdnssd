@@ -12,20 +12,18 @@
 
 namespace KDNSSD
 {
-
 struct DomainModelPrivate {
     DomainBrowser *m_browser;
 };
 
 DomainModel::DomainModel(DomainBrowser *browser, QObject *parent)
-    :  QAbstractItemModel(parent), d(new DomainModelPrivate)
+    : QAbstractItemModel(parent)
+    , d(new DomainModelPrivate)
 {
     d->m_browser = browser;
     browser->setParent(this);
-    connect(browser, SIGNAL(domainAdded(QString)), this,
-            SIGNAL(layoutChanged()));
-    connect(browser, SIGNAL(domainRemoved(QString)), this,
-            SIGNAL(layoutChanged()));
+    connect(browser, SIGNAL(domainAdded(QString)), this, SIGNAL(layoutChanged()));
+    connect(browser, SIGNAL(domainRemoved(QString)), this, SIGNAL(layoutChanged()));
     browser->startBrowse();
 }
 

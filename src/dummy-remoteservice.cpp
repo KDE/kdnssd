@@ -11,7 +11,6 @@
 
 namespace KDNSSD
 {
-
 RemoteService::RemoteService(const QString &name, const QString &type, const QString &domain)
     : ServiceBase(name, type, domain)
 {

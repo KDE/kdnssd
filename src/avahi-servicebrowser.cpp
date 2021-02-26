@@ -8,16 +8,15 @@
 */
 
 #include "avahi-servicebrowser_p.h"
-#include <QStringList>
-#include "servicebrowser.h"
-#include "avahi_servicebrowser_interface.h"
 #include "avahi_server_interface.h"
+#include "avahi_servicebrowser_interface.h"
+#include "servicebrowser.h"
 #include <QHash>
 #include <QHostAddress>
+#include <QStringList>
 
 namespace KDNSSD
 {
-
 ServiceBrowser::ServiceBrowser(const QString &type, bool autoResolve, const QString &domain, const QString &subtype)
     : d(new ServiceBrowserPrivate(this))
 {
@@ -64,27 +63,20 @@ void ServiceBrowser::startBrowse()
     // This uses a fancy trick whereby using QDBusMessage as last argument will
     // give us the correct signal argument types as well as the underlying
     // message so that we may check the message path.
+    QDBusConnection::systemBus().connect("org.freedesktop.Avahi",
+                                         "",
+                                         "org.freedesktop.Avahi.ServiceBrowser",
+                                         "ItemNew",
+                                         d,
+                                         SLOT(gotGlobalItemNew(int, int, QString, QString, QString, uint, QDBusMessage)));
+    QDBusConnection::systemBus().connect("org.freedesktop.Avahi",
+                                         "",
+                                         "org.freedesktop.Avahi.ServiceBrowser",
+                                         "ItemRemove",
+                                         d,
+                                         SLOT(gotGlobalItemRemove(int, int, QString, QString, QString, uint, QDBusMessage)));
     QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceBrowser",
-                     "ItemNew",
-                     d,
-                     SLOT(gotGlobalItemNew(int,int,QString,QString,QString,uint,QDBusMessage)));
-    QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceBrowser",
-                     "ItemRemove",
-                     d,
-                     SLOT(gotGlobalItemRemove(int,int,QString,QString,QString,uint,QDBusMessage)));
-    QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.ServiceBrowser",
-                     "AllForNow",
-                     d,
-                     SLOT(gotGlobalAllForNow(QDBusMessage)));
+        .connect("org.freedesktop.Avahi", "", "org.freedesktop.Avahi.ServiceBrowser", "AllForNow", d, SLOT(gotGlobalAllForNow(QDBusMessage)));
     d->m_dbusObjectPath.clear();
 
     org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
@@ -104,13 +96,9 @@ void ServiceBrowser::startBrowse()
     d->m_browserFinished = true;
 
     // This is held because we need to explicitly Free it!
-    d->m_browser = new org::freedesktop::Avahi::ServiceBrowser(
-                s.service(),
-                d->m_dbusObjectPath,
-                s.connection());
+    d->m_browser = new org::freedesktop::Avahi::ServiceBrowser(s.service(), d->m_dbusObjectPath, s.connection());
 
-    connect(&d->m_timer, &QTimer::timeout,
-            d, &ServiceBrowserPrivate::browserFinished);
+    connect(&d->m_timer, &QTimer::timeout, d, &ServiceBrowserPrivate::browserFinished);
     d->m_timer.start(domainIsLocal(d->m_domain) ? TIMEOUT_LAST_SERVICE : TIMEOUT_START_WAN);
 }
 
@@ -172,7 +160,8 @@ void ServiceBrowserPrivate::gotGlobalAllForNow(QDBusMessage msg)
 
 RemoteService::Ptr ServiceBrowserPrivate::find(RemoteService::Ptr s, const QList<RemoteService::Ptr> &where) const
 {
-    for (const RemoteService::Ptr &i : where) if (*s == *i) {
+    for (const RemoteService::Ptr &i : where)
+        if (*s == *i) {
             return i;
         }
     return RemoteService::Ptr();
@@ -186,7 +175,7 @@ void ServiceBrowserPrivate::gotNewService(int, int, const QString &name, const Q
         connect(svr.data(), SIGNAL(resolved(bool)), this, SLOT(serviceResolved(bool)));
         m_duringResolve += svr;
         svr->resolveAsync();
-    } else  {
+    } else {
         m_services += svr;
         Q_EMIT m_parent->serviceAdded(svr);
     }
@@ -230,7 +219,8 @@ QList<RemoteService::Ptr> ServiceBrowser::services() const
 }
 
 void ServiceBrowser::virtual_hook(int, void *)
-{}
+{
+}
 
 QHostAddress ServiceBrowser::resolveHostName(const QString &hostname)
 {
@@ -242,7 +232,7 @@ QHostAddress ServiceBrowser::resolveHostName(const QString &hostname)
     QString address;
     uint flags = 0;
 
-    QDBusReply<int> reply = s.ResolveHostName(-1, -1, hostname, 0, (unsigned int) 0, protocol, name, aprotocol, address, flags);
+    QDBusReply<int> reply = s.ResolveHostName(-1, -1, hostname, 0, (unsigned int)0, protocol, name, aprotocol, address, flags);
 
     if (reply.isValid()) {
         return QHostAddress(address);
@@ -266,5 +256,5 @@ QString ServiceBrowser::getLocalHostName()
 
 }
 
-#include "moc_servicebrowser.cpp"
 #include "moc_avahi-servicebrowser_p.cpp"
+#include "moc_servicebrowser.cpp"

@@ -9,28 +9,33 @@
 #ifndef AVAHI_SERVICEBROWSER_P_H
 #define AVAHI_SERVICEBROWSER_P_H
 
-#include <QString>
-#include <QList>
-#include <QTimer>
-#include "servicebrowser.h"
 #include "avahi_listener_p.h"
 #include "avahi_servicebrowser_interface.h"
+#include "servicebrowser.h"
+#include <QList>
+#include <QString>
+#include <QTimer>
 
 namespace KDNSSD
 {
-
 class ServiceBrowserPrivate : public QObject, public AvahiListener
 {
     Q_OBJECT
     friend class ServiceBrowser; // So the public class may functor connect.
 public:
-    ServiceBrowserPrivate(ServiceBrowser *parent) : QObject(), m_running(false), m_browser(nullptr), m_parent(parent)
-    {}
+    ServiceBrowserPrivate(ServiceBrowser *parent)
+        : QObject()
+        , m_running(false)
+        , m_browser(nullptr)
+        , m_parent(parent)
+    {
+    }
     ~ServiceBrowserPrivate()
     {
         if (m_browser) {
             m_browser->Free();
-        } delete m_browser;
+        }
+        delete m_browser;
     }
     QList<RemoteService::Ptr> m_services;
     QList<RemoteService::Ptr> m_duringResolve;
@@ -55,20 +60,8 @@ private Q_SLOTS:
 
     // NB: The global slots are runtime connected! If their signature changes
     // make sure the SLOT() signature gets updated!
-    void gotGlobalItemNew(int interface,
-                          int protocol,
-                          const QString &name,
-                          const QString &type,
-                          const QString &domain,
-                          uint flags,
-                          QDBusMessage msg);
-    void gotGlobalItemRemove(int interface,
-                             int protocol,
-                             const QString &name,
-                             const QString &type,
-                             const QString &domain,
-                             uint flags,
-                             QDBusMessage msg);
+    void gotGlobalItemNew(int interface, int protocol, const QString &name, const QString &type, const QString &domain, uint flags, QDBusMessage msg);
+    void gotGlobalItemRemove(int interface, int protocol, const QString &name, const QString &type, const QString &domain, uint flags, QDBusMessage msg);
     void gotGlobalAllForNow(QDBusMessage msg);
 
     void gotNewService(int, int, const QString &, const QString &, const QString &, uint);

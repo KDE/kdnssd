@@ -16,12 +16,14 @@
 
 namespace KDNSSD
 {
-
 class ServiceTypeBrowserPrivate : public QObject
 {
     Q_OBJECT
 public:
-    explicit ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent):  m_parent(parent) {}
+    explicit ServiceTypeBrowserPrivate(ServiceTypeBrowser *parent)
+        : m_parent(parent)
+    {
+    }
     ServiceTypeBrowser *m_parent = nullptr;
     ServiceBrowser *m_browser = nullptr;
     QStringList m_servicetypes;

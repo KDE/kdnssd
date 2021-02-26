@@ -15,7 +15,6 @@
 
 namespace KDNSSD
 {
-
 struct DomainModelPrivate;
 class DomainBrowser;
 
@@ -77,7 +76,6 @@ public:
 private:
     std::unique_ptr<DomainModelPrivate> const d;
     friend struct DomainModelPrivate;
-
 };
 
 }

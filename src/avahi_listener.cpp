@@ -8,8 +8,8 @@
 
 #include "avahi_listener_p.h"
 
-namespace KDNSSD {
-
+namespace KDNSSD
+{
 AvahiListener::AvahiListener()
 {
 }
@@ -17,7 +17,5 @@ AvahiListener::AvahiListener()
 AvahiListener::~AvahiListener()
 {
 }
-
-
 
 } // namespace KDNSSD

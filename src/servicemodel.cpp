@@ -11,20 +11,18 @@
 
 namespace KDNSSD
 {
-
 struct ServiceModelPrivate {
     ServiceBrowser *m_browser;
 };
 
 ServiceModel::ServiceModel(ServiceBrowser *browser, QObject *parent)
-    :  QAbstractItemModel(parent), d(new ServiceModelPrivate)
+    : QAbstractItemModel(parent)
+    , d(new ServiceModelPrivate)
 {
     d->m_browser = browser;
     browser->setParent(this);
-    connect(browser, SIGNAL(serviceAdded(KDNSSD::RemoteService::Ptr)), this,
-            SIGNAL(layoutChanged()));
-    connect(browser, SIGNAL(serviceRemoved(KDNSSD::RemoteService::Ptr)), this,
-            SIGNAL(layoutChanged()));
+    connect(browser, SIGNAL(serviceAdded(KDNSSD::RemoteService::Ptr)), this, SIGNAL(layoutChanged()));
+    connect(browser, SIGNAL(serviceRemoved(KDNSSD::RemoteService::Ptr)), this, SIGNAL(layoutChanged()));
     browser->startBrowse();
 }
 
@@ -75,9 +73,12 @@ QVariant ServiceModel::data(const QModelIndex &index, int role) const
     switch ((uint)role) {
     case Qt::DisplayRole:
         switch (index.column()) {
-        case ServiceName: return srv[index.row()]->serviceName();
-        case Host: return srv[index.row()]->hostName();
-        case Port: return srv[index.row()]->port();
+        case ServiceName:
+            return srv[index.row()]->serviceName();
+        case Host:
+            return srv[index.row()]->hostName();
+        case Port:
+            return srv[index.row()]->port();
         }
         break;
     case ServicePtrRole:
@@ -94,9 +95,12 @@ QVariant ServiceModel::headerData(int section, Qt::Orientation orientation, int 
         return QVariant();
     }
     switch (section) {
-    case ServiceName: return tr("Name");
-    case Host: return tr("Host");
-    case Port: return tr("Port");
+    case ServiceName:
+        return tr("Name");
+    case Host:
+        return tr("Host");
+    case Port:
+        return tr("Port");
     }
     return QVariant();
 }

@@ -9,8 +9,8 @@
 #ifndef KDNSSDSERVICEBROWSER_H
 #define KDNSSDSERVICEBROWSER_H
 
-#include <QObject>
 #include <QHostAddress>
+#include <QObject>
 
 #include <dnssd/remoteservice.h>
 #include <memory>
@@ -100,10 +100,7 @@ public:
      *
      * @see startBrowse() and isAvailable()
      */
-    explicit ServiceBrowser(const QString &type,
-                            bool autoResolve = false,
-                            const QString &domain = QString(),
-                            const QString &subtype = QString());
+    explicit ServiceBrowser(const QString &type, bool autoResolve = false, const QString &domain = QString(), const QString &subtype = QString());
 
     ~ServiceBrowser();
 

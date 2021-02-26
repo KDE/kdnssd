@@ -6,22 +6,28 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include <QStringList>
 #include "servicetypebrowser.h"
+#include <QStringList>
 
 namespace KDNSSD
 {
+class ServiceTypeBrowserPrivate
+{
+};
 
-class ServiceTypeBrowserPrivate {};
-
-ServiceTypeBrowser::ServiceTypeBrowser(const QString &, QObject *parent) : QObject(parent), d(nullptr)
-{}
+ServiceTypeBrowser::ServiceTypeBrowser(const QString &, QObject *parent)
+    : QObject(parent)
+    , d(nullptr)
+{
+}
 
 ServiceTypeBrowser::~ServiceTypeBrowser()
-{}
+{
+}
 
 void ServiceTypeBrowser::startBrowse()
-{}
+{
+}
 
 QStringList ServiceTypeBrowser::serviceTypes() const
 {

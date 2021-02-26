@@ -7,13 +7,14 @@
 */
 
 #include "mdnsd-servicetypebrowser_p.h"
-#include "servicetypebrowser.h"
 #include "servicebrowser.h"
+#include "servicetypebrowser.h"
 
 namespace KDNSSD
 {
-
-ServiceTypeBrowser::ServiceTypeBrowser(const QString &domain, QObject *parent) : QObject(parent), d(new ServiceTypeBrowserPrivate(this))
+ServiceTypeBrowser::ServiceTypeBrowser(const QString &domain, QObject *parent)
+    : QObject(parent)
+    , d(new ServiceTypeBrowserPrivate(this))
 {
     Q_D(ServiceTypeBrowser);
     d->m_browser = new ServiceBrowser("_services._dns-sd._udp", false, domain);

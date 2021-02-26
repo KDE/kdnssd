@@ -14,7 +14,10 @@
  * Implementation of interface class OrgFreedesktopAvahiEntryGroupInterface
  */
 
-OrgFreedesktopAvahiEntryGroupInterface::OrgFreedesktopAvahiEntryGroupInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent)
+OrgFreedesktopAvahiEntryGroupInterface::OrgFreedesktopAvahiEntryGroupInterface(const QString &service,
+                                                                               const QString &path,
+                                                                               const QDBusConnection &connection,
+                                                                               QObject *parent)
     : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent)
 {
 }

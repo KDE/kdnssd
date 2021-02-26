@@ -11,21 +11,21 @@
 #ifndef AVAHI_ENTRYGROUP_INTERFACE_H_1175536773
 #define AVAHI_ENTRYGROUP_INTERFACE_H_1175536773
 
-#include <QObject>
 #include <QByteRef>
+#include <QDBusAbstractInterface>
+#include <QDBusConnection>
+#include <QDBusReply>
 #include <QList>
 #include <QMap>
+#include <QObject>
 #include <QString>
 #include <QStringList>
 #include <QVariant>
-#include <QDBusConnection>
-#include <QDBusAbstractInterface>
-#include <QDBusReply>
 
 /*
  * Proxy class for interface org.freedesktop.Avahi.EntryGroup
  */
-class OrgFreedesktopAvahiEntryGroupInterface: public QDBusAbstractInterface
+class OrgFreedesktopAvahiEntryGroupInterface : public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
@@ -43,28 +43,43 @@ public Q_SLOTS: // METHODS
     inline QDBusReply<void> AddAddress(int interface, int protocol, uint flags, const QString &name, const QString &address)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name) << QVariant::fromValue(address);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name)
+                     << QVariant::fromValue(address);
         return callWithArgumentList(QDBus::Block, QLatin1String("AddAddress"), argumentList);
     }
 
-    inline QDBusReply<void> AddRecord(int interface, int protocol, uint flags, const QString &name, ushort clazz, ushort type, uint ttl, const QByteArray &rdata)
+    inline QDBusReply<void>
+    AddRecord(int interface, int protocol, uint flags, const QString &name, ushort clazz, ushort type, uint ttl, const QByteArray &rdata)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name) << QVariant::fromValue(clazz) << QVariant::fromValue(type) << QVariant::fromValue(ttl) << QVariant::fromValue(rdata);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name)
+                     << QVariant::fromValue(clazz) << QVariant::fromValue(type) << QVariant::fromValue(ttl) << QVariant::fromValue(rdata);
         return callWithArgumentList(QDBus::Block, QLatin1String("AddRecord"), argumentList);
     }
 
-    inline QDBusReply<void> AddService(int interface, int protocol, uint flags, const QString &name, const QString &type, const QString &domain, const QString &host, ushort port, const QList<QByteArray> &txt)
+    inline QDBusReply<void> AddService(int interface,
+                                       int protocol,
+                                       uint flags,
+                                       const QString &name,
+                                       const QString &type,
+                                       const QString &domain,
+                                       const QString &host,
+                                       ushort port,
+                                       const QList<QByteArray> &txt)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name) << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(host) << QVariant::fromValue(port) << QVariant::fromValue(txt);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name)
+                     << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(host) << QVariant::fromValue(port)
+                     << QVariant::fromValue(txt);
         return callWithArgumentList(QDBus::Block, QLatin1String("AddService"), argumentList);
     }
 
-    inline QDBusReply<void> AddServiceSubtype(int interface, int protocol, uint flags, const QString &name, const QString &type, const QString &domain, const QString &subtype)
+    inline QDBusReply<void>
+    AddServiceSubtype(int interface, int protocol, uint flags, const QString &name, const QString &type, const QString &domain, const QString &subtype)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name) << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(subtype);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name)
+                     << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(subtype);
         return callWithArgumentList(QDBus::Block, QLatin1String("AddServiceSubtype"), argumentList);
     }
 
@@ -98,10 +113,12 @@ public Q_SLOTS: // METHODS
         return callWithArgumentList(QDBus::Block, QLatin1String("Reset"), argumentList);
     }
 
-    inline QDBusReply<void> UpdateServiceTxt(int interface, int protocol, uint flags, const QString &name, const QString &type, const QString &domain, const QList<QByteArray> &txt)
+    inline QDBusReply<void>
+    UpdateServiceTxt(int interface, int protocol, uint flags, const QString &name, const QString &type, const QString &domain, const QList<QByteArray> &txt)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name) << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(txt);
+        argumentList << QVariant::fromValue(interface) << QVariant::fromValue(protocol) << QVariant::fromValue(flags) << QVariant::fromValue(name)
+                     << QVariant::fromValue(type) << QVariant::fromValue(domain) << QVariant::fromValue(txt);
         return callWithArgumentList(QDBus::Block, QLatin1String("UpdateServiceTxt"), argumentList);
     }
 

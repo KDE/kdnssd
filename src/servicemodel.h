@@ -16,7 +16,6 @@
 
 namespace KDNSSD
 {
-
 struct ServiceModelPrivate;
 class ServiceBrowser;
 
@@ -56,7 +55,6 @@ class KDNSSD_EXPORT ServiceModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-
     /** The additional data roles provided by this model */
     enum AdditionalRoles {
         ServicePtrRole = 0xA06519DE, ///< gets a RemoteService::Ptr for the service

@@ -8,20 +8,22 @@
 */
 
 #include "avahi-domainbrowser_p.h"
-#include <QSet>
-#include <QFile>
-#include <QIODevice>
-#include <QStandardPaths>
-#include <avahi-common/defs.h>
+#include "avahi_domainbrowser_interface.h"
 #include "avahi_server_interface.h"
 #include "domainbrowser.h"
-#include "avahi_domainbrowser_interface.h"
+#include <QFile>
+#include <QIODevice>
+#include <QSet>
+#include <QStandardPaths>
+#include <avahi-common/defs.h>
 
 namespace KDNSSD
 {
-
-DomainBrowser::DomainBrowser(DomainType type, QObject *parent) : QObject(parent), d(new DomainBrowserPrivate(type, this))
-{}
+DomainBrowser::DomainBrowser(DomainType type, QObject *parent)
+    : QObject(parent)
+    , d(new DomainBrowserPrivate(type, this))
+{
+}
 
 DomainBrowser::~DomainBrowser() = default;
 
@@ -46,32 +48,25 @@ void DomainBrowser::startBrowse()
     // This uses a fancy trick whereby using QDBusMessage as last argument will
     // give us the correct signal argument types as well as the underlying
     // message so that we may check the message path.
+    QDBusConnection::systemBus().connect("org.freedesktop.Avahi",
+                                         "",
+                                         "org.freedesktop.Avahi.DomainBrowser",
+                                         "ItemNew",
+                                         d,
+                                         SLOT(gotGlobalItemNew(int, int, QString, uint, QDBusMessage)));
+    QDBusConnection::systemBus().connect("org.freedesktop.Avahi",
+                                         "",
+                                         "org.freedesktop.Avahi.DomainBrowser",
+                                         "ItemRemove",
+                                         d,
+                                         SLOT(gotGlobalItemRemove(int, int, QString, uint, QDBusMessage)));
     QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.DomainBrowser",
-                     "ItemNew",
-                     d,
-                     SLOT(gotGlobalItemNew(int,int,QString,uint,QDBusMessage)));
-    QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.DomainBrowser",
-                     "ItemRemove",
-                     d,
-                     SLOT(gotGlobalItemRemove(int,int,QString,uint,QDBusMessage)));
-    QDBusConnection::systemBus()
-            .connect("org.freedesktop.Avahi",
-                     "",
-                     "org.freedesktop.Avahi.DomainBrowser",
-                     "AllForNow",
-                     d,
-                     SLOT(gotGlobalAllForNow(QDBusMessage)));
+        .connect("org.freedesktop.Avahi", "", "org.freedesktop.Avahi.DomainBrowser", "AllForNow", d, SLOT(gotGlobalAllForNow(QDBusMessage)));
     d->m_dbusObjectPath.clear();
 
     org::freedesktop::Avahi::Server s(QStringLiteral("org.freedesktop.Avahi"), QStringLiteral("/"), QDBusConnection::systemBus());
-    QDBusReply<QDBusObjectPath> rep = s.DomainBrowserNew(-1, -1, QString(), (d->m_type == Browsing) ?
-                                      AVAHI_DOMAIN_BROWSER_BROWSE : AVAHI_DOMAIN_BROWSER_REGISTER, 0);
+    QDBusReply<QDBusObjectPath> rep =
+        s.DomainBrowserNew(-1, -1, QString(), (d->m_type == Browsing) ? AVAHI_DOMAIN_BROWSER_BROWSE : AVAHI_DOMAIN_BROWSER_REGISTER, 0);
     if (!rep.isValid()) {
         return;
     }
@@ -79,10 +74,7 @@ void DomainBrowser::startBrowse()
     d->m_dbusObjectPath = rep.value().path();
 
     // This is held because we need to explicitly Free it!
-    d->m_browser = new org::freedesktop::Avahi::DomainBrowser(
-                s.service(),
-                d->m_dbusObjectPath,
-                s.connection());
+    d->m_browser = new org::freedesktop::Avahi::DomainBrowser(s.service(), d->m_dbusObjectPath, s.connection());
 
     if (d->m_type == Browsing) {
         QString domains_evar = QString::fromLocal8Bit(qgetenv("AVAHI_BROWSE_DOMAINS"));
@@ -92,7 +84,7 @@ void DomainBrowser::startBrowse()
                 d->gotNewDomain(-1, -1, s, 0);
             }
         }
-        //FIXME: watch this file and restart browser if it changes
+        // FIXME: watch this file and restart browser if it changes
         QString confDir = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
         QFile domains_cfg(confDir + QStringLiteral("/avahi/browse-domains"));
         if (domains_cfg.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -102,11 +94,7 @@ void DomainBrowser::startBrowse()
     }
 }
 
-void DomainBrowserPrivate::gotGlobalItemNew(int interface,
-                                            int protocol,
-                                            const QString &domain,
-                                            uint flags,
-                                            QDBusMessage msg)
+void DomainBrowserPrivate::gotGlobalItemNew(int interface, int protocol, const QString &domain, uint flags, QDBusMessage msg)
 {
     if (!isOurMsg(msg)) {
         return;
@@ -114,11 +102,7 @@ void DomainBrowserPrivate::gotGlobalItemNew(int interface,
     gotNewDomain(interface, protocol, domain, flags);
 }
 
-void DomainBrowserPrivate::gotGlobalItemRemove(int interface,
-                                               int protocol,
-                                               const QString &domain,
-                                               uint flags,
-                                               QDBusMessage msg)
+void DomainBrowserPrivate::gotGlobalItemRemove(int interface, int protocol, const QString &domain, uint flags, QDBusMessage msg)
 {
     if (!isOurMsg(msg)) {
         return;
@@ -166,5 +150,5 @@ bool DomainBrowser::isRunning() const
 }
 
 }
-#include "moc_domainbrowser.cpp"
 #include "moc_avahi-domainbrowser_p.cpp"
+#include "moc_domainbrowser.cpp"

@@ -15,7 +15,10 @@
  * Implementation of interface class OrgFreedesktopAvahiServiceResolverInterface
  */
 
-OrgFreedesktopAvahiServiceResolverInterface::OrgFreedesktopAvahiServiceResolverInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent)
+OrgFreedesktopAvahiServiceResolverInterface::OrgFreedesktopAvahiServiceResolverInterface(const QString &service,
+                                                                                         const QString &path,
+                                                                                         const QDBusConnection &connection,
+                                                                                         QObject *parent)
     : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent)
 {
 }

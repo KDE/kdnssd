@@ -11,21 +11,21 @@
 #ifndef AVAHI_SERVICERESOLVER_INTERFACE_H_1175536773
 #define AVAHI_SERVICERESOLVER_INTERFACE_H_1175536773
 
-#include <QObject>
 #include <QByteRef>
+#include <QDBusAbstractInterface>
+#include <QDBusConnection>
+#include <QDBusReply>
 #include <QList>
 #include <QMap>
+#include <QObject>
 #include <QString>
 #include <QStringList>
 #include <QVariant>
-#include <QDBusConnection>
-#include <QDBusReply>
-#include <QDBusAbstractInterface>
 
 /*
  * Proxy class for interface org.freedesktop.Avahi.ServiceResolver
  */
-class OrgFreedesktopAvahiServiceResolverInterface: public QDBusAbstractInterface
+class OrgFreedesktopAvahiServiceResolverInterface : public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
@@ -48,7 +48,17 @@ public Q_SLOTS: // METHODS
 
 Q_SIGNALS: // SIGNALS
     void Failure(const QString &error);
-    void Found(int interface, int protocol, const QString &name, const QString &type, const QString &domain, const QString &host, int aprotocol, const QString &address, ushort port, const QList<QByteArray> &txt, uint flags);
+    void Found(int interface,
+               int protocol,
+               const QString &name,
+               const QString &type,
+               const QString &domain,
+               const QString &host,
+               int aprotocol,
+               const QString &address,
+               ushort port,
+               const QList<QByteArray> &txt,
+               uint flags);
 };
 
 namespace org

@@ -12,8 +12,8 @@
 #include <QDBusMessage>
 #include <QString>
 
-namespace KDNSSD {
-
+namespace KDNSSD
+{
 // Assists with listening to Avahi for all signals and then checking if the
 // a given dbus message is meant for us or not.
 // Subclass and set the object path to object path you should be listening to.

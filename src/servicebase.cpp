@@ -13,15 +13,15 @@
 
 namespace KDNSSD
 {
-
-ServiceBase::ServiceBase(const QString &name, const QString &type, const QString &domain,
-                         const QString &host, unsigned short port)
-    :  d(new ServiceBasePrivate(name, type, domain, host, port))
-{}
+ServiceBase::ServiceBase(const QString &name, const QString &type, const QString &domain, const QString &host, unsigned short port)
+    : d(new ServiceBasePrivate(name, type, domain, host, port))
+{
+}
 
 ServiceBase::ServiceBase(ServiceBasePrivate *const _d)
-    :  d(_d)
-{}
+    : d(_d)
+{
+}
 
 ServiceBase::~ServiceBase() = default;
 
@@ -65,7 +65,8 @@ bool ServiceBase::operator!=(const ServiceBase &o) const
 }
 
 void ServiceBase::virtual_hook(int, void *)
-{}
+{
+}
 
 bool domainIsLocal(const QString &domain)
 {

@@ -9,19 +9,24 @@
 #ifndef AVAHI_DOMAINBROWSER_P_H
 #define AVAHI_DOMAINBROWSER_P_H
 
-#include <QSet>
-#include "domainbrowser.h"
-#include "avahi_listener_p.h"
 #include "avahi_domainbrowser_interface.h"
+#include "avahi_listener_p.h"
+#include "domainbrowser.h"
+#include <QSet>
 
 namespace KDNSSD
 {
-
 class DomainBrowserPrivate : public QObject, public AvahiListener
 {
     Q_OBJECT
 public:
-    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent) : m_type(type), m_browser(nullptr), m_parent(parent), m_started(false) {}
+    DomainBrowserPrivate(DomainBrowser::DomainType type, DomainBrowser *parent)
+        : m_type(type)
+        , m_browser(nullptr)
+        , m_parent(parent)
+        , m_started(false)
+    {
+    }
     ~DomainBrowserPrivate()
     {
         if (m_browser) {
@@ -38,16 +43,8 @@ public:
 public Q_SLOTS:
     // NB: The global slots are runtime connected! If their signature changes
     // make sure the SLOT() signature gets updated!
-    void gotGlobalItemNew(int interface,
-                          int protocol,
-                          const QString &domain,
-                          uint flags,
-                          QDBusMessage msg);
-    void gotGlobalItemRemove(int interface,
-                             int protocol,
-                             const QString &domain,
-                             uint flags,
-                             QDBusMessage msg);
+    void gotGlobalItemNew(int interface, int protocol, const QString &domain, uint flags, QDBusMessage msg);
+    void gotGlobalItemRemove(int interface, int protocol, const QString &domain, uint flags, QDBusMessage msg);
     void gotGlobalAllForNow(QDBusMessage msg);
 
     void gotNewDomain(int, int, const QString &, uint);

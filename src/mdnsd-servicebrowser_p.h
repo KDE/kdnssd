@@ -17,13 +17,15 @@
 
 namespace KDNSSD
 {
-
 class ServiceBrowserPrivate : public Responder
 {
     Q_OBJECT
 public:
-    ServiceBrowserPrivate(ServiceBrowser *parent) : Responder(),  m_parent(parent)
-    {}
+    ServiceBrowserPrivate(ServiceBrowser *parent)
+        : Responder()
+        , m_parent(parent)
+    {
+    }
     QList<RemoteService::Ptr> m_services;
     QList<RemoteService::Ptr> m_duringResolve;
     QString m_type;

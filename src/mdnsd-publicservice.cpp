@@ -6,36 +6,38 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
+#include "mdnsd-responder.h"
+#include "mdnsd-sdevent.h"
+#include "publicservice.h"
+#include "servicebase_p.h"
 #include <QCoreApplication>
 #include <QStringList>
 #include <netinet/in.h>
-#include "publicservice.h"
-#include "servicebase_p.h"
-#include "mdnsd-sdevent.h"
-#include "mdnsd-responder.h"
 
-#define KDNSSD_D PublicServicePrivate* d = static_cast<PublicServicePrivate*>(this->d.operator->())
+#define KDNSSD_D PublicServicePrivate *d = static_cast<PublicServicePrivate *>(this->d.operator->())
 
 namespace KDNSSD
 {
-void publish_callback(DNSServiceRef, DNSServiceFlags, DNSServiceErrorType errorCode, const char *name,
-                      const char *, const char *, void *context);
+void publish_callback(DNSServiceRef, DNSServiceFlags, DNSServiceErrorType errorCode, const char *name, const char *, const char *, void *context);
 class PublicServicePrivate : public Responder, public ServiceBasePrivate
 {
 public:
-    PublicServicePrivate(PublicService *parent, const QString &name, const QString &type, unsigned int port,
-                         const QString &domain) : Responder(), ServiceBasePrivate(name, type, domain, QString(), port),
-        m_published(false), m_parent(parent)
-    {}
+    PublicServicePrivate(PublicService *parent, const QString &name, const QString &type, unsigned int port, const QString &domain)
+        : Responder()
+        , ServiceBasePrivate(name, type, domain, QString(), port)
+        , m_published(false)
+        , m_parent(parent)
+    {
+    }
     bool m_published;
     PublicService *m_parent;
     QStringList m_subtypes;
     virtual void customEvent(QEvent *event);
 };
 
-PublicService::PublicService(const QString &name, const QString &type, unsigned int port,
-                             const QString &domain, const QStringList &subtypes)
-    : QObject(), ServiceBase(new PublicServicePrivate(this, name, type, port, domain))
+PublicService::PublicService(const QString &name, const QString &type, unsigned int port, const QString &domain, const QStringList &subtypes)
+    : QObject()
+    , ServiceBase(new PublicServicePrivate(this, name, type, port, domain))
 {
     KDNSSD_D;
     if (domain.isNull()) {
@@ -159,9 +161,19 @@ void PublicService::publishAsync()
     for (const QString &subtype : qAsConst(d->m_subtypes)) {
         fullType += ',' + subtype;
     }
-    if (DNSServiceRegister(&ref, 0, 0, d->m_serviceName.toUtf8().constData(), fullType.toLatin1().constData(), domainToDNS(d->m_domain).constData(), NULL,
-                           htons(d->m_port), TXTRecordGetLength(&txt), TXTRecordGetBytesPtr(&txt), publish_callback,
-                           reinterpret_cast<void *>(d)) == kDNSServiceErr_NoError) {
+    if (DNSServiceRegister(&ref,
+                           0,
+                           0,
+                           d->m_serviceName.toUtf8().constData(),
+                           fullType.toLatin1().constData(),
+                           domainToDNS(d->m_domain).constData(),
+                           NULL,
+                           htons(d->m_port),
+                           TXTRecordGetLength(&txt),
+                           TXTRecordGetBytesPtr(&txt),
+                           publish_callback,
+                           reinterpret_cast<void *>(d))
+        == kDNSServiceErr_NoError) {
         d->setRef(ref);
     }
     TXTRecordDeallocate(&txt);
@@ -170,8 +182,7 @@ void PublicService::publishAsync()
     }
 }
 
-void publish_callback(DNSServiceRef, DNSServiceFlags, DNSServiceErrorType errorCode, const char *name,
-                      const char *, const char *, void *context)
+void publish_callback(DNSServiceRef, DNSServiceFlags, DNSServiceErrorType errorCode, const char *name, const char *, const char *, void *context)
 {
     QObject *obj = reinterpret_cast<QObject *>(context);
     if (errorCode != kDNSServiceErr_NoError) {

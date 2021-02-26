@@ -6,18 +6,21 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include <QStringList>
 #include "domainbrowser.h"
 #include "servicebrowser.h"
 #include <QHash>
+#include <QStringList>
 
 namespace KDNSSD
 {
+class ServiceBrowserPrivate
+{
+};
 
-class ServiceBrowserPrivate {};
-
-ServiceBrowser::ServiceBrowser(const QString &, bool, const QString &, const QString &) : d(nullptr)
-{}
+ServiceBrowser::ServiceBrowser(const QString &, bool, const QString &, const QString &)
+    : d(nullptr)
+{
+}
 
 bool ServiceBrowser::isAutoResolving() const
 {
@@ -28,7 +31,7 @@ ServiceBrowser::State ServiceBrowser::isAvailable()
 {
     return Unsupported;
 }
-ServiceBrowser::~ ServiceBrowser()
+ServiceBrowser::~ServiceBrowser()
 {
 }
 
@@ -43,7 +46,8 @@ QList<RemoteService::Ptr> ServiceBrowser::services() const
 }
 
 void ServiceBrowser::virtual_hook(int, void *)
-{}
+{
+}
 
 QHostAddress ServiceBrowser::resolveHostName(const QString &hostname)
 {
