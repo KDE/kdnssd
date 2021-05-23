@@ -66,7 +66,6 @@ endif()
 ecm_install_po_files_as_qm(po)
 
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
-add_definitions(-DQT_NO_FOREACH)
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
 add_subdirectory(src)
 
