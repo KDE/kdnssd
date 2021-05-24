@@ -1,15 +1,16 @@
-ecm_create_qm_loader(kdnssd_QM_LOADER kdnssd5_qt)
+add_library(KF5DNSSD SHARED)
 
-set(kdnssd_LIB_SRCS
+ecm_create_qm_loader(KF5DNSSD kdnssd5_qt)
+
+target_sources(KF5DNSSD PRIVATE
     servicebase.cpp
     servicemodel.cpp
     domainmodel.cpp
-    ${kdnssd_QM_LOADER}
 )
 
 if (AVAHI_FOUND)
     include_directories( ${AVAHI_INCLUDE_DIR} )
-    set(kdnssd_LIB_SRCS ${kdnssd_LIB_SRCS}
+    target_sources(KF5DNSSD PRIVATE
         avahi-domainbrowser.cpp
         avahi-servicebrowser.cpp
         avahi-remoteservice.cpp
@@ -20,12 +21,14 @@ if (AVAHI_FOUND)
         avahi_entrygroup_interface.cpp
         avahi_listener.cpp
     )
-    qt_add_dbus_interface (kdnssd_LIB_SRCS org.freedesktop.Avahi.DomainBrowser.xml avahi_domainbrowser_interface )
-    qt_add_dbus_interface (kdnssd_LIB_SRCS org.freedesktop.Avahi.ServiceBrowser.xml avahi_servicebrowser_interface )
-    qt_add_dbus_interface (kdnssd_LIB_SRCS org.freedesktop.Avahi.ServiceTypeBrowser.xml avahi_servicetypebrowser_interface )
+    set(kdnssd_dbus_LIB_SRCS)
+    qt_add_dbus_interface(kdnssd_dbus_LIB_SRCS org.freedesktop.Avahi.DomainBrowser.xml avahi_domainbrowser_interface)
+    qt_add_dbus_interface(kdnssd_dbus_LIB_SRCS org.freedesktop.Avahi.ServiceBrowser.xml avahi_servicebrowser_interface)
+    qt_add_dbus_interface(kdnssd_dbus_LIB_SRCS org.freedesktop.Avahi.ServiceTypeBrowser.xml avahi_servicetypebrowser_interface)
+    target_sources(KF5DNSSD PRIVATE ${kdnssd_dbus_LIB_SRCS})
 elseif (DNSSD_FOUND)
     include_directories( ${DNSSD_INCLUDE_DIR} )
-    set(kdnssd_LIB_SRCS ${kdnssd_LIB_SRCS}
+    target_sources(KF5DNSSD PRIVATE
         mdnsd-domainbrowser.cpp
         mdnsd-remoteservice.cpp
         mdnsd-publicservice.cpp
@@ -34,7 +37,7 @@ elseif (DNSSD_FOUND)
         mdnsd-servicetypebrowser.cpp
     )
 else ()
-    set(kdnssd_LIB_SRCS ${kdnssd_LIB_SRCS}
+    target_sources(KF5DNSSD PRIVATE
         dummy-domainbrowser.cpp
         dummy-remoteservice.cpp
         dummy-publicservice.cpp
@@ -44,7 +47,6 @@ else ()
 
 endif ()
 
-add_library(KF5DNSSD SHARED ${kdnssd_LIB_SRCS})
 ecm_generate_export_header(KF5DNSSD
     EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
     BASE_NAME KDNSSD
