@@ -57,7 +57,7 @@ ecm_generate_export_header(KF5DNSSD
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-# Apps must include <DNSSD/File> or <dnssd/file.h>
+# Apps must include <KDNSSD/File> or <kdnssd/file.h>
 target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD>")
 
 target_link_libraries(KF5DNSSD PUBLIC Qt5::Network)
@@ -90,11 +90,11 @@ ecm_generate_headers(KDNSSD_CamelCase_HEADERS
   ServiceModel
   DomainModel
 
-  PREFIX DNSSD
+  PREFIX KDNSSD
   REQUIRED_HEADERS kdnssd_HEADERS
 )
 
-install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/DNSSD COMPONENT Devel)
+install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/KDNSSD COMPONENT Devel)
 
 install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
@@ -102,8 +102,46 @@ install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${KF5_INSTALL_TARGETS_DEFAULT_AR
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_export.h
   ${kdnssd_HEADERS}
-  DESTINATION  ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/dnssd COMPONENT Devel
+  DESTINATION  ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/kdnssd COMPONENT Devel
 )
+
+# provide compat headers for old broken include path prefix dnssd/ & DNSSD/
+if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND
+   EXCLUDE_DEPRECATED_BEFORE_AND_AT VERSION_LESS 5.84.0)
+    function(generate_compat_headers)
+        foreach(classname ${ARGV})
+            string(TOLOWER ${classname} classname_lc)
+            set(HEADER_NAME "${classname_lc}.h")
+            # normal header
+            set(compat_header "${CMAKE_CURRENT_BINARY_DIR}/compat/${HEADER_NAME}")
+            set(NEW_INCLUDE "kdnssd/${HEADER_NAME}")
+            configure_file(compatheader.h.in ${compat_header} @ONLY)
+            install(FILES ${compat_header}
+                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/dnssd
+                COMPONENT Devel
+            )
+            # CamelCase header
+            set(compat_header "${CMAKE_CURRENT_BINARY_DIR}/compat/${classname}")
+            set(NEW_INCLUDE "KDNSSD/${classname}")
+            configure_file(compatheader.h.in ${compat_header} @ONLY)
+            install(FILES ${compat_header}
+                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/DNSSD
+                COMPONENT Devel
+            )
+        endforeach()
+    endfunction()
+
+    generate_compat_headers(
+        DomainBrowser
+        RemoteService
+        ServiceTypeBrowser
+        PublicService
+        ServiceBase
+        ServiceBrowser
+        ServiceModel
+        DomainModel
+    )
+endif()
 
 if(BUILD_QCH)
     ecm_add_qch(
