@@ -9,9 +9,9 @@
 #ifndef KDNSSDDOMAINBROWSER_H
 #define KDNSSDDOMAINBROWSER_H
 
+#include "remoteservice.h"
 #include <QObject>
 #include <QtContainerFwd>
-#include <dnssd/remoteservice.h>
 #include <memory>
 
 namespace KDNSSD

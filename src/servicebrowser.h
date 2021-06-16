@@ -9,10 +9,10 @@
 #ifndef KDNSSDSERVICEBROWSER_H
 #define KDNSSDSERVICEBROWSER_H
 
+#include "remoteservice.h"
 #include <QHostAddress>
 #include <QObject>
 
-#include <dnssd/remoteservice.h>
 #include <memory>
 
 namespace KDNSSD

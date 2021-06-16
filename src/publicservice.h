@@ -9,9 +9,9 @@
 #ifndef KDNSSDPUBLICSERVICE_H
 #define KDNSSDPUBLICSERVICE_H
 
+#include "servicebase.h"
 #include <QObject>
 #include <QStringList>
-#include <dnssd/servicebase.h>
 
 namespace KDNSSD
 {

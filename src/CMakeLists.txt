@@ -48,7 +48,7 @@ else ()
 endif ()
 
 ecm_generate_export_header(KF5DNSSD
-    EXPORT_FILE_NAME ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
+    EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_export.h
     BASE_NAME KDNSSD
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
@@ -100,7 +100,7 @@ install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${KF5_INSTALL_TARGETS_DEFAULT_AR
 
 ########### install files ###############
 install(FILES
-  ${KDNSSD_BINARY_DIR}/dnssd/kdnssd_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_export.h
   ${kdnssd_HEADERS}
   DESTINATION  ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/dnssd COMPONENT Devel
 )

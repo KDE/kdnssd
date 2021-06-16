@@ -9,10 +9,10 @@
 #ifndef KDNSSDSERVICEBASE_H
 #define KDNSSDSERVICEBASE_H
 
+#include "kdnssd_export.h"
 #include <QExplicitlySharedDataPointer>
 #include <QMap>
 #include <QString>
-#include <dnssd/kdnssd_export.h>
 #include <memory>
 
 namespace KDNSSD

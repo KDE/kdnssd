@@ -9,9 +9,9 @@
 #ifndef KDNSSDSERVICEMODEL_H
 #define KDNSSDSERVICEMODEL_H
 
+#include "kdnssd_export.h"
+#include "remoteservice.h"
 #include <QAbstractItemModel>
-#include <dnssd/kdnssd_export.h>
-#include <dnssd/remoteservice.h>
 #include <memory>
 
 namespace KDNSSD

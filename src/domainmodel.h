@@ -9,8 +9,8 @@
 #ifndef KDNSSDDOMAINMODEL_H
 #define KDNSSDDOMAINMODEL_H
 
+#include "kdnssd_export.h"
 #include <QAbstractItemModel>
-#include <dnssd/kdnssd_export.h>
 #include <memory>
 
 namespace KDNSSD
