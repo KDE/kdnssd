@@ -1,4 +1,9 @@
 add_library(KF5DNSSD)
+set_target_properties(KF5DNSSD PROPERTIES
+   VERSION     "${KDNSSD_VERSION}"
+   SOVERSION   "${KDNSSD_SOVERSION}"
+   EXPORT_NAME DNSSD
+)
 
 ecm_create_qm_loader(KF5DNSSD kdnssd5_qt)
 
@@ -72,12 +77,6 @@ endif ()
 
 set(KDNSSD_BUILD_INCLUDE_DIRS ${KDNSSD_BINARY_DIR})
 target_include_directories(KF5DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BUILD_INCLUDE_DIRS}>")
-
-set_target_properties(KF5DNSSD PROPERTIES
-   VERSION "${KDNSSD_VERSION}"
-   SOVERSION "${KDNSSD_SOVERSION}"
-   EXPORT_NAME DNSSD
-)
 
 ecm_generate_headers(KDNSSD_CamelCase_HEADERS
   HEADER_NAMES
