@@ -1,4 +1,4 @@
-add_library(KF5DNSSD SHARED)
+add_library(KF5DNSSD)
 
 ecm_create_qm_loader(KF5DNSSD kdnssd5_qt)
 
