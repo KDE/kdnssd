@@ -219,7 +219,7 @@ bool PublicServicePrivate::fillEntryGroup()
         }
     }
 
-    for (const QString &subtype : qAsConst(m_subtypes)) {
+    for (const QString &subtype : std::as_const(m_subtypes)) {
         m_group->AddServiceSubtype(-1, -1, 0, m_serviceName, m_type, domainToDNS(m_domain), subtype);
     }
     return true;

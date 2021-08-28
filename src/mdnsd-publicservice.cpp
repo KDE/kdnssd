@@ -158,7 +158,7 @@ void PublicService::publishAsync()
     }
     DNSServiceRef ref;
     QString fullType = d->m_type;
-    for (const QString &subtype : qAsConst(d->m_subtypes)) {
+    for (const QString &subtype : std::as_const(d->m_subtypes)) {
         fullType += ',' + subtype;
     }
     if (DNSServiceRegister(&ref,
