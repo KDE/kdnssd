@@ -30,7 +30,7 @@ public:
         , m_parent(parent)
     {
     }
-    ~ServiceBrowserPrivate()
+    ~ServiceBrowserPrivate() override
     {
         if (m_browser) {
             m_browser->Free();

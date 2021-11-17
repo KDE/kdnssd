@@ -37,7 +37,7 @@ public:
 public:
     OrgFreedesktopAvahiEntryGroupInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
 
-    ~OrgFreedesktopAvahiEntryGroupInterface();
+    ~OrgFreedesktopAvahiEntryGroupInterface() override;
 
 public Q_SLOTS: // METHODS
     inline QDBusReply<void> AddAddress(int interface, int protocol, uint flags, const QString &name, const QString &address)

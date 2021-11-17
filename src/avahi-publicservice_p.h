@@ -36,7 +36,7 @@ public:
         , m_parent(parent)
     {
     }
-    ~PublicServicePrivate()
+    ~PublicServicePrivate() override
     {
         if (m_group) {
             m_group->Free();

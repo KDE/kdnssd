@@ -58,7 +58,7 @@ public:
      */
     explicit DomainModel(DomainBrowser *browser, QObject *parent = nullptr);
 
-    virtual ~DomainModel();
+    ~DomainModel() override;
 
     /** @reimp */
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;

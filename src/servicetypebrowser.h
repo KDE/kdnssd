@@ -54,7 +54,7 @@ public:
      */
     explicit ServiceTypeBrowser(const QString &domain = QString(), QObject *parent = nullptr);
 
-    ~ServiceTypeBrowser();
+    ~ServiceTypeBrowser() override;
 
     /**
      * All the service types currently being published

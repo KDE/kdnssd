@@ -34,7 +34,7 @@ public:
         , m_parent(parent)
     {
     }
-    ~RemoteServicePrivate()
+    ~RemoteServicePrivate() override
     {
         if (m_resolver) {
             m_resolver->Free();

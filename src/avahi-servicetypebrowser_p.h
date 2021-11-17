@@ -27,7 +27,7 @@ public:
         , m_started(false)
     {
     }
-    ~ServiceTypeBrowserPrivate()
+    ~ServiceTypeBrowserPrivate() override
     {
         if (m_browser) {
             m_browser->Free();

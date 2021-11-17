@@ -66,7 +66,7 @@ public:
      */
     explicit DomainBrowser(DomainType type, QObject *parent = nullptr);
 
-    ~DomainBrowser();
+    ~DomainBrowser() override;
 
     /**
      * The current known list of domains of the requested DomainType

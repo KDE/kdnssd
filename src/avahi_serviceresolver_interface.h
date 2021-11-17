@@ -37,7 +37,7 @@ public:
 public:
     OrgFreedesktopAvahiServiceResolverInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
 
-    ~OrgFreedesktopAvahiServiceResolverInterface();
+    ~OrgFreedesktopAvahiServiceResolverInterface() override;
 
 public Q_SLOTS: // METHODS
     inline QDBusReply<void> Free()

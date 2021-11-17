@@ -102,7 +102,7 @@ public:
      */
     explicit ServiceBrowser(const QString &type, bool autoResolve = false, const QString &domain = QString(), const QString &subtype = QString());
 
-    ~ServiceBrowser();
+    ~ServiceBrowser() override;
 
     /**
      * The currently known services of the specified type
