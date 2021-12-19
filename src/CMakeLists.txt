@@ -63,12 +63,12 @@ ecm_generate_export_header(KF5DNSSD
 )
 
 # Apps must include <KDNSSD/File> or <kdnssd/file.h>
-target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD>")
+target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD>")
 
-target_link_libraries(KF5DNSSD PUBLIC Qt5::Network)
+target_link_libraries(KF5DNSSD PUBLIC Qt${QT_MAJOR_VERSION}::Network)
 
 if (AVAHI_FOUND OR DNSSD_FOUND)
-    target_link_libraries(KF5DNSSD PRIVATE Qt5::DBus)
+    target_link_libraries(KF5DNSSD PRIVATE Qt${QT_MAJOR_VERSION}::DBus)
 endif ()
 
 if (DNSSD_FOUND)
@@ -93,7 +93,7 @@ ecm_generate_headers(KDNSSD_CamelCase_HEADERS
   REQUIRED_HEADERS kdnssd_HEADERS
 )
 
-install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/KDNSSD COMPONENT Devel)
+install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/KDNSSD COMPONENT Devel)
 
 install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
@@ -101,7 +101,7 @@ install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${KF5_INSTALL_TARGETS_DEFAULT_AR
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_export.h
   ${kdnssd_HEADERS}
-  DESTINATION  ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/kdnssd COMPONENT Devel
+  DESTINATION  ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/kdnssd COMPONENT Devel
 )
 
 # provide compat headers for old broken include path prefix dnssd/ & DNSSD/
@@ -116,7 +116,7 @@ if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND
             set(NEW_INCLUDE "kdnssd/${HEADER_NAME}")
             configure_file(compatheader.h.in ${compat_header} @ONLY)
             install(FILES ${compat_header}
-                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/dnssd
+                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/dnssd
                 COMPONENT Devel
             )
             # CamelCase header
@@ -124,7 +124,7 @@ if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND
             set(NEW_INCLUDE "KDNSSD/${classname}")
             configure_file(compatheader.h.in ${compat_header} @ONLY)
             install(FILES ${compat_header}
-                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD/DNSSD
+                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/DNSSD
                 COMPONENT Devel
             )
         endforeach()
@@ -169,5 +169,5 @@ if(BUILD_QCH)
 endif()
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KDNSSD LIB_NAME KF5DNSSD DEPS "network" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KDNSSD)
+ecm_generate_pri_file(BASE_NAME KDNSSD LIB_NAME KF5DNSSD DEPS "network" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

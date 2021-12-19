@@ -11,7 +11,6 @@
 #ifndef AVAHI_SERVER_INTERFACE_H_1175535514
 #define AVAHI_SERVER_INTERFACE_H_1175535514
 
-#include <QByteRef>
 #include <QDBusAbstractInterface>
 #include <QDBusConnection>
 #include <QDBusReply>
