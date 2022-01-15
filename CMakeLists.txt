@@ -38,7 +38,11 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KDNSSD
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfigVersion.cmake"
     SOVERSION 5)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF} COMPONENT Devel)
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD
+    COMPONENT Devel
+)
 
 configure_file(config-kdnssd.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdnssd.h )
 
