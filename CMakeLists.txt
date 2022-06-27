@@ -11,12 +11,16 @@ feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKA
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules) #TODO: remove cmake/modules when extra-cmake-modules is done
 
 include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
-include(KDEGitCommitHooks)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
+include(KDEGitCommitHooks)
 include(ECMPoQmTools)
 include(ECMAddQch)
+include(ECMGenerateExportHeader)
+include(ECMSetupVersion)
+include(ECMGenerateHeaders)
+include(CMakePackageConfigHelpers)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
@@ -27,12 +31,6 @@ set(REQUIRED_QT_VERSION 5.15.2)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-
-
-include(ECMGenerateExportHeader)
-include(ECMSetupVersion)
-include(ECMGenerateHeaders)
-include(CMakePackageConfigHelpers)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDNSSD
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
