@@ -20,6 +20,7 @@ include(ECMAddQch)
 include(ECMGenerateExportHeader)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMDeprecationSettings)
 include(CMakePackageConfigHelpers)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
@@ -68,7 +69,10 @@ endif()
 ecm_install_po_files_as_qm(po)
 
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
+ecm_set_disabled_deprecation_versions(
+    QT 5.15.2
+)
+
 add_subdirectory(src)
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5DNSSD")
