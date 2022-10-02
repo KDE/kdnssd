@@ -66,7 +66,7 @@ if(AVAHI_FOUND OR DNSSD_FOUND)
     find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
 endif()
 
-ecm_install_po_files_as_qm(po)
+ecm_install_po_files_as_qm(poqm)
 
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 ecm_set_disabled_deprecation_versions(
