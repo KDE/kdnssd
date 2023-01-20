@@ -1,13 +1,13 @@
-add_library(KF5DNSSD)
-set_target_properties(KF5DNSSD PROPERTIES
+add_library(KF6DNSSD)
+set_target_properties(KF6DNSSD PROPERTIES
    VERSION     "${KDNSSD_VERSION}"
    SOVERSION   "${KDNSSD_SOVERSION}"
    EXPORT_NAME DNSSD
 )
 
-ecm_create_qm_loader(KF5DNSSD kdnssd5_qt)
+ecm_create_qm_loader(KF6DNSSD kdnssd5_qt)
 
-target_sources(KF5DNSSD PRIVATE
+target_sources(KF6DNSSD PRIVATE
     servicebase.cpp
     servicemodel.cpp
     domainmodel.cpp
@@ -15,7 +15,7 @@ target_sources(KF5DNSSD PRIVATE
 
 if (AVAHI_FOUND)
     include_directories( ${AVAHI_INCLUDE_DIR} )
-    target_sources(KF5DNSSD PRIVATE
+    target_sources(KF6DNSSD PRIVATE
         avahi-domainbrowser.cpp
         avahi-servicebrowser.cpp
         avahi-remoteservice.cpp
@@ -30,10 +30,10 @@ if (AVAHI_FOUND)
     qt_add_dbus_interface(kdnssd_dbus_LIB_SRCS org.freedesktop.Avahi.DomainBrowser.xml avahi_domainbrowser_interface)
     qt_add_dbus_interface(kdnssd_dbus_LIB_SRCS org.freedesktop.Avahi.ServiceBrowser.xml avahi_servicebrowser_interface)
     qt_add_dbus_interface(kdnssd_dbus_LIB_SRCS org.freedesktop.Avahi.ServiceTypeBrowser.xml avahi_servicetypebrowser_interface)
-    target_sources(KF5DNSSD PRIVATE ${kdnssd_dbus_LIB_SRCS})
+    target_sources(KF6DNSSD PRIVATE ${kdnssd_dbus_LIB_SRCS})
 elseif (DNSSD_FOUND)
     include_directories( ${DNSSD_INCLUDE_DIR} )
-    target_sources(KF5DNSSD PRIVATE
+    target_sources(KF6DNSSD PRIVATE
         mdnsd-domainbrowser.cpp
         mdnsd-remoteservice.cpp
         mdnsd-publicservice.cpp
@@ -42,7 +42,7 @@ elseif (DNSSD_FOUND)
         mdnsd-servicetypebrowser.cpp
     )
 else ()
-    target_sources(KF5DNSSD PRIVATE
+    target_sources(KF6DNSSD PRIVATE
         dummy-domainbrowser.cpp
         dummy-remoteservice.cpp
         dummy-publicservice.cpp
@@ -52,7 +52,7 @@ else ()
 
 endif ()
 
-ecm_generate_export_header(KF5DNSSD
+ecm_generate_export_header(KF6DNSSD
     EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_export.h
     BASE_NAME KDNSSD
     GROUP_BASE_NAME KF
@@ -63,20 +63,20 @@ ecm_generate_export_header(KF5DNSSD
 )
 
 # Apps must include <KDNSSD/File> or <kdnssd/file.h>
-target_include_directories(KF5DNSSD INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD>")
+target_include_directories(KF6DNSSD INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD>")
 
-target_link_libraries(KF5DNSSD PUBLIC Qt${QT_MAJOR_VERSION}::Network)
+target_link_libraries(KF6DNSSD PUBLIC Qt${QT_MAJOR_VERSION}::Network)
 
 if (AVAHI_FOUND OR DNSSD_FOUND)
-    target_link_libraries(KF5DNSSD PRIVATE Qt${QT_MAJOR_VERSION}::DBus)
+    target_link_libraries(KF6DNSSD PRIVATE Qt${QT_MAJOR_VERSION}::DBus)
 endif ()
 
 if (DNSSD_FOUND)
-  target_link_libraries(KF5DNSSD PRIVATE ${DNSSD_LIBRARIES})
+  target_link_libraries(KF6DNSSD PRIVATE ${DNSSD_LIBRARIES})
 endif ()
 
 set(KDNSSD_BUILD_INCLUDE_DIRS ${KDNSSD_BINARY_DIR})
-target_include_directories(KF5DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BUILD_INCLUDE_DIRS}>")
+target_include_directories(KF6DNSSD PUBLIC "$<BUILD_INTERFACE:${KDNSSD_BUILD_INCLUDE_DIRS}>")
 
 ecm_generate_headers(KDNSSD_CamelCase_HEADERS
   HEADER_NAMES
@@ -95,7 +95,7 @@ ecm_generate_headers(KDNSSD_CamelCase_HEADERS
 
 install(FILES ${KDNSSD_CamelCase_HEADERS} DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/KDNSSD COMPONENT Devel)
 
-install(TARGETS KF5DNSSD EXPORT KF5DNSSDTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF6DNSSD EXPORT KF6DNSSDTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 install(FILES
@@ -144,9 +144,9 @@ endif()
 
 if(BUILD_QCH)
     ecm_add_qch(
-        KF5DNSSD_QCH
+        KF6DNSSD_QCH
         NAME KDNSSD
-        BASE_NAME KF5DNSSD
+        BASE_NAME KF6DNSSD
         VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
@@ -169,5 +169,5 @@ if(BUILD_QCH)
 endif()
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KDNSSD LIB_NAME KF5DNSSD DEPS "network" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD)
+ecm_generate_pri_file(BASE_NAME KDNSSD LIB_NAME KF6DNSSD DEPS "network" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

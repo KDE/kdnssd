@@ -15,10 +15,10 @@ centralized infrastructure.
 If you are using CMake, you need to have
 
 ```cmake
-find_package(KF5DNSSD NO_MODULE)
+find_package(KF6DNSSD NO_MODULE)
 ```
 
-(or similar) in your CMakeLists.txt file, and you need to link to KF5::DNSSD.
+(or similar) in your CMakeLists.txt file, and you need to link to KF6::DNSSD.
 
 If you are writing an application that wants to discover services on the
 network, use KDNSSD::ServiceBrowser.  You can also find available service types

@@ -35,8 +35,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDNSSD
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h"
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfigVersion.cmake"
-    SOVERSION 5)
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6DNSSDConfigVersion.cmake"
+    SOVERSION 6)
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kdnssd_version.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD
@@ -75,30 +75,30 @@ ecm_set_disabled_deprecation_versions(
 
 add_subdirectory(src)
 
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5DNSSD")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DNSSD")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5DNSSD_QCH
-        FILE KF5DNSSDQchTargets.cmake
+        TARGETS KF6DNSSD_QCH
+        FILE KF6DNSSDQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5DNSSDQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6DNSSDQchTargets.cmake\")")
 endif()
 
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5DNSSDConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfig.cmake"
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF6DNSSDConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/KF6DNSSDConfig.cmake"
                               INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
                               )
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF5DNSSDConfigVersion.cmake"
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6DNSSDConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/KF6DNSSDConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
-install(EXPORT KF5DNSSDTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        FILE KF5DNSSDTargets.cmake NAMESPACE KF5:: COMPONENT Devel)
+install(EXPORT KF6DNSSDTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        FILE KF6DNSSDTargets.cmake NAMESPACE KF6:: COMPONENT Devel)
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
