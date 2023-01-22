@@ -58,17 +58,17 @@ ecm_generate_export_header(KF6DNSSD
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
-    DEPRECATION_VERSIONS 4.0
+    DEPRECATION_VERSIONS
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
 # Apps must include <KDNSSD/File> or <kdnssd/file.h>
 target_include_directories(KF6DNSSD INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD>")
 
-target_link_libraries(KF6DNSSD PUBLIC Qt${QT_MAJOR_VERSION}::Network)
+target_link_libraries(KF6DNSSD PUBLIC Qt6::Network)
 
 if (AVAHI_FOUND OR DNSSD_FOUND)
-    target_link_libraries(KF6DNSSD PRIVATE Qt${QT_MAJOR_VERSION}::DBus)
+    target_link_libraries(KF6DNSSD PRIVATE Qt6::DBus)
 endif ()
 
 if (DNSSD_FOUND)
@@ -104,44 +104,6 @@ install(FILES
   DESTINATION  ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/kdnssd COMPONENT Devel
 )
 
-# provide compat headers for old broken include path prefix dnssd/ & DNSSD/
-if(NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND
-   EXCLUDE_DEPRECATED_BEFORE_AND_AT VERSION_LESS 5.84.0)
-    function(generate_compat_headers)
-        foreach(classname ${ARGV})
-            string(TOLOWER ${classname} classname_lc)
-            set(HEADER_NAME "${classname_lc}.h")
-            # normal header
-            set(compat_header "${CMAKE_CURRENT_BINARY_DIR}/compat/${HEADER_NAME}")
-            set(NEW_INCLUDE "kdnssd/${HEADER_NAME}")
-            configure_file(compatheader.h.in ${compat_header} @ONLY)
-            install(FILES ${compat_header}
-                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/dnssd
-                COMPONENT Devel
-            )
-            # CamelCase header
-            set(compat_header "${CMAKE_CURRENT_BINARY_DIR}/compat/${classname}")
-            set(NEW_INCLUDE "KDNSSD/${classname}")
-            configure_file(compatheader.h.in ${compat_header} @ONLY)
-            install(FILES ${compat_header}
-                DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/DNSSD
-                COMPONENT Devel
-            )
-        endforeach()
-    endfunction()
-
-    generate_compat_headers(
-        DomainBrowser
-        RemoteService
-        ServiceTypeBrowser
-        PublicService
-        ServiceBase
-        ServiceBrowser
-        ServiceModel
-        DomainModel
-    )
-endif()
-
 if(BUILD_QCH)
     ecm_add_qch(
         KF6DNSSD_QCH
@@ -153,7 +115,7 @@ if(BUILD_QCH)
             ${kdnssd_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt5Network_QCH
+            Qt6Network_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
             ${KDNSSD_BUILD_INCLUDE_DIRS}

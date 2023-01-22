@@ -29,7 +29,7 @@ option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, 
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 set(REQUIRED_QT_VERSION 6.4.0)
-find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
+find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -63,14 +63,14 @@ if(NOT AVAHI_FOUND)
 endif( )
 
 if(AVAHI_FOUND OR DNSSD_FOUND)
-    find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
+    find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
 endif()
 
 ecm_install_po_files_as_qm(poqm)
 
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 ecm_set_disabled_deprecation_versions(
-    QT 5.15.2
+    QT 6.4
 )
 
 add_subdirectory(src)

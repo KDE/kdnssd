@@ -77,19 +77,6 @@ public:
      */
     void startBrowse();
 
-#if KDNSSD_ENABLE_DEPRECATED_SINCE(4, 0)
-    /**
-     * This method is unnecessary, since it is safe to call startBrowse()
-     * multiple times.
-     * @deprecated since 4.0, just call startBrowse() again.
-     */
-    KDNSSD_DEPRECATED_VERSION(4, 0, "Just call ServiceTypeBrowser::startBrowse() again")
-    bool isRunning() const
-    {
-        return false;
-    }
-#endif
-
 Q_SIGNALS:
     /**
      * Emitted when there are no more services of this type
