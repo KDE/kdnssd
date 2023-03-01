@@ -23,7 +23,7 @@ msgstr ""
 "X-Qt-Contexts: true\n"
 
 # >> @title:column
-#: servicemodel.cpp:100
+#: servicemodel.cpp:99
 msgctxt "KDNSSD::ServiceModel|"
 msgid "Name"
 msgstr "ime"
@@ -35,7 +35,7 @@ msgid "Host"
 msgstr "domaćin"
 
 # >> @title:column
-#: servicemodel.cpp:102
+#: servicemodel.cpp:103
 msgctxt "KDNSSD::ServiceModel|"
 msgid "Port"
 msgstr "port"
