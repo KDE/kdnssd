@@ -5,7 +5,7 @@ set_target_properties(KF6DNSSD PROPERTIES
    EXPORT_NAME DNSSD
 )
 
-ecm_create_qm_loader(KF6DNSSD kdnssd5_qt)
+ecm_create_qm_loader(KF6DNSSD kdnssd6_qt)
 
 target_sources(KF6DNSSD PRIVATE
     servicebase.cpp
