@@ -173,7 +173,8 @@ public:
     bool operator!=(const ServiceBase &o) const;
 
 protected:
-    ServiceBase(ServiceBasePrivate *const d);
+    KDNSSD_NO_EXPORT explicit ServiceBase(ServiceBasePrivate *const d);
+
     virtual void virtual_hook(int, void *);
 
 protected:
