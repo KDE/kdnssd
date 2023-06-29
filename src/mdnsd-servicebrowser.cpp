@@ -212,4 +212,5 @@ QString ServiceBrowser::getLocalHostName()
 
 }
 
+#include "moc_mdnsd-servicebrowser_p.cpp"
 #include "moc_servicebrowser.cpp"

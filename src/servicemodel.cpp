@@ -106,3 +106,5 @@ QVariant ServiceModel::headerData(int section, Qt::Orientation orientation, int 
 }
 
 }
+
+#include "moc_servicemodel.cpp"
