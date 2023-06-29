@@ -53,4 +53,5 @@ void ServiceTypeBrowserPrivate::removeService(KDNSSD::RemoteService::Ptr srv)
 
 }
 
+#include "moc_mdnsd-servicetypebrowser_p.cpp"
 #include "moc_servicetypebrowser.cpp"

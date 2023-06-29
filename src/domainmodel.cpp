@@ -80,3 +80,5 @@ QVariant DomainModel::data(const QModelIndex &index, int role) const
 }
 
 }
+
+#include "moc_domainmodel.cpp"
