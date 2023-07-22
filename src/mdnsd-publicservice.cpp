@@ -12,7 +12,7 @@
 #include "servicebase_p.h"
 #include <QCoreApplication>
 #include <QStringList>
-#include <netinet/in.h>
+#include <QtEndian>
 
 #define KDNSSD_D PublicServicePrivate *d = static_cast<PublicServicePrivate *>(this->d.operator->())
 
@@ -168,7 +168,7 @@ void PublicService::publishAsync()
                            fullType.toLatin1().constData(),
                            domainToDNS(d->m_domain).constData(),
                            NULL,
-                           htons(d->m_port),
+                           qToBigEndian(d->m_port),
                            TXTRecordGetLength(&txt),
                            TXTRecordGetBytesPtr(&txt),
                            publish_callback,

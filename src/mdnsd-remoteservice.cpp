@@ -13,7 +13,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QEventLoop>
-#include <netinet/in.h>
+#include <QtEndian>
 
 namespace KDNSSD
 {
@@ -148,7 +148,7 @@ void resolve_callback(DNSServiceRef,
             map[QString::fromUtf8(key)].clear();
         }
     }
-    ResolveEvent rev(DNSToDomain(hosttarget), ntohs(port), map);
+    ResolveEvent rev(DNSToDomain(hosttarget), qFromBigEndian(port), map);
     QCoreApplication::sendEvent(obj, &rev);
 }
 
