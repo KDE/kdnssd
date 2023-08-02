@@ -23,7 +23,7 @@ if (DNSSD_INCLUDE_DIR)
   if (APPLE)
     set(DNSSD_LIBRARIES "/usr/lib/libSystem.dylib")
   else (APPLE)
-    FIND_LIBRARY(DNSSD_LIBRARIES NAMES dns_sd )
+    FIND_LIBRARY(DNSSD_LIBRARIES NAMES dns_sd dnssd)
   endif (APPLE)
 
   cmake_push_check_state()

@@ -12,7 +12,12 @@
 #include "servicebase_p.h"
 #include <QCoreApplication>
 #include <QStringList>
+
+#ifdef _WIN32
+#include <winsock2.h>
+#else
 #include <netinet/in.h>
+#endif
 
 #define KDNSSD_D PublicServicePrivate *d = static_cast<PublicServicePrivate *>(this->d.operator->())
 
