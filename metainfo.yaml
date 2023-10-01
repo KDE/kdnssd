@@ -11,8 +11,7 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
- - qmake: KDNSSD
-   cmake: "KF6::DNSSD"
+ - cmake: "KF6::DNSSD"
 cmakename: KF6DNSSD
 
 public_lib: true
