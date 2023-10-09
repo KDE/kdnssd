@@ -57,7 +57,7 @@ class KDNSSD_EXPORT ServiceModel : public QAbstractItemModel
 public:
     /** The additional data roles provided by this model */
     enum AdditionalRoles {
-        ServicePtrRole = 0xA06519DE, ///< gets a RemoteService::Ptr for the service
+        ServicePtrRole = 0x7E6519DE, ///< gets a RemoteService::Ptr for the service
     };
 
     /**
