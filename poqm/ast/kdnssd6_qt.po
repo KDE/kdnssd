@@ -1,8 +1,8 @@
-# Enol P. <enolp@softastur.org>, 2023.
+# SPDX-FileCopyrightText: 2023 Enol P. <enolp@softastur.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2023-05-03 23:38+0200\n"
+"PO-Revision-Date: 2023-11-02 00:18+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
 "Language: ast\n"
@@ -11,19 +11,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.08.2\n"
 
 #: servicemodel.cpp:99
 msgctxt "KDNSSD::ServiceModel|"
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: servicemodel.cpp:101
 msgctxt "KDNSSD::ServiceModel|"
 msgid "Host"
-msgstr ""
+msgstr "Agospiador"
 
 #: servicemodel.cpp:103
 msgctxt "KDNSSD::ServiceModel|"
 msgid "Port"
-msgstr ""
+msgstr "Puertu"
