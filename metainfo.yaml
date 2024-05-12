@@ -1,4 +1,3 @@
-maintainer: mdawson
 description: Abstraction to system DNSSD features
 tier: 1
 type: integration
