@@ -1,0 +1,47 @@
+/*!
+    \page kdnssd-index.html
+    \title KDNSSD
+
+    Network service discovery using Zeroconf
+
+    \section1 Introduction
+
+    KDNSSD is a library for handling the DNS-based Service Discovery Protocol
+    (DNS-SD), the layer of \l {http://www.zeroconf.org} {Zeroconf} that allows network
+    services, such as printers, to be discovered without any user intervention or
+    centralized infrastructure.
+
+    \section1
+
+    If you are writing an application that wants to discover services on the
+    network, use KDNSSD::ServiceBrowser.  You can also find available service types
+    using ServiceTypeBrowser.
+
+    If you want to announce the availability of a service provided by your
+    application, use KDNSSD::PublicService.
+
+    KDNSSD::DomainBrowser allows you to find domains (other than the local one)
+    recommended for browsing or publishing to.
+
+    Note that KDNSSD::ServiceBrowser::isAvailable() provides information about the
+    availability of the services provided by this library generally, not just for
+    browsing services.
+
+    \section1 More information
+
+    More information about DNS-SD can be found in the online documentation for Apple's implementation of Zeroconf, \l {https://developer.apple.com/bonjour/} {Bonjour}.
+
+    \section1 Using the Module
+
+    \include {module-use.qdocinc} {using the c++ api}
+
+    \section2 Building with CMake
+
+    \include {module-use.qdocinc} {building with cmake} {KF6} {DNSSD} {KF6::DNSSD}
+
+    \section1 API Reference
+
+    \list
+        \li \l{KDNSSD C++ Classes}
+    \endlist
+*/

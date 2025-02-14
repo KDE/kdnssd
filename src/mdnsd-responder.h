@@ -15,12 +15,6 @@
 
 namespace KDNSSD
 {
-/**
-This class should not be used directly.
-
-@author Jakub Stachowski
-@short Internal class wrapping dns_sd.h interface
- */
 class Responder : public QObject
 {
     Q_OBJECT

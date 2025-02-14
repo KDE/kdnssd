@@ -105,29 +105,4 @@ install(FILES
   DESTINATION  ${KDE_INSTALL_INCLUDEDIR_KF}/KDNSSD/kdnssd COMPONENT Devel
 )
 
-if(BUILD_QCH)
-    ecm_add_qch(
-        KF6DNSSD_QCH
-        NAME KDNSSD
-        BASE_NAME KF6DNSSD
-        VERSION ${KF_VERSION}
-        ORG_DOMAIN org.kde
-        SOURCES # using only public headers, to cover only public API
-            ${kdnssd_HEADERS}
-        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
-        LINK_QCHS
-            Qt6Network_QCH
-        INCLUDE_DIRS
-            ${CMAKE_CURRENT_BINARY_DIR}
-            ${KDNSSD_BUILD_INCLUDE_DIRS}
-        BLANK_MACROS
-            KDNSSD_EXPORT
-            KDNSSD_DEPRECATED
-            KDNSSD_DEPRECATED_EXPORT
-            "KDNSSD_DEPRECATED_VERSION(x, y, t)"
-        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        COMPONENT Devel
-    )
-endif()
-
+ecm_generate_qdoc(KF6DNSSD kdnssd.qdocconf) 

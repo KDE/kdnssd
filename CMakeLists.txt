@@ -16,17 +16,14 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
 include(KDEGitCommitHooks)
 include(ECMPoQmTools)
-include(ECMAddQch)
 include(ECMGenerateExportHeader)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMGenerateQDoc)
 include(ECMDeprecationSettings)
 include(CMakePackageConfigHelpers)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
-
-option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
-add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 set(REQUIRED_QT_VERSION 6.7.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
@@ -77,16 +74,6 @@ ecm_set_disabled_deprecation_versions(
 add_subdirectory(src)
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DNSSD")
-
-if (BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS KF6DNSSD_QCH
-        FILE KF6DNSSDQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6DNSSDQchTargets.cmake\")")
-endif()
 
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF6DNSSDConfig.cmake.in"
                               "${CMAKE_CURRENT_BINARY_DIR}/KF6DNSSDConfig.cmake"
