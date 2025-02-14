@@ -20,6 +20,7 @@ include(ECMAddQch)
 include(ECMGenerateExportHeader)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMGenerateQDoc)
 include(ECMDeprecationSettings)
 include(CMakePackageConfigHelpers)
 
