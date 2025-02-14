@@ -1,0 +1,9 @@
+/*!
+    \module KDNSSD
+    \title KDNSSD C++ Classes
+    \ingroup modules
+    \cmakepackage KF6
+    \cmakecomponent DNSSD
+
+    \brief Interface to system-level multicast DNS service discovery.
+*/

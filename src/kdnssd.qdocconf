@@ -1,0 +1,27 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = KDNSSD
+description = Interface to system-level multicast DNS service discovery.
+
+documentationinheaders = true
+
+headerdirs += .
+sourcedirs += .
+
+outputformats = HTML
+
+depends += kde qtcore qtgui kcoreaddons
+
+qhp.projects            = KDNSSD
+
+qhp.KDNSSD.file                = kdnssd.qhp
+qhp.KDNSSD.namespace           = org.kde.kdnssd.$QT_VERSION_TAG
+qhp.KDNSSD.virtualFolder       = kdnssd
+qhp.KDNSSD.indexTitle          = KDNSSD
+qhp.KDNSSD.indexRoot           =
+
+qhp.KDNSSD.subprojects         = classes
+qhp.KDNSSD.subprojects.classes.title = C++ Classes
+qhp.KDNSSD.subprojects.classes.indexTitle = KDNSSD C++ Classes
+qhp.KDNSSD.subprojects.classes.selectors = class fake:headerfile
+qhp.KDNSSD.subprojects.classes.sortPages = true
