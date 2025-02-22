@@ -21,6 +21,7 @@ class DomainBrowserPrivate;
 /*!
  * \class KDNSSD::DomainBrowser
  * \inmodule KDNSSD
+ * \inheaderfile KDNSSD/DomainBrowser
  *
  * \brief Browses recommended domains for browsing or publishing to.
  *

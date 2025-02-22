@@ -23,6 +23,7 @@ class ServiceBrowserPrivate;
 /*!
  * \class KDNSSD::ServiceBrowser
  * \inmodule KDNSSD
+ * \inheaderfile KDNSSD/ServiceBrowser
  *
  * \brief Browses for network services advertised over DNS-SD.
  *

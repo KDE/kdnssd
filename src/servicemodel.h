@@ -22,6 +22,7 @@ class ServiceBrowser;
 /*!
  * \class KDNSSD::ServiceModel
  * \inmodule KDNSSD
+ * \inheaderfile KDNSSD/ServiceModel
  *
  * \brief Model for list of Zeroconf services.
  *

@@ -21,6 +21,7 @@ class ServiceTypeBrowserPrivate;
 /*!
  * \class KDNSSD::ServiceTypeBrowser
  * \inmodule KDNSSD
+ * \inheaderfile KDNSSD/ServiceTypeBrowser
  *
  * \brief Browses the service types being published on a domain.
  *
