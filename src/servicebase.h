@@ -206,6 +206,8 @@ protected:
 /* Utility functions */
 
 /*!
+ * \relates KDNSSD::ServiceBase
+ *
  * Check if the \a domain is link-local.
  *
  * Returns \c true if domain is link-local ('local.'), \c false otherwise

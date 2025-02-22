@@ -123,6 +123,7 @@ public:
      * Publish the service asynchronously
      *
      * Returns immediately and emits published() when completed.
+     *
      * \note published() may be emitted before this method
      * returns when an error is detected immediately.
      */

@@ -48,10 +48,8 @@ public:
     /*!
      * \enum KDNSSD::DomainBrowser::DomainType
      * \brief A type of domain recommendation.
-     * \value Browsing
-     * Domains recommended for browsing for services on (using ServiceBrowser).
-     * \value Publishing
-     * Domains recommended for publishing to (using PublicService).
+     * \value Browsing Domains recommended for browsing for services on (using ServiceBrowser).
+     * \value Publishing Domains recommended for publishing to (using PublicService).
      */
     enum DomainType {
         Browsing,
