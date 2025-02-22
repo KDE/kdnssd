@@ -21,6 +21,7 @@ class DomainBrowser;
 /*!
  * \class KDNSSD::DomainModel
  * \inmodule KDNSSD
+ * \inheaderfile KDNSSD/DomainModel
  *
  * \brief Model for list of Zeroconf domains.
  *

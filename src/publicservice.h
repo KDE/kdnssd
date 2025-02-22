@@ -20,6 +20,7 @@ class PublicServicePrivate;
 /*!
  * \class KDNSSD::PublicService
  * \inmodule KDNSSD
+ * \inheaderfile class KDNSSD/PublicService
  *
  * \brief Represents a service to be published.
  *

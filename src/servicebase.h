@@ -27,6 +27,7 @@ class ServiceBasePrivate;
 /*!
  * \class KDNSSD::ServiceBase
  * \inmodule KDNSSD
+ * \inheaderfile KDNSSD/ServiceBase
  *
  * \brief Describes a service.
  *

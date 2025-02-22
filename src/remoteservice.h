@@ -20,6 +20,7 @@ class RemoteServicePrivate;
 /*!
  * \class KDNSSD::RemoteService
  * \inmodule KDNSSD
+ * \inheaderfile KDNSSD/RemoteService
  *
  * \brief Describes a service published over DNS-SD,
  *        typically on a remote machine.
