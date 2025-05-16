@@ -12,6 +12,8 @@ outputformats = HTML
 
 depends += kde qtcore qtgui kcoreaddons
 
+navigation.landingpage = "KDNSSD"
+
 qhp.projects            = KDNSSD
 
 qhp.KDNSSD.file                = kdnssd.qhp
