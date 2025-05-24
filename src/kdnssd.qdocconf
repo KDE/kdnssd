@@ -27,3 +27,5 @@ qhp.KDNSSD.subprojects.classes.title = C++ Classes
 qhp.KDNSSD.subprojects.classes.indexTitle = KDNSSD C++ Classes
 qhp.KDNSSD.subprojects.classes.selectors = class fake:headerfile
 qhp.KDNSSD.subprojects.classes.sortPages = true
+
+tagfile = kdnssd.tags
