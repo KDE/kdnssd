@@ -34,7 +34,7 @@ msgstr "Nom"
 #: servicemodel.cpp:101
 msgctxt "KDNSSD::ServiceModel|"
 msgid "Host"
-msgstr "Servidor"
+msgstr "Amfitrió"
 
 #: servicemodel.cpp:103
 msgctxt "KDNSSD::ServiceModel|"
