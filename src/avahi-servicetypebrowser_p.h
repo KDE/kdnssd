@@ -37,7 +37,16 @@ public:
     org::freedesktop::Avahi::ServiceTypeBrowser *m_browser = nullptr;
     ServiceTypeBrowser *m_parent = nullptr;
     bool m_started = false;
-    QStringList m_servicetypes;
+
+    struct AvahiServiceType {
+        int interface;
+        int protocol;
+        QString type;
+        QString domain;
+        bool operator==(const AvahiServiceType &) const = default;
+    };
+    std::vector<AvahiServiceType> m_servicetypes;
+
     QString m_domain;
     QTimer m_timer;
 

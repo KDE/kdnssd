@@ -110,24 +110,49 @@ void ServiceTypeBrowserPrivate::gotGlobalAllForNow(QDBusMessage msg)
     finished();
 }
 
-void ServiceTypeBrowserPrivate::gotNewServiceType(int, int, const QString &type, const QString &, uint)
+void ServiceTypeBrowserPrivate::gotNewServiceType(int interface, int protocol, const QString &type, const QString &domain, [[maybe_unused]] uint flags)
 {
     m_timer.start(TIMEOUT_LAST_SERVICE);
-    m_servicetypes += type;
-    Q_EMIT m_parent->serviceTypeAdded(type);
+    // we can get the same type for e.g. different protocols, so track all of those and only report
+    // the first time a new type is added and likewise below, the last time a type is removed
+    const auto newType = std::ranges::find_if(m_servicetypes,
+                                              [type](const auto &s) {
+                                                  return s.type == type;
+                                              })
+        == m_servicetypes.end();
+    m_servicetypes.emplace_back(interface, protocol, type, domain);
+    if (newType) {
+        Q_EMIT m_parent->serviceTypeAdded(type);
+    }
 }
 
-void ServiceTypeBrowserPrivate::gotRemoveServiceType(int, int, const QString &type, const QString &, uint)
+void ServiceTypeBrowserPrivate::gotRemoveServiceType(int interface, int protocol, const QString &type, const QString &domain, [[maybe_unused]] uint flags)
 {
     m_timer.start(TIMEOUT_LAST_SERVICE);
-    m_servicetypes.removeAll(type);
-    Q_EMIT m_parent->serviceTypeRemoved(type);
+    auto it = std::ranges::find(m_servicetypes, AvahiServiceType{interface, protocol, type, domain});
+    if (it == m_servicetypes.end()) {
+        return;
+    }
+    m_servicetypes.erase(it);
+    if (std::ranges::find_if(m_servicetypes,
+                             [type](const auto &s) {
+                                 return s.type == type;
+                             })
+        == m_servicetypes.end()) {
+        Q_EMIT m_parent->serviceTypeRemoved(type);
+    }
 }
 
 QStringList ServiceTypeBrowser::serviceTypes() const
 {
     Q_D(const ServiceTypeBrowser);
-    return d->m_servicetypes;
+    QStringList types;
+    for (const auto &s : d->m_servicetypes) {
+        if (!types.contains(s.type)) {
+            types.push_back(s.type);
+        }
+    }
+    return types;
 }
 
 }
