@@ -27,6 +27,7 @@ set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprec
 
 set(REQUIRED_QT_VERSION 6.9.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Network)
+find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG OPTIONAL_COMPONENTS Widgets)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -72,6 +73,7 @@ ecm_set_disabled_deprecation_versions(
 )
 
 add_subdirectory(src)
+add_subdirectory(examples)
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DNSSD")
 
