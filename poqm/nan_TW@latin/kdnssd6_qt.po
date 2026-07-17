@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2026 Kisaragi Hiu <mail@kisaragi-hiu.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"PO-Revision-Date: 2026-07-16 15:51+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Min Nan Chinese Latin <zh-l10n@lists.slat.org>\n"
+"Language: nan_TW@latin\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 26.11.70\n"
+
+#: servicemodel.cpp:99
+msgctxt "KDNSSD::ServiceModel|"
+msgid "Name"
+msgstr "Miâ"
+
+#: servicemodel.cpp:101
+msgctxt "KDNSSD::ServiceModel|"
+msgid "Host"
+msgstr "Tsú-ki"
+
+#: servicemodel.cpp:103
+msgctxt "KDNSSD::ServiceModel|"
+msgid "Port"
+msgstr "Poo-thâu"
