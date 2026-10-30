@@ -59,7 +59,6 @@ public:
             m_group->Commit();
         }
     }
-    void stop();
     bool fillEntryGroup();
     void tryApply();
 
